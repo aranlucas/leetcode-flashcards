@@ -16,14 +16,7 @@ export default function App(props: AppProps) {
         />
       </Head>
 
-      <MantineProvider
-        withGlobalStyles
-        withNormalizeCSS
-        theme={{
-          /** Put your mantine theme override here */
-          colorScheme: "dark",
-        }}
-      >
+      <MantineProvider withGlobalStyles withNormalizeCSS>
         <Component {...pageProps} />
       </MantineProvider>
     </>

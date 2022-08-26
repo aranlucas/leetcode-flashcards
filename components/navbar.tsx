@@ -6,19 +6,9 @@ import {
   createStyles,
   Stack,
 } from "@mantine/core";
-import {
-  TablerIcon,
-  IconHome2,
-  IconGauge,
-  IconDeviceDesktopAnalytics,
-  IconFingerprint,
-  IconCalendarStats,
-  IconUser,
-  IconSettings,
-  IconLogout,
-  IconSwitchHorizontal,
-} from "@tabler/icons";
+import { TablerIcon, IconHome2, IconMovie, IconInbox } from "@tabler/icons";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -69,6 +59,7 @@ function NavbarLink({
   href,
 }: NavbarLinkProps) {
   const { classes, cx } = useStyles();
+
   return (
     <Tooltip label={label} position="right" transitionDuration={0}>
       <Link href={href} passHref>
@@ -86,23 +77,17 @@ function NavbarLink({
 
 const mockdata = [
   { icon: IconHome2, label: "Home", href: "/" },
-  { icon: IconGauge, label: "Dashboard", href: "/" },
-  { icon: IconDeviceDesktopAnalytics, label: "Analytics", href: "/" },
-  { icon: IconCalendarStats, label: "Releases", href: "/" },
-  { icon: IconUser, label: "Account", href: "/" },
-  { icon: IconFingerprint, label: "Security", href: "/" },
-  { icon: IconSettings, label: "Settings", href: "/" },
+  { icon: IconMovie, label: "Movies", href: "/movies" },
+  { icon: IconInbox, label: "Posts", href: "/posts" },
 ];
 
 export function NavbarMinimal() {
-  const [active, setActive] = useState(2);
-
+  const router = useRouter();
   const links = mockdata.map((link, index) => (
     <NavbarLink
       {...link}
       key={link.label}
-      active={index === active}
-      onClick={() => setActive(index)}
+      active={router.pathname === link.href}
       href={link.href}
     />
   ));
@@ -112,16 +97,6 @@ export function NavbarMinimal() {
       <Navbar.Section grow>
         <Stack justify="center" spacing={0}>
           {links}
-        </Stack>
-      </Navbar.Section>
-      <Navbar.Section>
-        <Stack justify="center" spacing={0}>
-          <NavbarLink
-            icon={IconSwitchHorizontal}
-            label="Change account"
-            href="/"
-          />
-          <NavbarLink icon={IconLogout} label="Logout" href="/" />
         </Stack>
       </Navbar.Section>
     </Navbar>

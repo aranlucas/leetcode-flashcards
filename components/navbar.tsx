@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Navbar,
   Tooltip,
@@ -47,7 +46,7 @@ interface NavbarLinkProps {
   icon: TablerIcon;
   label: string;
   active?: boolean;
-  onClick?(): void;
+  onClick?: () => void;
   href: string;
 }
 

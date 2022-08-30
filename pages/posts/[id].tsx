@@ -1,5 +1,7 @@
+import { Title, TypographyStylesProvider } from "@mantine/core";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
+import { ReactNode } from "react";
 import Layout from "../../components/layout";
 import { getAllPostIds, getPostData } from "../../lib/posts";
 
@@ -12,7 +14,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  if (!params?.id) {
+  if (params == null) {
     return {
       notFound: true,
     };
@@ -37,18 +39,21 @@ export default function Post({
   postData,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <Layout>
+    <>
       <Head>
         <title>{postData.title}</title>
       </Head>
-      {postData.title}
-      <br />
-      {postData.id}
-      <br />
+      <Title order={1}>{postData.title}</Title>
       {postData.date}
       <br />
 
-      <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
-    </Layout>
+      <TypographyStylesProvider>
+        <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
+      </TypographyStylesProvider>
+    </>
   );
 }
+
+Post.getLayout = function getLayout(page: ReactNode) {
+  return <Layout>{page}</Layout>;
+};

@@ -1,9 +1,29 @@
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { MantineProvider } from "@mantine/core";
+import { ReactElement, ReactNode, useState } from "react";
+import { NextPage } from "next";
+import { SessionProvider } from "next-auth/react";
+import {
+  Hydrate,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-export default function App(props: AppProps) {
-  const { Component, pageProps } = props;
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
+  const [queryClient] = useState(() => new QueryClient());
+
+  // eslint-disable-next-line
+  const getLayout = Component.getLayout || ((page) => page);
 
   return (
     <>
@@ -15,9 +35,16 @@ export default function App(props: AppProps) {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
-
       <MantineProvider withGlobalStyles withNormalizeCSS>
-        <Component {...pageProps} />
+        <SessionProvider session={pageProps.session}>
+          <QueryClientProvider client={queryClient}>
+            <ReactQueryDevtools initialIsOpen={false} />
+
+            <Hydrate state={pageProps.dehydratedState}>
+              {getLayout(<Component {...pageProps} />)}
+            </Hydrate>
+          </QueryClientProvider>
+        </SessionProvider>
       </MantineProvider>
     </>
   );

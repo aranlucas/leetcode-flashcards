@@ -1,6 +1,7 @@
+import { HydratedDocument } from "mongoose";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Layout from "../../components/layout";
-import { getTopMovies, Movie } from "../../lib/movies";
+import Movie, { IMovie } from "../../models/movie";
 
 export default function Index({
   movies,
@@ -12,8 +13,8 @@ export default function Index({
         <small>(According to Metacritic)</small>
       </p>
       <ul>
-        {movies.map((movie: Movie) => (
-          <li key={movie._id}>
+        {movies.map((movie: HydratedDocument<IMovie>) => (
+          <li key={movie._id.toString()}>
             <h2>{movie.title}</h2>
             <h3>{movie.metacritic}</h3>
             <p>{movie.plot}</p>
@@ -25,11 +26,10 @@ export default function Index({
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const movies = await getTopMovies();
-
+  const movies = await Movie.find({}).sort({ metacritic: -1 }).limit(20);
   return {
     props: {
-      movies: movies,
+      movies: JSON.parse(JSON.stringify(movies)),
     },
   };
 };

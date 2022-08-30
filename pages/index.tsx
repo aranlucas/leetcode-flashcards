@@ -1,7 +1,8 @@
-import { Card, Group, Text } from "@mantine/core";
-import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { GetStaticProps } from "next";
+import { ReactNode } from "react";
+import { HeroText } from "../components/hero";
 import Layout from "../components/layout";
-import { getSortedPostsData, Post } from "../lib/posts";
+import { getSortedPostsData } from "../lib/posts";
 
 export const getStaticProps: GetStaticProps = async () => {
   const allPostsData = getSortedPostsData();
@@ -13,5 +14,9 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 export default function IndexPage() {
-  return <Layout>Sample website</Layout>;
+  return <HeroText />;
 }
+
+IndexPage.getLayout = function getLayout(page: ReactNode) {
+  return <Layout>{page}</Layout>;
+};

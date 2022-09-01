@@ -1,6 +1,6 @@
 import { HydratedDocument } from "mongoose";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
-import Layout from "../../components/layout";
+import Layout from "../../components/layout/layout";
 import Movie, { IMovie } from "../../models/movie";
 
 export default function Index({

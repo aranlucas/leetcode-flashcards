@@ -1,16 +1,8 @@
-import { createConnection } from "mongoose";
-
-if (process.env.MONGODB_URI == null) {
-  throw new Error(
-    "Please define the MONGODB_URI environment variable inside .env.local"
-  );
-}
-
-const uri: string = process.env.MONGODB_URI;
+import dbConnect from "./dbConnect";
 
 const connections = {
-  movies: createConnection(uri, { dbName: "sample_mflix" }),
-  pets: createConnection(uri, { dbName: "pets" }),
+  movies: dbConnect().useDb("sample_mflix"),
+  pets: dbConnect().useDb("pets"),
 };
 
 export default connections;

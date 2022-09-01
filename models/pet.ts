@@ -1,7 +1,8 @@
-import { Schema, models, model } from "mongoose";
+import { Schema, models } from "mongoose";
 import connections from "../lib/connections";
 
 export interface IPet {
+  _id: Number;
   name: string;
   owner_name?: string;
   species: string;
@@ -39,4 +40,4 @@ const PetSchema = new Schema<IPet>({
   },
 });
 
-export default models.Pet || connections.pets.model<IPet>("Pet", PetSchema);
+export default models.Pet || connections.pets.model("Pet", PetSchema);

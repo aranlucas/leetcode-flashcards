@@ -2,7 +2,7 @@ import { Title, TypographyStylesProvider } from "@mantine/core";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 import { ReactNode } from "react";
-import Layout from "../../components/layout";
+import Layout from "../../components/layout/layout";
 import { getAllPostIds, getPostData } from "../../lib/posts";
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -14,19 +14,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  if (params == null) {
-    return {
-      notFound: true,
-    };
-  }
+  const id = params?.id as string;
 
-  if (typeof params.id !== "string") {
-    return {
-      notFound: true,
-    };
-  }
-
-  const postData = await getPostData(params.id);
+  const postData = await getPostData(id);
 
   return {
     props: {
@@ -45,7 +35,6 @@ export default function Post({
       </Head>
       <Title order={1}>{postData.title}</Title>
       {postData.date}
-      <br />
 
       <TypographyStylesProvider>
         <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />

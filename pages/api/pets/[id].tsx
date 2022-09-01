@@ -1,6 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getToken } from "next-auth/jwt";
 import Pet from "../../../models/pet";
 
 interface Data {
@@ -13,29 +12,23 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const token = await getToken({ req });
-
-  const { method } = req;
+  const { method, query } = req;
 
   switch (method) {
     case "GET":
       try {
-        const pets = await Pet.find({});
-        res.status(200).json({ success: true, data: pets });
+        const pet = await Pet.findOne({ _id: query.id });
+        res.status(200).json(pet);
       } catch (error) {
-        res.status(400).json({ success: false });
+        res.status(400).json({ success: false, error });
       }
       break;
-    case "POST":
+    case "PUT":
       try {
-        // create a new model in the database
-        const pet = await Pet.create({
-          ...req.body,
-          owner_name: token?.email,
-        });
-        res.status(201).json(pet);
+        const pet = await Pet.updateOne({ _id: query.id }, req.body);
+        res.status(200).json({ success: pet.acknowledged });
       } catch (error) {
-        res.status(400).json({ success: false, error: JSON.stringify(error) });
+        res.status(400).json({ success: false, error });
       }
       break;
     default:

@@ -1,22 +1,10 @@
-import { GetStaticProps } from "next";
-import { ReactNode } from "react";
 import { HeroText } from "../components/hero";
-import Layout from "../components/layout";
-import { getSortedPostsData } from "../lib/posts";
-
-export const getStaticProps: GetStaticProps = async () => {
-  const allPostsData = getSortedPostsData();
-  return {
-    props: {
-      allPostsData,
-    },
-  };
-};
+import Layout from "../components/layout/layout";
 
 export default function IndexPage() {
-  return <HeroText />;
+  return (
+    <Layout disableBreadcrumbs>
+      <HeroText />
+    </Layout>
+  );
 }
-
-IndexPage.getLayout = function getLayout(page: ReactNode) {
-  return <Layout>{page}</Layout>;
-};

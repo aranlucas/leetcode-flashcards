@@ -1,0 +1,79 @@
+import { Skeleton, Table as MantineTable } from "@mantine/core";
+import {
+  useReactTable,
+  getCoreRowModel,
+  flexRender,
+} from "@tanstack/react-table";
+import { useMemo } from "react";
+
+interface TableProps<T> {
+  items: T[];
+  columnDefinitions: any[];
+  isLoading?: boolean;
+}
+
+export default function Table<T>({
+  items,
+  columnDefinitions,
+  isLoading,
+}: TableProps<T>) {
+  const data = useMemo(() => {
+    return items;
+  }, [items]);
+
+  const columns = useMemo(() => {
+    return columnDefinitions;
+  }, [columnDefinitions]);
+
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
+
+  return (
+    <div>
+      <MantineTable>
+        <thead>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th
+                  key={header.id}
+                  {...{
+                    colSpan: header.colSpan,
+                    style: {
+                      width: header.getSize(),
+                    },
+                  }}
+                >
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map((row) => (
+            <tr key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id}>
+                  {isLoading ? (
+                    <Skeleton height={28} />
+                  ) : (
+                    flexRender(cell.column.columnDef.cell, cell.getContext())
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </MantineTable>
+    </div>
+  );
+}

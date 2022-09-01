@@ -22,9 +22,6 @@ type AppPropsWithLayout = AppProps & {
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const [queryClient] = useState(() => new QueryClient());
 
-  // eslint-disable-next-line
-  const getLayout = Component.getLayout || ((page) => page);
-
   return (
     <>
       <Head>
@@ -38,10 +35,9 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
       <MantineProvider withGlobalStyles withNormalizeCSS>
         <SessionProvider session={pageProps.session}>
           <QueryClientProvider client={queryClient}>
-            <ReactQueryDevtools initialIsOpen={false} />
-
+            <ReactQueryDevtools />
             <Hydrate state={pageProps.dehydratedState}>
-              {getLayout(<Component {...pageProps} />)}
+              <Component {...pageProps} />
             </Hydrate>
           </QueryClientProvider>
         </SessionProvider>

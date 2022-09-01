@@ -16,7 +16,7 @@ export default function EditPet() {
   const queryClient = useQueryClient();
 
   const { data } = useQuery(
-    ["pet", id],
+    ["pets", id],
     async () => {
       const response = await fetch(`/api/pets/${id}`);
       const pet = await response.json();

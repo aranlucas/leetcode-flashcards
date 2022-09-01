@@ -9,7 +9,7 @@ export default function Pet() {
   const id = query.id as string;
 
   const { data, isLoading } = useQuery(
-    ["pet", id],
+    ["pets", id],
     async () => {
       const response = await fetch(`/api/pets/${id}`);
       const pet = await response.json();

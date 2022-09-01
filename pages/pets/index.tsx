@@ -1,4 +1,4 @@
-import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { GetStaticProps } from "next";
 import Link from "next/link";
 import Layout from "../../components/layout/layout";
 import Pet, { IPet } from "../../models/pet";
@@ -6,12 +6,17 @@ import { createColumnHelper } from "@tanstack/react-table";
 import Table from "../../components/table";
 import { Button, Group, Title } from "@mantine/core";
 import { NextLink } from "@mantine/next";
+import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 
 const columnHelper = createColumnHelper<IPet>();
 
-export default function Index({
-  pets,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function Index() {
+  const { data } = useQuery(["pets"], async () => {
+    const response = await fetch("/api/pets");
+    const pets = await response.json();
+    return pets;
+  });
+
   const columns = [
     columnHelper.accessor("name", {
       cell: (info) => (
@@ -19,9 +24,6 @@ export default function Index({
           {info.getValue()}
         </Link>
       ),
-    }),
-    columnHelper.accessor("owner_name", {
-      cell: (info) => info.getValue(),
     }),
     columnHelper.accessor("species", {
       cell: (info) => info.getValue(),
@@ -36,16 +38,24 @@ export default function Index({
           Create
         </Button>
       </Group>
-      <Table items={pets} columnDefinitions={columns} />
+      <Table items={data.pets} columnDefinitions={columns} />
     </Layout>
   );
 }
 
 export const getStaticProps: GetStaticProps = async () => {
+  const queryClient = new QueryClient();
   const pets = await Pet.find({}).limit(20);
+
+  const parsedPets = JSON.parse(JSON.stringify(pets));
+
+  await queryClient.prefetchQuery(["pets"], () => {
+    return { pets: parsedPets };
+  });
+
   return {
     props: {
-      pets: JSON.parse(JSON.stringify(pets)),
+      dehydratedState: dehydrate(queryClient),
     },
   };
 };

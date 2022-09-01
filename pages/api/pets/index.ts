@@ -5,7 +5,7 @@ import Pet from "../../../models/pet";
 
 interface Data {
   success: boolean;
-  data?: any;
+  pets?: any;
   error?: any;
 }
 
@@ -21,7 +21,7 @@ export default async function handler(
     case "GET":
       try {
         const pets = await Pet.find({});
-        res.status(200).json({ success: true, data: pets });
+        res.status(200).json({ success: true, pets });
       } catch (error) {
         res.status(400).json({ success: false });
       }

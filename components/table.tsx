@@ -3,12 +3,13 @@ import {
   useReactTable,
   getCoreRowModel,
   flexRender,
+  ColumnDef,
 } from "@tanstack/react-table";
 import { useMemo } from "react";
 
 interface TableProps<T> {
   items: T[];
-  columnDefinitions: any[];
+  columnDefinitions: Array<ColumnDef<T, any>>;
   isLoading?: boolean;
 }
 

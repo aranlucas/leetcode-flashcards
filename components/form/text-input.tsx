@@ -15,11 +15,18 @@ function TextInput<TFieldValues extends FieldValues>({
   name,
   ...rest
 }: TextInputProps<TFieldValues>) {
-  const { field } = useController({
+  const { field, fieldState } = useController({
     control,
     name,
   });
-  return <MantineTextInput {...field} value={field.value} {...rest} />;
+  return (
+    <MantineTextInput
+      {...field}
+      value={field.value}
+      error={fieldState?.error?.message}
+      {...rest}
+    />
+  );
 }
 
 export default TextInput;

@@ -7,6 +7,12 @@ import { useForm } from "react-hook-form";
 import TextInput from "../../../components/form/text-input";
 import Layout from "../../../components/layout/layout";
 import { IPet } from "../../../models/pet";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+
+const schema = z.object({
+  name: z.string().min(1, { message: "Required" }),
+});
 
 export default function EditPet() {
   const router = useRouter();
@@ -52,6 +58,7 @@ export default function EditPet() {
       name: "",
       species: "",
     },
+    resolver: zodResolver(schema),
   });
 
   useEffect(() => {

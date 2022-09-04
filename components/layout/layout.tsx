@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { AppShell, Stack } from "@mantine/core";
+import { AppShell, Container, Group, Stack } from "@mantine/core";
 import { HeaderAction } from "./header";
 import Breadcrumbs from "../breadcrumbs";
 
@@ -15,24 +15,14 @@ export default function Layout({
   disableBreadcrumbs,
 }: LayoutProps) {
   return (
-    <AppShell
-      padding="md"
-      header={
-        <HeaderAction
-          links={[
-            {
-              link: "/pets",
-              label: "Pets",
-            },
-          ]}
-        />
-      }
-    >
-      <Stack px="xl">
-        {!disableBreadcrumbs && <Breadcrumbs />}
-        {headerContent}
-        {children}
-      </Stack>
+    <AppShell padding="md" header={<HeaderAction />}>
+      <Container>
+        <Stack>
+          <Group>{!disableBreadcrumbs && <Breadcrumbs />}</Group>
+          {headerContent}
+          {children}
+        </Stack>
+      </Container>
     </AppShell>
   );
 }

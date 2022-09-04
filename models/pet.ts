@@ -2,7 +2,7 @@ import { Schema, models } from "mongoose";
 import connections from "../lib/connections";
 
 export interface IPet {
-  _id: Number;
+  _id?: Number;
   name: string;
   owner_name?: string;
   species: string;

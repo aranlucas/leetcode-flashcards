@@ -1,59 +1,32 @@
 import { Button, Group, Title } from "@mantine/core";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { HydratedDocument } from "mongoose";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import TextInput from "../../../components/form/text-input";
 import Layout from "../../../components/layout/layout";
-import { IPet } from "../../../models/pet";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { showNotification } from "@mantine/notifications";
+import useEditPet from "../../../hooks/pets/editPet";
+import useGetPet from "../../../hooks/pets/getPet";
 
 const schema = z.object({
   name: z.string().min(1, { message: "Required" }),
+  species: z.string(),
 });
+
+type FormData = z.infer<typeof schema>;
 
 export default function EditPet() {
   const router = useRouter();
   const { query } = useRouter();
   const id = query.id as string;
 
-  const queryClient = useQueryClient();
+  const { data } = useGetPet(id);
 
-  const { data } = useQuery(
-    ["pets", id],
-    async () => {
-      const response = await fetch(`/api/pets/${id}`);
-      const pet = await response.json();
-      return pet;
-    },
-    {
-      enabled: !!id,
-    }
-  );
+  const mutate = useEditPet(id);
 
-  const mutate = useMutation(
-    async (pet: IPet) => {
-      const response = await fetch(`/api/pets/${id}`, {
-        method: "PUT",
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(pet),
-      });
-
-      return (await response.json()) as HydratedDocument<IPet>;
-    },
-    {
-      onSuccess: async () => {
-        await queryClient.invalidateQueries(["pets"]);
-      },
-    }
-  );
-
-  const { control, handleSubmit, reset } = useForm<IPet>({
+  const { control, handleSubmit, reset } = useForm<FormData>({
     defaultValues: {
       name: "",
       species: "",
@@ -72,8 +45,11 @@ export default function EditPet() {
           try {
             await mutate.mutateAsync(data);
             await router.push(`/pets/${id}`);
-          } catch (e) {
-            console.log(e);
+          } catch (e: any) {
+            showNotification({
+              title: "Default notification",
+              message: e,
+            });
           }
         })}
       >

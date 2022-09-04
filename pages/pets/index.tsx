@@ -4,23 +4,21 @@ import Layout from "../../components/layout/layout";
 import Pet, { IPet } from "../../models/pet";
 import { createColumnHelper } from "@tanstack/react-table";
 import Table from "../../components/table";
-import { Button, Group, Title } from "@mantine/core";
+import { Button } from "@mantine/core";
 import { NextLink } from "@mantine/next";
-import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
+import useGetPets from "../../hooks/pets/getPets";
+import Header from "../../components/header";
 
 const columnHelper = createColumnHelper<IPet>();
 
 export default function Index() {
-  const { data } = useQuery(["pets"], async () => {
-    const response = await fetch("/api/pets");
-    const pets = await response.json();
-    return pets;
-  });
+  const { data } = useGetPets();
 
   const columns = [
     columnHelper.accessor("name", {
       cell: (info) => (
-        <Link href={`/pets/${info.row.original._id.toString()}`}>
+        <Link href={`/pets/${(info.row.original._id ?? "").toString()}`}>
           {info.getValue()}
         </Link>
       ),
@@ -32,13 +30,18 @@ export default function Index() {
 
   return (
     <Layout>
-      <Group position="apart">
-        <Title order={1}>Pets</Title>
-        <Button component={NextLink} href={`/pets/new`}>
-          Create
-        </Button>
-      </Group>
-      <Table items={data.pets} columnDefinitions={columns} />
+      <Header
+        variant={1}
+        counter={`(${data?.pets.length})`}
+        actions={
+          <Button component={NextLink} href={`/pets/new`}>
+            Create
+          </Button>
+        }
+      >
+        Pets
+      </Header>
+      <Table items={data?.pets ?? []} columnDefinitions={columns} />
     </Layout>
   );
 }

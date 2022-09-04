@@ -4,24 +4,6 @@ import { IconBrandGithub } from "@tabler/icons";
 const BREAKPOINT = "@media (max-width: 755px)";
 
 const useStyles = createStyles((theme) => ({
-  wrapper: {
-    position: "relative",
-    boxSizing: "border-box",
-    backgroundColor:
-      theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.white,
-  },
-
-  inner: {
-    position: "relative",
-    paddingTop: 200,
-    paddingBottom: 120,
-
-    [BREAKPOINT]: {
-      paddingBottom: 80,
-      paddingTop: 80,
-    },
-  },
-
   title: {
     fontSize: 62,
     fontWeight: 900,
@@ -71,8 +53,8 @@ export function HeroText() {
   const { classes } = useStyles();
 
   return (
-    <div className={classes.wrapper}>
-      <Container size={700} className={classes.inner}>
+    <div>
+      <Container size={700}>
         <h1 className={classes.title}>
           A{" "}
           <Text

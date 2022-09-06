@@ -1,4 +1,4 @@
-import { Button, Group, Title } from "@mantine/core";
+import { Button, Group, Paper } from "@mantine/core";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import TextInput from "../../components/form/text-input";
@@ -7,6 +7,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { showNotification } from "@mantine/notifications";
 import useCreatePet from "../../hooks/pets/createPet";
+import Header from "../../components/header";
 
 const schema = z.object({
   name: z.string().min(1, { message: "Required" }),
@@ -29,7 +30,13 @@ export default function NewPet() {
   });
 
   return (
-    <Layout headerContent={<Title order={1}>Create Pet</Title>}>
+    <Layout
+      headerContent={
+        <Header variant={1} description="Create a new pet">
+          Create Pet
+        </Header>
+      }
+    >
       <form
         onSubmit={handleSubmit(async (data) => {
           try {
@@ -43,19 +50,24 @@ export default function NewPet() {
           }
         })}
       >
-        <TextInput
-          control={control}
-          name="name"
-          label="Your name"
-          placeholder="Your name"
-        />
-        <TextInput
-          control={control}
-          name="species"
-          label="Your species"
-          placeholder="Your species"
-        />
+        <Paper radius="md" p="md" withBorder>
+          <TextInput
+            control={control}
+            name="name"
+            label="Your name"
+            placeholder="Your name"
+          />
+          <TextInput
+            control={control}
+            name="species"
+            label="Your species"
+            placeholder="Your species"
+          />
+        </Paper>
         <Group position="right" mt="md">
+          <Button variant="subtle" onClick={() => router.back()}>
+            Cancel
+          </Button>
           <Button type="submit">Submit</Button>
         </Group>
       </form>

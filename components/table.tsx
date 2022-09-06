@@ -1,9 +1,17 @@
-import { Skeleton, Table as MantineTable } from "@mantine/core";
+import {
+  Grid,
+  Group,
+  Pagination,
+  Skeleton,
+  Table as MantineTable,
+} from "@mantine/core";
 import {
   useReactTable,
   getCoreRowModel,
   flexRender,
   ColumnDef,
+  getFilteredRowModel,
+  getPaginationRowModel,
 } from "@tanstack/react-table";
 import { useMemo } from "react";
 
@@ -30,10 +38,27 @@ export default function Table<T>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
   });
 
   return (
     <div>
+      <Grid>
+        <Grid.Col span={8}></Grid.Col>
+
+        <Grid.Col span={4}>
+          <Group position="right">
+            <Pagination
+              total={table.getPageCount()}
+              page={table.getState().pagination.pageIndex + 1}
+              onChange={(e) => {
+                table.setPageIndex(e - 1);
+              }}
+            />
+          </Group>
+        </Grid.Col>
+      </Grid>
       <MantineTable>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (

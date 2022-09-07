@@ -1,8 +1,10 @@
 import dbConnect from "./dbConnect";
 
+const db = dbConnect();
+
 const connections = {
-  movies: dbConnect().useDb("sample_mflix"),
-  pets: dbConnect().useDb("pets"),
+  movies: db.useDb("sample_mflix"),
+  pets: db.useDb("pets"),
 };
 
 export default connections;

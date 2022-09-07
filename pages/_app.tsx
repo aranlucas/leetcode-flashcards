@@ -15,6 +15,7 @@ import {
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { NotificationsProvider } from "@mantine/notifications";
+import { useLocalStorage } from "@mantine/hooks";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -26,7 +27,13 @@ type AppPropsWithLayout = AppProps & {
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const [queryClient] = useState(() => new QueryClient());
-  const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
+  const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
+    key: "color-scheme",
+    defaultValue: "light",
+  });
+
+  const toggleColorScheme = () =>
+    setColorScheme((current) => (current === "dark" ? "light" : "dark"));
 
   return (
     <>
@@ -40,9 +47,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
       </Head>
       <ColorSchemeProvider
         colorScheme={colorScheme}
-        toggleColorScheme={(value) => {
-          setColorScheme(value ?? (colorScheme === "dark" ? "light" : "dark"));
-        }}
+        toggleColorScheme={toggleColorScheme}
       >
         <MantineProvider
           theme={{ colorScheme }}

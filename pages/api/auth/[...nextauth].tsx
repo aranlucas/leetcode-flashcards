@@ -1,7 +1,7 @@
-import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
-import NextAuth from "next-auth";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
-import clientPromise from "../../../lib/mongodb";
+import { prisma } from "../../../server/db/client";
 
 if (process.env.GITHUB_ID == null) {
   throw new Error(
@@ -15,9 +15,9 @@ if (process.env.GITHUB_SECRET == null) {
   );
 }
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
-  adapter: MongoDBAdapter(clientPromise),
+  adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID,
@@ -43,4 +43,6 @@ export default NextAuth({
       return session;
     },
   },
-});
+};
+
+export default NextAuth(authOptions);

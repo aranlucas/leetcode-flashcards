@@ -1,7 +1,6 @@
 import { Title, TypographyStylesProvider } from "@mantine/core";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
-import { ReactNode } from "react";
 import Layout from "../../components/layout/layout";
 import { getAllPostIds, getPostData } from "../../lib/posts";
 
@@ -29,7 +28,7 @@ export default function Post({
   postData,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <>
+    <Layout>
       <Head>
         <title>{postData.title}</title>
       </Head>
@@ -39,10 +38,6 @@ export default function Post({
       <TypographyStylesProvider>
         <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
       </TypographyStylesProvider>
-    </>
+    </Layout>
   );
 }
-
-Post.getLayout = function getLayout(page: ReactNode) {
-  return <Layout>{page}</Layout>;
-};

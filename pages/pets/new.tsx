@@ -3,11 +3,11 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import TextInput from "../../components/form/text-input";
 import Layout from "../../components/layout/layout";
-import * as z from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { showNotification } from "@mantine/notifications";
-import useCreatePet from "../../hooks/pets/createPet";
 import Header from "../../components/header";
+import { trpc } from "../../utils/trpc";
 
 const schema = z.object({
   name: z.string().min(1, { message: "Required" }),
@@ -18,8 +18,17 @@ type FormData = z.infer<typeof schema>;
 
 export default function NewPet() {
   const router = useRouter();
+  const utils = trpc.useContext();
 
-  const mutate = useCreatePet();
+  const mutate = trpc.useMutation(["pets.createPet"], {
+    onSuccess: async () => {
+      showNotification({
+        title: "Created Pet",
+        message: "Created Pet",
+      });
+      await utils.invalidateQueries(["pets.getAll"]);
+    },
+  });
 
   const { control, handleSubmit } = useForm<FormData>({
     defaultValues: {
@@ -41,7 +50,7 @@ export default function NewPet() {
         onSubmit={handleSubmit(async (data) => {
           try {
             const pet = await mutate.mutateAsync(data);
-            await router.push(`/pets/${pet._id.toString()}`);
+            await router.push(`/pets/${pet.id}`);
           } catch (e: any) {
             showNotification({
               title: "Default notification",

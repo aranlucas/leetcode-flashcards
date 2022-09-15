@@ -3,18 +3,11 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import TextInput from "../../components/form/text-input";
 import Layout from "../../components/layout/layout";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { showNotification } from "@mantine/notifications";
 import Header from "../../components/header";
 import { trpc } from "../../utils/trpc";
-
-const schema = z.object({
-  name: z.string().min(1, { message: "Required" }),
-  species: z.string(),
-});
-
-type FormData = z.infer<typeof schema>;
+import { CreatePetInput, createPetSchema } from "../../schema/pet.schema";
 
 export default function NewPet() {
   const router = useRouter();
@@ -30,12 +23,12 @@ export default function NewPet() {
     },
   });
 
-  const { control, handleSubmit } = useForm<FormData>({
+  const { control, handleSubmit } = useForm<CreatePetInput>({
     defaultValues: {
       name: "",
       species: "",
     },
-    resolver: zodResolver(schema),
+    resolver: zodResolver(createPetSchema),
   });
 
   return (

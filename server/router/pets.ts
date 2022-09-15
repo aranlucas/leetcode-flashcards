@@ -1,17 +1,16 @@
 import { createRouter } from "./context";
 import { z } from "zod";
+import { createPetSchema, getPetSchema } from "../../schema/pet.schema";
 
 // https://www.prisma.io/docs/concepts/components/prisma-client/crud
 export const petsRouter = createRouter()
   .query("getAll", {
-    async resolve({ ctx }) {
+    resolve({ ctx }) {
       return ctx.prisma.pets.findMany();
     },
   })
   .query("getPet", {
-    input: z.object({
-      id: z.string(),
-    }),
+    input: getPetSchema,
     resolve({ input, ctx }) {
       const { id } = input;
       return ctx.prisma.pets.findUnique({
@@ -23,8 +22,8 @@ export const petsRouter = createRouter()
   })
   .mutation("createPet", {
     // validate input with Zod
-    input: z.object({ name: z.string(), species: z.string() }),
-    async resolve({ input, ctx }) {
+    input: createPetSchema,
+    resolve({ input, ctx }) {
       // use your ORM of choice
       return ctx.prisma.pets.create({ data: input });
     },
@@ -33,9 +32,9 @@ export const petsRouter = createRouter()
     // validate input with Zod
     input: z.object({
       id: z.string(),
-      data: z.object({ name: z.string(), species: z.string() }),
+      data: createPetSchema,
     }),
-    async resolve({ ctx, input }) {
+    resolve({ ctx, input }) {
       const { id, data } = input;
 
       return ctx.prisma.pets.update({

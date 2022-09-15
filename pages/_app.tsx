@@ -5,15 +5,9 @@ import {
   ColorSchemeProvider,
   MantineProvider,
 } from "@mantine/core";
-import { ReactElement, ReactNode, useState } from "react";
+import { ReactElement, ReactNode } from "react";
 import { NextPage } from "next";
 import { SessionProvider } from "next-auth/react";
-import {
-  Hydrate,
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { NotificationsProvider } from "@mantine/notifications";
 import { useLocalStorage } from "@mantine/hooks";
 import { AppRouter } from "../server/router";
@@ -31,7 +25,6 @@ type AppPropsWithLayout = AppProps & {
 };
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  const [queryClient] = useState(() => new QueryClient());
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
     key: "color-scheme",
     defaultValue: "light",
@@ -61,12 +54,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         >
           <SessionProvider session={pageProps.session}>
             <NotificationsProvider>
-              <QueryClientProvider client={queryClient}>
-                <ReactQueryDevtools />
-                <Hydrate state={pageProps.dehydratedState}>
-                  <Component {...pageProps} />
-                </Hydrate>
-              </QueryClientProvider>
+              <Component {...pageProps} />
             </NotificationsProvider>
           </SessionProvider>
         </MantineProvider>
@@ -81,13 +69,14 @@ const getBaseUrl = () => {
   return `http://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
 };
 
+const url = `${getBaseUrl()}/api/trpc`;
+
 export default withTRPC<AppRouter>({
   config() {
     /**
      * If you want to use SSR, you need to use the server's full URL
      * @link https://trpc.io/docs/ssr
      */
-    const url = `${getBaseUrl()}/api/trpc`;
 
     return {
       links: [

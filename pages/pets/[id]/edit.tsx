@@ -5,33 +5,26 @@ import { useForm } from "react-hook-form";
 import TextInput from "../../../components/form/text-input";
 import Layout from "../../../components/layout/layout";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { showNotification } from "@mantine/notifications";
 import Header from "../../../components/header";
 import { trpc } from "../../../utils/trpc";
-
-const schema = z.object({
-  name: z.string().min(1, { message: "Required" }),
-  species: z.string(),
-});
-
-type FormData = z.infer<typeof schema>;
+import { CreatePetInput, createPetSchema } from "../../../schema/pet.schema";
 
 export default function EditPet() {
   const router = useRouter();
   const { query } = useRouter();
-  const id = String(query.id); 
+  const id = String(query.id);
 
   const { data } = trpc.useQuery(["pets.getPet", { id }]);
 
   const mutate = trpc.useMutation(["pets.editPet"]);
 
-  const { control, handleSubmit, reset } = useForm<FormData>({
+  const { control, handleSubmit, reset } = useForm<CreatePetInput>({
     defaultValues: {
       name: "",
       species: "",
     },
-    resolver: zodResolver(schema),
+    resolver: zodResolver(createPetSchema),
   });
 
   useEffect(() => {

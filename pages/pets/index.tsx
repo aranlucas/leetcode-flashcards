@@ -6,10 +6,11 @@ import { Button } from "@mantine/core";
 import { NextLink } from "@mantine/next";
 import Header from "../../components/header";
 import { trpc } from "../../utils/trpc";
+import { CreatePetInput } from "../../schema/pet.schema";
 
 export default function Index() {
   const { data, isLoading } = trpc.useQuery(["pets.getAll"]);
-  const columnHelper = createColumnHelper<any>();
+  const columnHelper = createColumnHelper<CreatePetInput & { id: string }>();
 
   const columns = [
     columnHelper.accessor("name", {

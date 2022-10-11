@@ -5,33 +5,40 @@ import {
   ColorSchemeProvider,
   MantineProvider,
 } from "@mantine/core";
-import { ReactElement, ReactNode } from "react";
-import { NextPage } from "next";
+import { useState } from "react";
+import { GetServerSidePropsContext } from "next";
 import { SessionProvider } from "next-auth/react";
 import { NotificationsProvider } from "@mantine/notifications";
-import { useLocalStorage } from "@mantine/hooks";
 import { AppRouter } from "../server/router";
 import { withTRPC } from "@trpc/next";
 import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
 import { loggerLink } from "@trpc/client/links/loggerLink";
 import superjson from "superjson";
+import { getCookie, setCookie } from "cookies-next";
+import { Session } from "next-auth";
 
-export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
-  getLayout?: (page: ReactElement) => ReactNode;
+type AppPropsWithLayout = AppProps<{
+  session: Session;
+}> & {
+  colorScheme: ColorScheme;
 };
 
-type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout;
-};
+function App({
+  Component,
+  pageProps,
+  colorScheme: initialColorScheme,
+}: AppPropsWithLayout) {
+  const [colorScheme, setColorScheme] =
+    useState<ColorScheme>(initialColorScheme);
 
-function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
-    key: "color-scheme",
-    defaultValue: "light",
-  });
-
-  const toggleColorScheme = () =>
-    setColorScheme((current) => (current === "dark" ? "light" : "dark"));
+  const toggleColorScheme = (value?: ColorScheme) => {
+    const nextColorScheme =
+      value ?? (colorScheme === "dark" ? "light" : "dark");
+    setColorScheme(nextColorScheme);
+    setCookie("mantine-color-scheme", nextColorScheme, {
+      maxAge: 60 * 60 * 24 * 30,
+    });
+  };
 
   return (
     <>
@@ -62,6 +69,10 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     </>
   );
 }
+
+App.getInitialProps = ({ ctx }: { ctx: GetServerSidePropsContext }) => ({
+  colorScheme: getCookie("mantine-color-scheme", ctx) ?? "light",
+});
 
 const getBaseUrl = () => {
   if (typeof window !== "undefined") return ""; // browser should use relative url
@@ -112,4 +123,4 @@ export default withTRPC<AppRouter>({
    * @link https://trpc.io/docs/ssr
    */
   ssr: false,
-})(MyApp);
+})(App);

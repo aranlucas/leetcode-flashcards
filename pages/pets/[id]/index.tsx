@@ -16,7 +16,7 @@ export default function ViewPet() {
       headerContent={
         <Group position="apart">
           <Title order={1}>{data?.name}</Title>
-          <Button component={NextLink} href={`/pets/${id}/edit`}>
+          <Button legacyBehavior component={NextLink} href={`/pets/${id}/edit`}>
             Edit
           </Button>
         </Group>

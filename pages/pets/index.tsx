@@ -31,7 +31,7 @@ export default function Index() {
         variant={1}
         counter={`(${data?.length ?? "-"})`}
         actions={
-          <Button component={NextLink} href={`/pets/new`}>
+          <Button legacyBehavior component={NextLink} href={`/pets/new`}>
             Create
           </Button>
         }

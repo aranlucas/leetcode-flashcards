@@ -18,6 +18,13 @@ model Example {
   id String @id @default(cuid())
 }
 
+model Pets {
+  id         String  @id @default(cuid())
+  name       String
+  species    String
+  owner_name String?
+}
+
 // Necessary for Next auth
 model Account {
   id                String  @id @default(cuid())
@@ -61,11 +68,4 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
-}
-
-model Pets {
-  id         String  @id @default(cuid())
-  name       String
-  species    String
-  owner_name String?
 }

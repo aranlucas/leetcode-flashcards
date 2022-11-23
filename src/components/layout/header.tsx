@@ -1,11 +1,5 @@
-import {
-  createStyles,
-  Header,
-  Container, 
-  Group,
-} from "@mantine/core";
+import { createStyles, Header, Container, Group } from "@mantine/core";
 import { IconRocket } from "@tabler/icons";
-import { SwitchToggle } from "../color-scheme";
 import SignIn from "./sign-in";
 
 const HEADER_HEIGHT = 40;
@@ -23,9 +17,8 @@ const useStyles = createStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-  }, 
+  },
 }));
-
 
 export function HeaderAction() {
   const { classes } = useStyles();
@@ -38,7 +31,6 @@ export function HeaderAction() {
         </Group>
 
         <Group>
-          <SwitchToggle />
           <SignIn />
         </Group>
       </Container>

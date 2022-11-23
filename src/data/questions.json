@@ -1,0 +1,103 @@
+{
+  "updated": "2022-11-22T18:12:50.895489",
+  "data": [
+    {
+      "id": 0,
+      "title": "Contains Duplicate",
+      "slug": "contains-duplicate",
+      "pattern": [
+        "Arrays"
+      ],
+      "difficulty": "Easy",
+      "premium": false,
+      "companies": [
+        {
+          "name": "Amazon",
+          "slug": "amazon",
+          "frequency": 20
+        },
+        {
+          "name": "Apple",
+          "slug": "apple",
+          "frequency": 11
+        },
+        {
+          "name": "Bloomberg",
+          "slug": "bloomberg",
+          "frequency": 10
+        },
+        {
+          "name": "Adobe",
+          "slug": "adobe",
+          "frequency": 8
+        },
+        {
+          "name": "Microsoft",
+          "slug": "microsoft",
+          "frequency": 7
+        },
+        {
+          "name": "Google",
+          "slug": "google",
+          "frequency": 6
+        },
+        {
+          "name": "Uber",
+          "slug": "uber",
+          "frequency": 3
+        },
+        {
+          "name": "Facebook",
+          "slug": "facebook",
+          "frequency": 3
+        },
+        {
+          "name": "JPMorgan",
+          "slug": "jpmorgan",
+          "frequency": 3
+        },
+        {
+          "name": "Yahoo",
+          "slug": "yahoo",
+          "frequency": 2
+        },
+        {
+          "name": "Intel",
+          "slug": "intel",
+          "frequency": 2
+        },
+        {
+          "name": "Nagarro",
+          "slug": "nagarro",
+          "frequency": 2
+        },
+        {
+          "name": "Oracle",
+          "slug": "oracle",
+          "frequency": 2
+        },
+        {
+          "name": "tcs",
+          "slug": "tcs",
+          "frequency": 2
+        },
+        {
+          "name": "Qualtrics",
+          "slug": "qualtrics",
+          "frequency": 2
+        },
+        {
+          "name": "Accenture",
+          "slug": "accenture",
+          "frequency": 2
+        },
+        {
+          "name": "Atlassian",
+          "slug": "atlassian",
+          "frequency": 2
+        }
+      ],
+      "code": "class Solution {\n    public boolean containsDuplicate(int[] nums) {\n        // Use set to count duplicates\n        Set<Integer> counts = new HashSet();\n        \n        for (int num : nums) {\n            if (counts.contains(num)) {\n                return true;\n            }\n            counts.add(num);\n        }\n        return false;\n    }\n}"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-import NextApp, { AppContext, AppProps } from "next/app";
+import { AppProps } from "next/app";
 import Head from "next/head";
 import {
   ColorScheme,
@@ -8,7 +8,7 @@ import {
 import { useState } from "react";
 import { SessionProvider } from "next-auth/react";
 import { NotificationsProvider } from "@mantine/notifications";
-import { getCookie, setCookie } from "cookies-next";
+import { setCookie } from "cookies-next";
 import { Session } from "next-auth";
 import { trpc } from "../utils/trpc";
 
@@ -64,13 +64,5 @@ function MyApp({
     </>
   );
 }
-
-MyApp.getInitialProps = async (appContext: AppContext) => {
-  const appProps = await NextApp.getInitialProps(appContext);
-  return {
-    ...appProps,
-    colorScheme: getCookie("mantine-color-scheme", appContext.ctx) ?? "dark",
-  };
-};
 
 export default trpc.withTRPC(MyApp);

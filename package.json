@@ -21,7 +21,7 @@
     "@mantine/carousel": "^5.8.2",
     "@mantine/core": "^5.8.2",
     "@mantine/hooks": "^5.8.2",
-    "@mantine/next": "^5.8.2",
+    "@mantine/next": "^5.8.3",
     "@mantine/notifications": "^5.8.2",
     "@mantine/prism": "^5.8.2",
     "@next-auth/prisma-adapter": "^1.0.5",

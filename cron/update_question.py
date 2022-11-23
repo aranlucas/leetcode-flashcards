@@ -33,6 +33,7 @@ def get_question_metadata(api, title_slug):
                 difficulty
                 companyTagStats
                 isPaidOnly
+                content
             }
         }
         ''',
@@ -71,6 +72,7 @@ def update_question_metadata(question, response):
     question_company_tags = json.loads(
         response.data.question.company_tag_stats)
     question_is_premium = response.data.question.is_paid_only
+    question_content = response.data.question.content
 
     # Retrieve companies who have asked this question for the following two
     # company_tag_stat sections:
@@ -83,6 +85,7 @@ def update_question_metadata(question, response):
     question["difficulty"] = question_difficulty
     question["companies"] = companies
     question["premium"] = question_is_premium
+    question["content"] = question_content
 
 
 def read_questions(file_name):

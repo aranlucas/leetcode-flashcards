@@ -1,4 +1,4 @@
-import { Anchor, Breadcrumbs } from "@mantine/core";
+import { Anchor, Breadcrumbs, MediaQuery } from "@mantine/core";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 
@@ -56,8 +56,10 @@ export default function NextBreadcrumbs() {
   ));
 
   return (
-    <Breadcrumbs aria-label="breadcrumb" separator="〉">
-      {items}
-    </Breadcrumbs>
+    <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
+      <Breadcrumbs aria-label="breadcrumb" separator="〉">
+        {items}
+      </Breadcrumbs>
+    </MediaQuery>
   );
 }

@@ -25,23 +25,29 @@ async function test() {
 
   const q = await instance.get(`/api/submissions/`);
 
+  const data = q.data.submissions_dump
+    .filter((s) => s.status_display === "Accepted")
+    .map((s) => {
+      return {
+        id: s.title_slug,
+        slug: s.title_slug,
+        title: s.title,
+        code: s.code,
+      };
+    });
+  const fileContents = fs.readFileSync(questionsPath, "utf8");
+
+  const questions = JSON.parse(fileContents).data;
+  const allQuestions = [...questions, ...data];
+
+  const unique = [...new Map(allQuestions.map((m) => [m.id, m])).values()];
+
   const content = {
     updated: Date.now(),
-    data: q.data.submissions_dump
-      .filter((s) => s.status_display === "Accepted")
-      .map((s) => {
-        return {
-          id: s.id,
-          slug: s.title_slug,
-          title: s.title,
-          code: s.code,
-        };
-      }),
+    data: unique,
   };
 
   fs.writeFileSync(questionsPath, JSON.stringify(content, null, 2));
-
-  // prisma.user.findFirst({ where: { username: "arangol" } });
 }
 
 test();

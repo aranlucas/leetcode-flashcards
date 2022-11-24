@@ -19,7 +19,7 @@ export function getQuestions(): Question[] {
 export function getQuestionData(id: string) {
   const questions = getQuestions();
 
-  return questions.find((q) => (q.id = id));
+  return questions.find((q) => q.id === id);
 }
 
 export function getAllQuestionId() {

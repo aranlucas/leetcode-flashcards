@@ -119,35 +119,13 @@ def main(base_path):
 
     api = create_leetcode_api()
     questions = read_questions(questions_file_name)
-    # Authentication setting
-    auth_settings = [
-        "cookieCSRF",
-        "cookieSession",
-        "headerCSRF",
-        "referer",
-    ]
-    header_params = {
-        "Accept": api.api_client.select_header_accept(["application/json"])
-    }
 
     for question in questions["data"]:
         title_slug = question["slug"]
         print(title_slug)
-        submission = api.api_client.call_api(
-            "/api/submissions/{title_slug}",
-            "GET",
-            {
-                'title_slug': title_slug
-            },
-            auth_settings=auth_settings,
-            header_params=header_params,
-            response_type="InlineResponse200"
-        )
-        sleep(5)
 
         response = get_question_metadata(api, title_slug)
 
-        question['code'] = submission[0]['submissions_dump'][0]['code']
         update_question_metadata(question, response)
 
     write(file_name+"questions.json", questions)

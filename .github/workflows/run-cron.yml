@@ -7,21 +7,19 @@ on:
   workflow_dispatch:
 
 jobs:
-  update:
+  update-node:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-node@v3.5.1
         with:
-          python-version: '3.x'
-          architecture: 'x64'
+         node-version: '18.x'
       - run: |
-          python -m pip install --upgrade pip
-          pip install requests python-leetcode python-decouple
-      - run: |
-          python cron/update_questions.py
+          npm install
+          node cron/test.mjs
         env:
           LEETCODE_SESSION_TOKEN: ${{ secrets.LEETCODE_SESSION_TOKEN }}
+          LEETCODE_CSRF:  ${{ secrets.CSRF }}
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Update questions via run-cron GitHub Action

@@ -12,8 +12,6 @@ def create_leetcode_api():
     LEETCODE_SESSION_TOKEN = config("LEETCODE_SESSION_TOKEN")
     csrf_token = leetcode.auth.get_csrf_cookie(LEETCODE_SESSION_TOKEN)
 
-    print(csrf_token)
-
     configuration = leetcode.Configuration()
 
     configuration.api_key["x-csrftoken"] = csrf_token
@@ -128,11 +126,9 @@ def main(base_path):
         "headerCSRF",
         "referer",
     ]
-    header_params = {}
-    # HTTP header `Accept`
-    header_params["Accept"] = api.api_client.select_header_accept(
-            ["application/json"]
-        )  # noqa: E501
+    header_params = {
+        "Accept": api.api_client.select_header_accept(["application/json"])
+    }
 
     for question in questions["data"]:
         title_slug = question["slug"]

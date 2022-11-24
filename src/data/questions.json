@@ -1,104 +1,53 @@
 {
-  "updated": "2022-11-22T19:00:18.534400",
+  "updated": 1669280769488,
   "data": [
     {
-      "id": 0,
-      "title": "Contains Duplicate",
+      "id": 848897014,
+      "slug": "word-search",
+      "title": "Word Search",
+      "code": "class Solution {\n    private static final int[][] DIRS = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};\n\n    public boolean exist(char[][] board, String word) {\n        int m = board.length;\n        int n = board[0].length;\n        for (int i = 0; i < m; i++) {\n            for (int j = 0; j < n; j++) {\n                if (backtrack(i, j, board, word, 0)) {\n                    return true;\n                }\n            }\n        }\n        return false;\n    }\n    \n    public boolean backtrack(int r, int c, char[][] board, String word, int index){\n        if (index >= word.length()){\n            return true;\n        }\n        \n        int m = board.length;\n        int n = board[0].length;\n        if (r < 0 || c < 0 || r >= m || c >= n) {\n            return false;\n        }\n        \n        // Candidates are up down left right\n        // Prune candidates that are not the next word\n        if (board[r][c] == word.charAt(index)) {\n            // Add valid candidate\n            board[r][c] = '#';\n            \n            boolean ret = false;\n            // Explore\n            ret = backtrack(r + 1, c, board, word, index + 1)\n                || backtrack(r - 1, c, board, word, index + 1)\n                || backtrack(r, c + 1, board, word, index + 1) \n                || backtrack(r, c - 1, board, word, index + 1);\n            // Clean up candidate\n            board[r][c] = word.charAt(index);\n            return ret;\n        }\n        return false;\n    }\n}"
+    },
+    {
+      "id": 848891035,
+      "slug": "alien-dictionary",
+      "title": "Alien Dictionary",
+      "code": "class Solution {\n    public String alienOrder(String[] words) {\n        // Step 0: Create data structures and find all unique letters.\n        Map<Character, List<Character>> adjList = new HashMap<>();\n        Map<Character, Integer> indegrees = new HashMap<Character, Integer>();\n        \n        for (String word : words) {\n            for (char c : word.toCharArray()) {\n                indegrees.put(c, 0);\n                adjList.put(c, new ArrayList<>());\n            }\n        }\n        \n        // Find edges\n        for (int i = 0; i < words.length -1; i++) {\n            String word1 = words[i];\n            String word2 = words[i+1];\n            \n            if (word1.length() > word2.length() && word1.startsWith(word2)){\n                return \"\";\n            }\n            for (int j = 0; j < Math.min(word1.length(), word2.length()); j++) {\n                if (word1.charAt(j) != word2.charAt(j) ) {\n                    adjList.get(word1.charAt(j)).add(word2.charAt(j));\n                    indegrees.put(word2.charAt(j), indegrees.get(word2.charAt(j)) + 1);\n                    break;\n                }\n            }\n        }\n        StringBuilder sb = new StringBuilder();\n        Deque<Character> queue = new ArrayDeque();\n        \n        System.out.println(indegrees);\n        for (Character c : indegrees.keySet()) {\n            if (indegrees.get(c).equals(0)) {\n                queue.offer(c);\n            }\n        }\n        \n        while (!queue.isEmpty()) {\n            Character c = queue.poll();\n            sb.append(c);\n            \n            for (Character neighbor: adjList.get(c)) {\n                indegrees.put(neighbor, indegrees.get(neighbor) - 1);\n                if (indegrees.get(neighbor).equals(0)) {\n                    queue.offer(neighbor);\n                }\n            }\n        }\n        if (sb.length() < indegrees.size()) {\n            return \"\";\n        }\n        return sb.toString();\n    }\n}"
+    },
+    {
+      "id": 848341763,
       "slug": "contains-duplicate",
-      "pattern": [
-        "Arrays"
-      ],
-      "difficulty": "Easy",
-      "premium": false,
-      "companies": [
-        {
-          "name": "Amazon",
-          "slug": "amazon",
-          "frequency": 20
-        },
-        {
-          "name": "Apple",
-          "slug": "apple",
-          "frequency": 11
-        },
-        {
-          "name": "Bloomberg",
-          "slug": "bloomberg",
-          "frequency": 10
-        },
-        {
-          "name": "Adobe",
-          "slug": "adobe",
-          "frequency": 8
-        },
-        {
-          "name": "Microsoft",
-          "slug": "microsoft",
-          "frequency": 7
-        },
-        {
-          "name": "Google",
-          "slug": "google",
-          "frequency": 6
-        },
-        {
-          "name": "Uber",
-          "slug": "uber",
-          "frequency": 3
-        },
-        {
-          "name": "Facebook",
-          "slug": "facebook",
-          "frequency": 3
-        },
-        {
-          "name": "JPMorgan",
-          "slug": "jpmorgan",
-          "frequency": 3
-        },
-        {
-          "name": "Yahoo",
-          "slug": "yahoo",
-          "frequency": 2
-        },
-        {
-          "name": "Intel",
-          "slug": "intel",
-          "frequency": 2
-        },
-        {
-          "name": "Nagarro",
-          "slug": "nagarro",
-          "frequency": 2
-        },
-        {
-          "name": "Oracle",
-          "slug": "oracle",
-          "frequency": 2
-        },
-        {
-          "name": "tcs",
-          "slug": "tcs",
-          "frequency": 2
-        },
-        {
-          "name": "Qualtrics",
-          "slug": "qualtrics",
-          "frequency": 2
-        },
-        {
-          "name": "Accenture",
-          "slug": "accenture",
-          "frequency": 2
-        },
-        {
-          "name": "Atlassian",
-          "slug": "atlassian",
-          "frequency": 2
-        }
-      ],
-      "code": "class Solution {\n    public boolean containsDuplicate(int[] nums) {\n        // Use set to count duplicates\n        Set<Integer> counts = new HashSet();\n        \n        for (int num : nums) {\n            if (counts.contains(num)) {\n                return true;\n            }\n            counts.add(num);\n        }\n        return false;\n    }\n}",
-      "content": "<p>Given an integer array <code>nums</code>, return <code>true</code> if any value appears <strong>at least twice</strong> in the array, and return <code>false</code> if every element is distinct.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<pre><strong>Input:</strong> nums = [1,2,3,1]\n<strong>Output:</strong> true\n</pre><p><strong class=\"example\">Example 2:</strong></p>\n<pre><strong>Input:</strong> nums = [1,2,3,4]\n<strong>Output:</strong> false\n</pre><p><strong class=\"example\">Example 3:</strong></p>\n<pre><strong>Input:</strong> nums = [1,1,1,3,3,4,3,2,4,2]\n<strong>Output:</strong> true\n</pre>\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= nums.length &lt;= 10<sup>5</sup></code></li>\n\t<li><code>-10<sup>9</sup> &lt;= nums[i] &lt;= 10<sup>9</sup></code></li>\n</ul>\n"
+      "title": "Contains Duplicate",
+      "code": "class Solution {\n    public boolean containsDuplicate(int[] nums) {\n        // Use set to count duplicates\n        Set<Integer> counts = new HashSet();\n        \n        for (int num : nums) {\n            if (counts.contains(num)) {\n                return true;\n            }\n            counts.add(num);\n        }\n        return false;\n    }\n}"
+    },
+    {
+      "id": 847797932,
+      "slug": "graph-valid-tree",
+      "title": "Graph Valid Tree",
+      "code": "class UnionFind {\n    int[] root;\n    \n    public UnionFind(int size) {\n        root = new int[size];\n        for (int i = 0; i < size; i++) {\n            root[i] = i;\n        }\n    }\n    \n    public int find(int n) {\n        return root[n];\n    }\n    \n    public boolean union(int a, int b) {\n        int rootA = find(a);\n        int rootB = find(b);\n        if (rootA == rootB) {\n            return false;\n        }\n        if (rootA != rootB) {\n            for (int i = 0; i < root.length; i++){\n                // Replace all of rootB with rootA;\n                if (root[i] == rootB) {\n                    root[i] = rootA;\n                }\n            }\n        }\n        \n        return true;\n    }\n    \n    public boolean connected(int a, int b) {\n        return find(a) == find(b);\n    }\n}\n\nclass Solution {\n    public boolean validTree(int n, int[][] edges) {\n        // Condition 1: The graph must contain n - 1 edges.\n        if (edges.length != n - 1) return false;\n        \n        UnionFind union = new UnionFind(n);\n        \n        for (int[] edge: edges) {\n            if(union.connected(edge[0], edge[1])) {\n                return false;\n            }\n            union.union(edge[0], edge[1]);\n        }\n        \n        return true;\n    }\n}"
+    },
+    {
+      "id": 847769705,
+      "slug": "nearest-exit-from-entrance-in-maze",
+      "title": "Nearest Exit from Entrance in Maze",
+      "code": "class Solution {\n    public int nearestExit(char[][] maze, int[] entrance) {\n        \n        Deque<int[]> q = new ArrayDeque();\n        \n        boolean[][] visited = new boolean[maze.length][maze[0].length];\n\n        \n        q.offer(new int[] {entrance[0], entrance[1], 0});\n        \n        visited[entrance[0]][entrance[1]] = true;\n        int[][] dirs = { {0,1}, {0,-1}, {1,0}, {-1,0} };\n        \n        while (!q.isEmpty()) {\n            int[] curr = q.poll();\n\n            for (int[] dir : dirs) {\n                int i = curr[0] + dir[0];\n                int j = curr[1] + dir[1];\n                \n                if (i < 0 || j < 0 || i >= maze.length || j >= maze[0].length || visited[i][j] || maze[i][j] == '+') {\n                    continue;\n                }\n                \n                if (isExit(i, j, maze)) {\n                    return curr[2] + 1;\n                }\n                \n                visited[i][j] = true;\n                q.offer(new int[] {i, j, curr[2] + 1});\n            }    \n        }\n        \n        return -1;\n    }\n    \n    public boolean isExit(int nextRow, int nextCol, char[][] maze) {\n        return (nextRow == 0 || nextRow == maze.length - 1 || nextCol == 0 || nextCol == maze[0].length - 1);\n    }\n}"
+    },
+    {
+      "id": 847769637,
+      "slug": "nearest-exit-from-entrance-in-maze",
+      "title": "Nearest Exit from Entrance in Maze",
+      "code": "class Solution {\n    public int nearestExit(char[][] maze, int[] entrance) {\n        \n        Deque<int[]> q = new ArrayDeque();\n        \n        boolean[][] visited = new boolean[maze.length][maze[0].length];\n\n        \n        q.offer(new int[] {entrance[0], entrance[1], 0});\n        \n        visited[entrance[0]][entrance[1]] = true;\n        int[][] dirs = { {0,1}, {0,-1}, {1,0}, {-1,0} };\n        \n        while (!q.isEmpty()) {\n            int[] curr = q.poll();\n            System.out.println(Arrays.toString(curr));\n\n            for (int[] dir : dirs) {\n                int i = curr[0] + dir[0];\n                int j = curr[1] + dir[1];\n                \n                if (i < 0 || j < 0 || i >= maze.length || j >= maze[0].length || visited[i][j] || maze[i][j] == '+') {\n                    continue;\n                }\n                \n                if (isExit(i, j, maze)) {\n                    return curr[2] + 1;\n                }\n                \n                visited[i][j] = true;\n                q.offer(new int[] {i, j, curr[2] + 1});\n            }    \n        }\n        \n        return -1;\n    }\n    \n    public boolean isExit(int nextRow, int nextCol, char[][] maze) {\n        return (nextRow == 0 || nextRow == maze.length - 1 || nextCol == 0 || nextCol == maze[0].length - 1);\n    }\n}"
+    },
+    {
+      "id": 847180673,
+      "slug": "course-schedule",
+      "title": "Course Schedule",
+      "code": "class Solution {\n    public boolean canFinish(int numCourses, int[][] prerequisites) {\n        \n        Map<Integer, List<Integer>> adj = new HashMap();\n        \n        for (int i = 0; i < numCourses; i++) {\n            adj.computeIfAbsent(i, k -> new ArrayList());\n        }\n        \n        for (int i = 0; i < prerequisites.length; i++) {\n            int[] prereq = prerequisites[i];\n            adj.get(prereq[1]).add(prereq[0]);\n        }\n        \n        boolean[] checked = new boolean[numCourses];\n        boolean[] path = new boolean[numCourses];\n        for (int node: adj.keySet()) {\n            if (dfs(adj, node, path, checked)) {\n                return false;\n            }\n        }\n        return true;\n    }\n    \n    private boolean dfs(Map<Integer, List<Integer>> adj, int node, boolean[] path, boolean[] checked) {\n        // bottom cases\n        if (checked[node])\n            // this node has been checked, no cycle would be formed with this node.\n            return false;\n        \n        if (path[node]) {\n            return true;\n        }\n        \n        if (!adj.containsKey(node)) {\n            return false;\n        }\n        path[node] = true;\n        \n        boolean ret = false;\n        \n        for(int neighbor : adj.get(node)) {\n            ret = dfs(adj, neighbor, path, checked);\n            if (ret) {\n                break;\n            }\n        }\n        path[node] = false;\n        checked[node] = true;\n        return ret;\n    }\n}"
+    },
+    {
+      "id": 847148182,
+      "slug": "pacific-atlantic-water-flow",
+      "title": "Pacific Atlantic Water Flow",
+      "code": "class Solution {\n    private static final int[][] DIRECTIONS = new int[][]{{0, 1}, {1, 0}, {-1, 0}, {0, -1}};\n    \n    public List<List<Integer>> pacificAtlantic(int[][] heights) {\n        // Check if input is empty\n        if (heights.length == 0 || heights[0].length == 0) {\n            return new ArrayList<>();\n        }\n        \n        // Save initial values to parameters\n        int numRows = heights.length;\n        int numCols = heights[0].length;\n        boolean[][] pacificReachable = new boolean[numRows][numCols];\n        boolean[][] atlanticReachable = new boolean[numRows][numCols];\n        \n        // Loop through each cell adjacent to the oceans and start a DFS\n        for (int i = 0; i < numRows; i++) {\n            dfs(heights, i, 0, pacificReachable);\n            dfs(heights, i, numCols - 1, atlanticReachable);\n        }\n        for (int i = 0; i < numCols; i++) {\n            dfs(heights, 0, i, pacificReachable);\n            dfs(heights, numRows - 1, i, atlanticReachable);\n        }\n        \n        // Find all cells that can reach both oceans\n        List<List<Integer>> commonCells = new ArrayList<>();\n        for (int i = 0; i < numRows; i++) {\n            for (int j = 0; j < numCols; j++) {\n                if (pacificReachable[i][j] && atlanticReachable[i][j]) {\n                    commonCells.add(List.of(i, j));\n                }\n            }\n        }\n        return commonCells;\n    }\n    \n    private void dfs(int[][] heights, int row, int col, boolean[][] reachable) {\n        // This cell is reachable, so mark it\n        reachable[row][col] = true;\n        for (int[] dir : DIRECTIONS) { // Check all 4 directions\n            int newRow = row + dir[0];\n            int newCol = col + dir[1];\n            // Check if new cell is within bounds\n            if (newRow < 0 || newRow >= heights.length || newCol < 0 || newCol >= heights[0].length) {\n                continue;\n            }\n            // Check that the new cell hasn't already been visited\n            if (reachable[newRow][newCol]) {\n                continue;\n            }\n            // Check that the new cell has a higher or equal height,\n            // So that water can flow from the new cell to the old cell\n            if (heights[newRow][newCol] < heights[row][col]) {\n                continue;\n            }\n            // If we've gotten this far, that means the new cell is reachable\n            dfs(heights, newRow, newCol, reachable);\n        }\n    }\n}"
     }
   ]
 }

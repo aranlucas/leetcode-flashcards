@@ -1,5 +1,5 @@
 {
-  "updated": 1669319446235,
+  "updated": 1669319560721,
   "data": [
     {
       "id": "group-anagrams",
@@ -637,6 +637,136 @@
         {
           "name": "Wayfair",
           "slug": "wayfair",
+          "frequency": 2
+        }
+      ]
+    },
+    {
+      "id": "container-with-most-water",
+      "slug": "container-with-most-water",
+      "title": "Container With Most Water",
+      "code": "class Solution {\n    public int maxArea(int[] height) {\n        int left = 0;\n        int right = height.length - 1;\n        \n        int maxArea = 0;\n        while (left < right){\n            int width = right - left;\n            int length = Math.min(height[left], height[right]);\n            int currentArea = width * length;\n            maxArea = Math.max(currentArea, maxArea);\n            \n            if (height[left] > height[right]) {\n                right--;\n            } else {\n                left++;\n            }\n        }\n        \n        return maxArea;\n    }\n}",
+      "difficulty": "Medium",
+      "content": "<p>You are given an integer array <code>height</code> of length <code>n</code>. There are <code>n</code> vertical lines drawn such that the two endpoints of the <code>i<sup>th</sup></code> line are <code>(i, 0)</code> and <code>(i, height[i])</code>.</p>\n\n<p>Find two lines that together with the x-axis form a container, such that the container contains the most water.</p>\n\n<p>Return <em>the maximum amount of water a container can store</em>.</p>\n\n<p><strong>Notice</strong> that you may not slant the container.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<img alt=\"\" src=\"https://s3-lc-upload.s3.amazonaws.com/uploads/2018/07/17/question_11.jpg\" style=\"width: 600px; height: 287px;\" />\n<pre>\n<strong>Input:</strong> height = [1,8,6,2,5,4,8,3,7]\n<strong>Output:</strong> 49\n<strong>Explanation:</strong> The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<pre>\n<strong>Input:</strong> height = [1,1]\n<strong>Output:</strong> 1\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>n == height.length</code></li>\n\t<li><code>2 &lt;= n &lt;= 10<sup>5</sup></code></li>\n\t<li><code>0 &lt;= height[i] &lt;= 10<sup>4</sup></code></li>\n</ul>\n",
+      "companies": [
+        {
+          "name": "Amazon",
+          "slug": "amazon",
+          "frequency": 23
+        },
+        {
+          "name": "Apple",
+          "slug": "apple",
+          "frequency": 8
+        },
+        {
+          "name": "Google",
+          "slug": "google",
+          "frequency": 7
+        },
+        {
+          "name": "Adobe",
+          "slug": "adobe",
+          "frequency": 7
+        },
+        {
+          "name": "Bloomberg",
+          "slug": "bloomberg",
+          "frequency": 4
+        },
+        {
+          "name": "Microsoft",
+          "slug": "microsoft",
+          "frequency": 3
+        },
+        {
+          "name": "Facebook",
+          "slug": "facebook",
+          "frequency": 3
+        },
+        {
+          "name": "Uber",
+          "slug": "uber",
+          "frequency": 2
+        },
+        {
+          "name": "TikTok",
+          "slug": "tiktok",
+          "frequency": 2
+        },
+        {
+          "name": "Swiggy",
+          "slug": "swiggy",
+          "frequency": 4
+        },
+        {
+          "name": "Goldman Sachs",
+          "slug": "goldman-sachs",
+          "frequency": 3
+        },
+        {
+          "name": "VMware",
+          "slug": "vmware",
+          "frequency": 3
+        },
+        {
+          "name": "Qualtrics",
+          "slug": "qualtrics",
+          "frequency": 3
+        },
+        {
+          "name": "Intuit",
+          "slug": "intuit",
+          "frequency": 3
+        },
+        {
+          "name": "ByteDance",
+          "slug": "bytedance",
+          "frequency": 2
+        },
+        {
+          "name": "Samsung",
+          "slug": "samsung",
+          "frequency": 2
+        },
+        {
+          "name": "Walmart Global Tech",
+          "slug": "walmart-labs",
+          "frequency": 2
+        },
+        {
+          "name": "Oracle",
+          "slug": "oracle",
+          "frequency": 2
+        },
+        {
+          "name": "Intel",
+          "slug": "intel",
+          "frequency": 2
+        },
+        {
+          "name": "Cisco",
+          "slug": "cisco",
+          "frequency": 2
+        },
+        {
+          "name": "Tesla",
+          "slug": "tesla",
+          "frequency": 2
+        },
+        {
+          "name": "Arcesium",
+          "slug": "arcesium",
+          "frequency": 2
+        },
+        {
+          "name": "DE Shaw",
+          "slug": "de-shaw",
+          "frequency": 2
+        },
+        {
+          "name": "JPMorgan",
+          "slug": "jpmorgan",
           "frequency": 2
         }
       ]

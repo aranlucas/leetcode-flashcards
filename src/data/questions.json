@@ -1,61 +1,37 @@
 {
-  "updated": "2022-11-24T09:17:32.508826",
+  "updated": 1669319283080,
   "data": [
     {
-      "id": "word-search",
-      "slug": "word-search",
-      "title": "Word Search",
-      "code": "class Solution {\n    private static final int[][] DIRS = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};\n\n    public boolean exist(char[][] board, String word) {\n        int m = board.length;\n        int n = board[0].length;\n        for (int i = 0; i < m; i++) {\n            for (int j = 0; j < n; j++) {\n                if (backtrack(i, j, board, word, 0)) {\n                    return true;\n                }\n            }\n        }\n        return false;\n    }\n    \n    public boolean backtrack(int r, int c, char[][] board, String word, int index){\n        if (index >= word.length()){\n            return true;\n        }\n        \n        int m = board.length;\n        int n = board[0].length;\n        if (r < 0 || c < 0 || r >= m || c >= n) {\n            return false;\n        }\n        \n        // Candidates are up down left right\n        // Prune candidates that are not the next word\n        if (board[r][c] == word.charAt(index)) {\n            // Add valid candidate\n            board[r][c] = '#';\n            \n            boolean ret = false;\n            // Explore\n            ret = backtrack(r + 1, c, board, word, index + 1)\n                || backtrack(r - 1, c, board, word, index + 1)\n                || backtrack(r, c + 1, board, word, index + 1) \n                || backtrack(r, c - 1, board, word, index + 1);\n            // Clean up candidate\n            board[r][c] = word.charAt(index);\n            return ret;\n        }\n        return false;\n    }\n}",
+      "id": "group-anagrams",
+      "slug": "group-anagrams",
+      "title": "Group Anagrams",
+      "code": "class Solution {\n    public List<List<String>> groupAnagrams(String[] strs) {\n        if (strs.length == 0) {\n            return new ArrayList();\n        }\n        \n        Map<String, List> ans = new HashMap();\n        \n        for (String s : strs) {\n            char[] ca = s.toCharArray();\n            Arrays.sort(ca);\n            String key = String.valueOf(ca);\n            if (!ans.containsKey(key)){\n                ans.put(key, new ArrayList());\n            }\n            ans.get(key).add(s);\n        }\n        return new ArrayList(ans.values());\n    }\n}",
       "difficulty": "Medium",
+      "content": "<p>Given an array of strings <code>strs</code>, group <strong>the anagrams</strong> together. You can return the answer in <strong>any order</strong>.</p>\n\n<p>An <strong>Anagram</strong> is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<pre><strong>Input:</strong> strs = [\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"]\n<strong>Output:</strong> [[\"bat\"],[\"nat\",\"tan\"],[\"ate\",\"eat\",\"tea\"]]\n</pre><p><strong class=\"example\">Example 2:</strong></p>\n<pre><strong>Input:</strong> strs = [\"\"]\n<strong>Output:</strong> [[\"\"]]\n</pre><p><strong class=\"example\">Example 3:</strong></p>\n<pre><strong>Input:</strong> strs = [\"a\"]\n<strong>Output:</strong> [[\"a\"]]\n</pre>\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= strs.length &lt;= 10<sup>4</sup></code></li>\n\t<li><code>0 &lt;= strs[i].length &lt;= 100</code></li>\n\t<li><code>strs[i]</code> consists of lowercase English letters.</li>\n</ul>\n",
       "companies": [
         {
           "name": "Amazon",
           "slug": "amazon",
-          "frequency": 29
+          "frequency": 51
+        },
+        {
+          "name": "Apple",
+          "slug": "apple",
+          "frequency": 9
+        },
+        {
+          "name": "Yandex",
+          "slug": "yandex",
+          "frequency": 7
         },
         {
           "name": "Bloomberg",
           "slug": "bloomberg",
-          "frequency": 23
+          "frequency": 7
         },
         {
-          "name": "Twitter",
-          "slug": "twitter",
-          "frequency": 20
-        },
-        {
-          "name": "Uber",
-          "slug": "uber",
-          "frequency": 11
-        },
-        {
-          "name": "Karat",
-          "slug": "karat",
-          "frequency": 10
-        },
-        {
-          "name": "Microsoft",
-          "slug": "microsoft",
-          "frequency": 9
-        },
-        {
-          "name": "Cisco",
-          "slug": "cisco",
-          "frequency": 9
-        },
-        {
-          "name": "Google",
-          "slug": "google",
-          "frequency": 8
-        },
-        {
-          "name": "TikTok",
-          "slug": "tiktok",
-          "frequency": 8
-        },
-        {
-          "name": "Indeed",
-          "slug": "indeed",
+          "name": "Adobe",
+          "slug": "adobe",
           "frequency": 7
         },
         {
@@ -64,114 +40,161 @@
           "frequency": 6
         },
         {
-          "name": "Snapchat",
-          "slug": "snapchat",
+          "name": "Google",
+          "slug": "google",
           "frequency": 6
         },
         {
-          "name": "Wayfair",
-          "slug": "wayfair",
-          "frequency": 5
+          "name": "Uber",
+          "slug": "uber",
+          "frequency": 4
         },
         {
-          "name": "Apple",
-          "slug": "apple",
+          "name": "Microsoft",
+          "slug": "microsoft",
+          "frequency": 4
+        },
+        {
+          "name": "eBay",
+          "slug": "ebay",
+          "frequency": 4
+        },
+        {
+          "name": "Expedia",
+          "slug": "expedia",
           "frequency": 4
         },
         {
           "name": "Walmart Global Tech",
           "slug": "walmart-labs",
-          "frequency": 3
-        },
-        {
-          "name": "Samsung",
-          "slug": "samsung",
-          "frequency": 3
-        },
-        {
-          "name": "Roblox",
-          "slug": "roblox",
-          "frequency": 3
-        },
-        {
-          "name": "Adobe",
-          "slug": "adobe",
-          "frequency": 2
+          "frequency": 4
         },
         {
           "name": "Goldman Sachs",
           "slug": "goldman-sachs",
+          "frequency": 3
+        },
+        {
+          "name": "Oracle",
+          "slug": "oracle",
+          "frequency": 3
+        },
+        {
+          "name": "JPMorgan",
+          "slug": "jpmorgan",
+          "frequency": 3
+        },
+        {
+          "name": "Yahoo",
+          "slug": "yahoo",
           "frequency": 2
         },
         {
-          "name": "ByteDance",
-          "slug": "bytedance",
+          "name": "Mathworks",
+          "slug": "mathworks",
           "frequency": 2
         },
         {
-          "name": "Bolt",
-          "slug": "bolt",
+          "name": "Atlassian",
+          "slug": "atlassian",
           "frequency": 2
-        }
-      ],
-      "premium": false,
-      "content": "<p>Given an <code>m x n</code> grid of characters <code>board</code> and a string <code>word</code>, return <code>true</code> <em>if</em> <code>word</code> <em>exists in the grid</em>.</p>\n\n<p>The word can be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2020/11/04/word2.jpg\" style=\"width: 322px; height: 242px;\" />\n<pre>\n<strong>Input:</strong> board = [[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;E&quot;],[&quot;S&quot;,&quot;F&quot;,&quot;C&quot;,&quot;S&quot;],[&quot;A&quot;,&quot;D&quot;,&quot;E&quot;,&quot;E&quot;]], word = &quot;ABCCED&quot;\n<strong>Output:</strong> true\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2020/11/04/word-1.jpg\" style=\"width: 322px; height: 242px;\" />\n<pre>\n<strong>Input:</strong> board = [[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;E&quot;],[&quot;S&quot;,&quot;F&quot;,&quot;C&quot;,&quot;S&quot;],[&quot;A&quot;,&quot;D&quot;,&quot;E&quot;,&quot;E&quot;]], word = &quot;SEE&quot;\n<strong>Output:</strong> true\n</pre>\n\n<p><strong class=\"example\">Example 3:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2020/10/15/word3.jpg\" style=\"width: 322px; height: 242px;\" />\n<pre>\n<strong>Input:</strong> board = [[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;E&quot;],[&quot;S&quot;,&quot;F&quot;,&quot;C&quot;,&quot;S&quot;],[&quot;A&quot;,&quot;D&quot;,&quot;E&quot;,&quot;E&quot;]], word = &quot;ABCB&quot;\n<strong>Output:</strong> false\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>m == board.length</code></li>\n\t<li><code>n = board[i].length</code></li>\n\t<li><code>1 &lt;= m, n &lt;= 6</code></li>\n\t<li><code>1 &lt;= word.length &lt;= 15</code></li>\n\t<li><code>board</code> and <code>word</code> consists of only lowercase and uppercase English letters.</li>\n</ul>\n\n<p>&nbsp;</p>\n<p><strong>Follow up:</strong> Could you use search pruning to make your solution faster with a larger <code>board</code>?</p>\n"
-    },
-    {
-      "id": "alien-dictionary",
-      "slug": "alien-dictionary",
-      "title": "Alien Dictionary",
-      "code": "class Solution {\n    public String alienOrder(String[] words) {\n        // Step 0: Create data structures and find all unique letters.\n        Map<Character, List<Character>> adjList = new HashMap<>();\n        Map<Character, Integer> indegrees = new HashMap<Character, Integer>();\n        \n        for (String word : words) {\n            for (char c : word.toCharArray()) {\n                indegrees.put(c, 0);\n                adjList.put(c, new ArrayList<>());\n            }\n        }\n        \n        // Find edges\n        for (int i = 0; i < words.length -1; i++) {\n            String word1 = words[i];\n            String word2 = words[i+1];\n            \n            if (word1.length() > word2.length() && word1.startsWith(word2)){\n                return \"\";\n            }\n            for (int j = 0; j < Math.min(word1.length(), word2.length()); j++) {\n                if (word1.charAt(j) != word2.charAt(j) ) {\n                    adjList.get(word1.charAt(j)).add(word2.charAt(j));\n                    indegrees.put(word2.charAt(j), indegrees.get(word2.charAt(j)) + 1);\n                    break;\n                }\n            }\n        }\n        StringBuilder sb = new StringBuilder();\n        Deque<Character> queue = new ArrayDeque();\n        \n        System.out.println(indegrees);\n        for (Character c : indegrees.keySet()) {\n            if (indegrees.get(c).equals(0)) {\n                queue.offer(c);\n            }\n        }\n        \n        while (!queue.isEmpty()) {\n            Character c = queue.poll();\n            sb.append(c);\n            \n            for (Character neighbor: adjList.get(c)) {\n                indegrees.put(neighbor, indegrees.get(neighbor) - 1);\n                if (indegrees.get(neighbor).equals(0)) {\n                    queue.offer(neighbor);\n                }\n            }\n        }\n        if (sb.length() < indegrees.size()) {\n            return \"\";\n        }\n        return sb.toString();\n    }\n}",
-      "difficulty": "Hard",
-      "companies": [
-        {
-          "name": "Airbnb",
-          "slug": "airbnb",
-          "frequency": 14
         },
         {
-          "name": "Google",
-          "slug": "google",
-          "frequency": 8
+          "name": "Samsung",
+          "slug": "samsung",
+          "frequency": 2
         },
         {
-          "name": "Amazon",
-          "slug": "amazon",
+          "name": "TikTok",
+          "slug": "tiktok",
+          "frequency": 2
+        },
+        {
+          "name": "Cruise Automation",
+          "slug": "cruise-automation",
+          "frequency": 2
+        },
+        {
+          "name": "Avalara",
+          "slug": "avalara",
+          "frequency": 2
+        },
+        {
+          "name": "BlackRock",
+          "slug": "blackrock",
+          "frequency": 6
+        },
+        {
+          "name": "Affirm",
+          "slug": "affirm",
           "frequency": 5
         },
         {
-          "name": "Facebook",
-          "slug": "facebook",
+          "name": "Visa",
+          "slug": "visa",
+          "frequency": 4
+        },
+        {
+          "name": "Salesforce",
+          "slug": "salesforce",
           "frequency": 3
         },
         {
-          "name": "Microsoft",
-          "slug": "microsoft",
+          "name": "VMware",
+          "slug": "vmware",
           "frequency": 3
+        },
+        {
+          "name": "Twilio",
+          "slug": "twilio",
+          "frequency": 3
+        },
+        {
+          "name": "ServiceNow",
+          "slug": "servicenow",
+          "frequency": 3
+        },
+        {
+          "name": "Netflix",
+          "slug": "netflix",
+          "frequency": 2
         },
         {
           "name": "Snapchat",
           "slug": "snapchat",
-          "frequency": 3
-        },
-        {
-          "name": "Uber",
-          "slug": "uber",
           "frequency": 2
         },
         {
-          "name": "Bloomberg",
-          "slug": "bloomberg",
+          "name": "Alation",
+          "slug": "alation",
           "frequency": 2
         },
         {
-          "name": "Pinterest",
-          "slug": "pinterest",
+          "name": "IBM",
+          "slug": "ibm",
+          "frequency": 2
+        },
+        {
+          "name": "Cisco",
+          "slug": "cisco",
+          "frequency": 2
+        },
+        {
+          "name": "C3 IoT",
+          "slug": "c3-iot",
+          "frequency": 2
+        },
+        {
+          "name": "PayTM",
+          "slug": "paytm",
+          "frequency": 2
+        },
+        {
+          "name": "Nvidia",
+          "slug": "nvidia",
           "frequency": 2
         }
-      ],
-      "premium": true,
-      "content": "<p>There is a new alien language that uses the English alphabet. However, the order among the letters is unknown to you.</p>\n\n<p>You are given a list of strings <code>words</code> from the alien language&#39;s dictionary, where the strings in <code>words</code> are <span data-keyword=\"lexicographically-smaller-string-alien\"><strong>sorted lexicographically</strong></span> by the rules of this new language.</p>\n\n<p>Return <em>a string of the unique letters in the new alien language sorted in <strong>lexicographically increasing order</strong> by the new language&#39;s rules. </em>If there is no solution, return <code>&quot;&quot;</code><em>. </em>If there are multiple solutions, return<em> <strong>any of them</strong></em>.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<pre>\n<strong>Input:</strong> words = [&quot;wrt&quot;,&quot;wrf&quot;,&quot;er&quot;,&quot;ett&quot;,&quot;rftt&quot;]\n<strong>Output:</strong> &quot;wertf&quot;\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<pre>\n<strong>Input:</strong> words = [&quot;z&quot;,&quot;x&quot;]\n<strong>Output:</strong> &quot;zx&quot;\n</pre>\n\n<p><strong class=\"example\">Example 3:</strong></p>\n\n<pre>\n<strong>Input:</strong> words = [&quot;z&quot;,&quot;x&quot;,&quot;z&quot;]\n<strong>Output:</strong> &quot;&quot;\n<strong>Explanation:</strong> The order is invalid, so return <code>&quot;&quot;</code>.\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= words.length &lt;= 100</code></li>\n\t<li><code>1 &lt;= words[i].length &lt;= 100</code></li>\n\t<li><code>words[i]</code> consists of only lowercase English letters.</li>\n</ul>\n"
+      ]
     },
     {
       "id": "contains-duplicate",
@@ -179,6 +202,7 @@
       "title": "Contains Duplicate",
       "code": "class Solution {\n    public boolean containsDuplicate(int[] nums) {\n        // Use set to count duplicates\n        Set<Integer> counts = new HashSet();\n        \n        for (int num : nums) {\n            if (counts.contains(num)) {\n                return true;\n            }\n            counts.add(num);\n        }\n        return false;\n    }\n}",
       "difficulty": "Easy",
+      "content": "<p>Given an integer array <code>nums</code>, return <code>true</code> if any value appears <strong>at least twice</strong> in the array, and return <code>false</code> if every element is distinct.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<pre><strong>Input:</strong> nums = [1,2,3,1]\n<strong>Output:</strong> true\n</pre><p><strong class=\"example\">Example 2:</strong></p>\n<pre><strong>Input:</strong> nums = [1,2,3,4]\n<strong>Output:</strong> false\n</pre><p><strong class=\"example\">Example 3:</strong></p>\n<pre><strong>Input:</strong> nums = [1,1,1,3,3,4,3,2,4,2]\n<strong>Output:</strong> true\n</pre>\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= nums.length &lt;= 10<sup>5</sup></code></li>\n\t<li><code>-10<sup>9</sup> &lt;= nums[i] &lt;= 10<sup>9</sup></code></li>\n</ul>\n",
       "companies": [
         {
           "name": "Amazon",
@@ -265,9 +289,177 @@
           "slug": "atlassian",
           "frequency": 2
         }
-      ],
-      "premium": false,
-      "content": "<p>Given an integer array <code>nums</code>, return <code>true</code> if any value appears <strong>at least twice</strong> in the array, and return <code>false</code> if every element is distinct.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<pre><strong>Input:</strong> nums = [1,2,3,1]\n<strong>Output:</strong> true\n</pre><p><strong class=\"example\">Example 2:</strong></p>\n<pre><strong>Input:</strong> nums = [1,2,3,4]\n<strong>Output:</strong> false\n</pre><p><strong class=\"example\">Example 3:</strong></p>\n<pre><strong>Input:</strong> nums = [1,1,1,3,3,4,3,2,4,2]\n<strong>Output:</strong> true\n</pre>\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= nums.length &lt;= 10<sup>5</sup></code></li>\n\t<li><code>-10<sup>9</sup> &lt;= nums[i] &lt;= 10<sup>9</sup></code></li>\n</ul>\n"
+      ]
+    },
+    {
+      "id": "word-search",
+      "slug": "word-search",
+      "title": "Word Search",
+      "code": "class Solution {\n    private static final int[][] DIRS = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};\n\n    public boolean exist(char[][] board, String word) {\n        int m = board.length;\n        int n = board[0].length;\n        for (int i = 0; i < m; i++) {\n            for (int j = 0; j < n; j++) {\n                if (backtrack(i, j, board, word, 0)) {\n                    return true;\n                }\n            }\n        }\n        return false;\n    }\n    \n    public boolean backtrack(int r, int c, char[][] board, String word, int index){\n        if (index >= word.length()){\n            return true;\n        }\n        \n        int m = board.length;\n        int n = board[0].length;\n        if (r < 0 || c < 0 || r >= m || c >= n) {\n            return false;\n        }\n        \n        // Candidates are up down left right\n        // Prune candidates that are not the next word\n        if (board[r][c] == word.charAt(index)) {\n            // Add valid candidate\n            board[r][c] = '#';\n            \n            boolean ret = false;\n            // Explore\n            ret = backtrack(r + 1, c, board, word, index + 1)\n                || backtrack(r - 1, c, board, word, index + 1)\n                || backtrack(r, c + 1, board, word, index + 1) \n                || backtrack(r, c - 1, board, word, index + 1);\n            // Clean up candidate\n            board[r][c] = word.charAt(index);\n            return ret;\n        }\n        return false;\n    }\n}",
+      "difficulty": "Medium",
+      "content": "<p>Given an <code>m x n</code> grid of characters <code>board</code> and a string <code>word</code>, return <code>true</code> <em>if</em> <code>word</code> <em>exists in the grid</em>.</p>\n\n<p>The word can be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2020/11/04/word2.jpg\" style=\"width: 322px; height: 242px;\" />\n<pre>\n<strong>Input:</strong> board = [[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;E&quot;],[&quot;S&quot;,&quot;F&quot;,&quot;C&quot;,&quot;S&quot;],[&quot;A&quot;,&quot;D&quot;,&quot;E&quot;,&quot;E&quot;]], word = &quot;ABCCED&quot;\n<strong>Output:</strong> true\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2020/11/04/word-1.jpg\" style=\"width: 322px; height: 242px;\" />\n<pre>\n<strong>Input:</strong> board = [[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;E&quot;],[&quot;S&quot;,&quot;F&quot;,&quot;C&quot;,&quot;S&quot;],[&quot;A&quot;,&quot;D&quot;,&quot;E&quot;,&quot;E&quot;]], word = &quot;SEE&quot;\n<strong>Output:</strong> true\n</pre>\n\n<p><strong class=\"example\">Example 3:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2020/10/15/word3.jpg\" style=\"width: 322px; height: 242px;\" />\n<pre>\n<strong>Input:</strong> board = [[&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;E&quot;],[&quot;S&quot;,&quot;F&quot;,&quot;C&quot;,&quot;S&quot;],[&quot;A&quot;,&quot;D&quot;,&quot;E&quot;,&quot;E&quot;]], word = &quot;ABCB&quot;\n<strong>Output:</strong> false\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>m == board.length</code></li>\n\t<li><code>n = board[i].length</code></li>\n\t<li><code>1 &lt;= m, n &lt;= 6</code></li>\n\t<li><code>1 &lt;= word.length &lt;= 15</code></li>\n\t<li><code>board</code> and <code>word</code> consists of only lowercase and uppercase English letters.</li>\n</ul>\n\n<p>&nbsp;</p>\n<p><strong>Follow up:</strong> Could you use search pruning to make your solution faster with a larger <code>board</code>?</p>\n",
+      "companies": [
+        {
+          "name": "Amazon",
+          "slug": "amazon",
+          "frequency": 29
+        },
+        {
+          "name": "Bloomberg",
+          "slug": "bloomberg",
+          "frequency": 23
+        },
+        {
+          "name": "Uber",
+          "slug": "uber",
+          "frequency": 11
+        },
+        {
+          "name": "Karat",
+          "slug": "karat",
+          "frequency": 10
+        },
+        {
+          "name": "Microsoft",
+          "slug": "microsoft",
+          "frequency": 9
+        },
+        {
+          "name": "Cisco",
+          "slug": "cisco",
+          "frequency": 9
+        },
+        {
+          "name": "Google",
+          "slug": "google",
+          "frequency": 8
+        },
+        {
+          "name": "TikTok",
+          "slug": "tiktok",
+          "frequency": 8
+        },
+        {
+          "name": "Indeed",
+          "slug": "indeed",
+          "frequency": 7
+        },
+        {
+          "name": "Facebook",
+          "slug": "facebook",
+          "frequency": 6
+        },
+        {
+          "name": "Apple",
+          "slug": "apple",
+          "frequency": 4
+        },
+        {
+          "name": "Walmart Global Tech",
+          "slug": "walmart-labs",
+          "frequency": 3
+        },
+        {
+          "name": "Adobe",
+          "slug": "adobe",
+          "frequency": 2
+        },
+        {
+          "name": "Twitter",
+          "slug": "twitter",
+          "frequency": 20
+        },
+        {
+          "name": "Snapchat",
+          "slug": "snapchat",
+          "frequency": 6
+        },
+        {
+          "name": "Wayfair",
+          "slug": "wayfair",
+          "frequency": 5
+        },
+        {
+          "name": "Samsung",
+          "slug": "samsung",
+          "frequency": 3
+        },
+        {
+          "name": "Roblox",
+          "slug": "roblox",
+          "frequency": 3
+        },
+        {
+          "name": "Goldman Sachs",
+          "slug": "goldman-sachs",
+          "frequency": 2
+        },
+        {
+          "name": "ByteDance",
+          "slug": "bytedance",
+          "frequency": 2
+        },
+        {
+          "name": "Bolt",
+          "slug": "bolt",
+          "frequency": 2
+        }
+      ]
+    },
+    {
+      "id": "alien-dictionary",
+      "slug": "alien-dictionary",
+      "title": "Alien Dictionary",
+      "code": "class Solution {\n    public String alienOrder(String[] words) {\n        // Step 0: Create data structures and find all unique letters.\n        Map<Character, List<Character>> adjList = new HashMap<>();\n        Map<Character, Integer> indegrees = new HashMap<Character, Integer>();\n        \n        for (String word : words) {\n            for (char c : word.toCharArray()) {\n                indegrees.put(c, 0);\n                adjList.put(c, new ArrayList<>());\n            }\n        }\n        \n        // Find edges\n        for (int i = 0; i < words.length -1; i++) {\n            String word1 = words[i];\n            String word2 = words[i+1];\n            \n            if (word1.length() > word2.length() && word1.startsWith(word2)){\n                return \"\";\n            }\n            for (int j = 0; j < Math.min(word1.length(), word2.length()); j++) {\n                if (word1.charAt(j) != word2.charAt(j) ) {\n                    adjList.get(word1.charAt(j)).add(word2.charAt(j));\n                    indegrees.put(word2.charAt(j), indegrees.get(word2.charAt(j)) + 1);\n                    break;\n                }\n            }\n        }\n        StringBuilder sb = new StringBuilder();\n        Deque<Character> queue = new ArrayDeque();\n        \n        System.out.println(indegrees);\n        for (Character c : indegrees.keySet()) {\n            if (indegrees.get(c).equals(0)) {\n                queue.offer(c);\n            }\n        }\n        \n        while (!queue.isEmpty()) {\n            Character c = queue.poll();\n            sb.append(c);\n            \n            for (Character neighbor: adjList.get(c)) {\n                indegrees.put(neighbor, indegrees.get(neighbor) - 1);\n                if (indegrees.get(neighbor).equals(0)) {\n                    queue.offer(neighbor);\n                }\n            }\n        }\n        if (sb.length() < indegrees.size()) {\n            return \"\";\n        }\n        return sb.toString();\n    }\n}",
+      "difficulty": "Hard",
+      "content": "<p>There is a new alien language that uses the English alphabet. However, the order among the letters is unknown to you.</p>\n\n<p>You are given a list of strings <code>words</code> from the alien language&#39;s dictionary, where the strings in <code>words</code> are <span data-keyword=\"lexicographically-smaller-string-alien\"><strong>sorted lexicographically</strong></span> by the rules of this new language.</p>\n\n<p>Return <em>a string of the unique letters in the new alien language sorted in <strong>lexicographically increasing order</strong> by the new language&#39;s rules. </em>If there is no solution, return <code>&quot;&quot;</code><em>. </em>If there are multiple solutions, return<em> <strong>any of them</strong></em>.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<pre>\n<strong>Input:</strong> words = [&quot;wrt&quot;,&quot;wrf&quot;,&quot;er&quot;,&quot;ett&quot;,&quot;rftt&quot;]\n<strong>Output:</strong> &quot;wertf&quot;\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<pre>\n<strong>Input:</strong> words = [&quot;z&quot;,&quot;x&quot;]\n<strong>Output:</strong> &quot;zx&quot;\n</pre>\n\n<p><strong class=\"example\">Example 3:</strong></p>\n\n<pre>\n<strong>Input:</strong> words = [&quot;z&quot;,&quot;x&quot;,&quot;z&quot;]\n<strong>Output:</strong> &quot;&quot;\n<strong>Explanation:</strong> The order is invalid, so return <code>&quot;&quot;</code>.\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= words.length &lt;= 100</code></li>\n\t<li><code>1 &lt;= words[i].length &lt;= 100</code></li>\n\t<li><code>words[i]</code> consists of only lowercase English letters.</li>\n</ul>\n",
+      "companies": [
+        {
+          "name": "Airbnb",
+          "slug": "airbnb",
+          "frequency": 14
+        },
+        {
+          "name": "Amazon",
+          "slug": "amazon",
+          "frequency": 5
+        },
+        {
+          "name": "Facebook",
+          "slug": "facebook",
+          "frequency": 3
+        },
+        {
+          "name": "Microsoft",
+          "slug": "microsoft",
+          "frequency": 3
+        },
+        {
+          "name": "Uber",
+          "slug": "uber",
+          "frequency": 2
+        },
+        {
+          "name": "Bloomberg",
+          "slug": "bloomberg",
+          "frequency": 2
+        },
+        {
+          "name": "Google",
+          "slug": "google",
+          "frequency": 8
+        },
+        {
+          "name": "Snapchat",
+          "slug": "snapchat",
+          "frequency": 3
+        },
+        {
+          "name": "Pinterest",
+          "slug": "pinterest",
+          "frequency": 2
+        }
+      ]
     },
     {
       "id": "graph-valid-tree",
@@ -275,20 +467,11 @@
       "title": "Graph Valid Tree",
       "code": "class UnionFind {\n    int[] root;\n    \n    public UnionFind(int size) {\n        root = new int[size];\n        for (int i = 0; i < size; i++) {\n            root[i] = i;\n        }\n    }\n    \n    public int find(int n) {\n        return root[n];\n    }\n    \n    public boolean union(int a, int b) {\n        int rootA = find(a);\n        int rootB = find(b);\n        if (rootA == rootB) {\n            return false;\n        }\n        if (rootA != rootB) {\n            for (int i = 0; i < root.length; i++){\n                // Replace all of rootB with rootA;\n                if (root[i] == rootB) {\n                    root[i] = rootA;\n                }\n            }\n        }\n        \n        return true;\n    }\n    \n    public boolean connected(int a, int b) {\n        return find(a) == find(b);\n    }\n}\n\nclass Solution {\n    public boolean validTree(int n, int[][] edges) {\n        // Condition 1: The graph must contain n - 1 edges.\n        if (edges.length != n - 1) return false;\n        \n        UnionFind union = new UnionFind(n);\n        \n        for (int[] edge: edges) {\n            if(union.connected(edge[0], edge[1])) {\n                return false;\n            }\n            union.union(edge[0], edge[1]);\n        }\n        \n        return true;\n    }\n}",
       "difficulty": "Medium",
+      "content": "<p>You have a graph of <code>n</code> nodes labeled from <code>0</code> to <code>n - 1</code>. You are given an integer n and a list of <code>edges</code> where <code>edges[i] = [a<sub>i</sub>, b<sub>i</sub>]</code> indicates that there is an undirected edge between nodes <code>a<sub>i</sub></code> and <code>b<sub>i</sub></code> in the graph.</p>\n\n<p>Return <code>true</code> <em>if the edges of the given graph make up a valid tree, and</em> <code>false</code> <em>otherwise</em>.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2021/03/12/tree1-graph.jpg\" style=\"width: 222px; height: 302px;\" />\n<pre>\n<strong>Input:</strong> n = 5, edges = [[0,1],[0,2],[0,3],[1,4]]\n<strong>Output:</strong> true\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2021/03/12/tree2-graph.jpg\" style=\"width: 382px; height: 222px;\" />\n<pre>\n<strong>Input:</strong> n = 5, edges = [[0,1],[1,2],[2,3],[1,3],[1,4]]\n<strong>Output:</strong> false\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= n &lt;= 2000</code></li>\n\t<li><code>0 &lt;= edges.length &lt;= 5000</code></li>\n\t<li><code>edges[i].length == 2</code></li>\n\t<li><code>0 &lt;= a<sub>i</sub>, b<sub>i</sub> &lt; n</code></li>\n\t<li><code>a<sub>i</sub> != b<sub>i</sub></code></li>\n\t<li>There are no self-loops or repeated edges.</li>\n</ul>\n",
       "companies": [
-        {
-          "name": "LinkedIn",
-          "slug": "linkedin",
-          "frequency": 11
-        },
         {
           "name": "Google",
           "slug": "google",
-          "frequency": 3
-        },
-        {
-          "name": "Microsoft",
-          "slug": "microsoft",
           "frequency": 3
         },
         {
@@ -305,10 +488,18 @@
           "name": "TikTok",
           "slug": "tiktok",
           "frequency": 2
+        },
+        {
+          "name": "LinkedIn",
+          "slug": "linkedin",
+          "frequency": 11
+        },
+        {
+          "name": "Microsoft",
+          "slug": "microsoft",
+          "frequency": 3
         }
-      ],
-      "premium": true,
-      "content": "<p>You have a graph of <code>n</code> nodes labeled from <code>0</code> to <code>n - 1</code>. You are given an integer n and a list of <code>edges</code> where <code>edges[i] = [a<sub>i</sub>, b<sub>i</sub>]</code> indicates that there is an undirected edge between nodes <code>a<sub>i</sub></code> and <code>b<sub>i</sub></code> in the graph.</p>\n\n<p>Return <code>true</code> <em>if the edges of the given graph make up a valid tree, and</em> <code>false</code> <em>otherwise</em>.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2021/03/12/tree1-graph.jpg\" style=\"width: 222px; height: 302px;\" />\n<pre>\n<strong>Input:</strong> n = 5, edges = [[0,1],[0,2],[0,3],[1,4]]\n<strong>Output:</strong> true\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2021/03/12/tree2-graph.jpg\" style=\"width: 382px; height: 222px;\" />\n<pre>\n<strong>Input:</strong> n = 5, edges = [[0,1],[1,2],[2,3],[1,3],[1,4]]\n<strong>Output:</strong> false\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= n &lt;= 2000</code></li>\n\t<li><code>0 &lt;= edges.length &lt;= 5000</code></li>\n\t<li><code>edges[i].length == 2</code></li>\n\t<li><code>0 &lt;= a<sub>i</sub>, b<sub>i</sub> &lt; n</code></li>\n\t<li><code>a<sub>i</sub> != b<sub>i</sub></code></li>\n\t<li>There are no self-loops or repeated edges.</li>\n</ul>\n"
+      ]
     },
     {
       "id": "nearest-exit-from-entrance-in-maze",
@@ -316,15 +507,14 @@
       "title": "Nearest Exit from Entrance in Maze",
       "code": "class Solution {\n    public int nearestExit(char[][] maze, int[] entrance) {\n        \n        Deque<int[]> q = new ArrayDeque();\n        \n        boolean[][] visited = new boolean[maze.length][maze[0].length];\n\n        \n        q.offer(new int[] {entrance[0], entrance[1], 0});\n        \n        visited[entrance[0]][entrance[1]] = true;\n        int[][] dirs = { {0,1}, {0,-1}, {1,0}, {-1,0} };\n        \n        while (!q.isEmpty()) {\n            int[] curr = q.poll();\n            System.out.println(Arrays.toString(curr));\n\n            for (int[] dir : dirs) {\n                int i = curr[0] + dir[0];\n                int j = curr[1] + dir[1];\n                \n                if (i < 0 || j < 0 || i >= maze.length || j >= maze[0].length || visited[i][j] || maze[i][j] == '+') {\n                    continue;\n                }\n                \n                if (isExit(i, j, maze)) {\n                    return curr[2] + 1;\n                }\n                \n                visited[i][j] = true;\n                q.offer(new int[] {i, j, curr[2] + 1});\n            }    \n        }\n        \n        return -1;\n    }\n    \n    public boolean isExit(int nextRow, int nextCol, char[][] maze) {\n        return (nextRow == 0 || nextRow == maze.length - 1 || nextCol == 0 || nextCol == maze[0].length - 1);\n    }\n}",
       "difficulty": "Medium",
+      "content": "<p>You are given an <code>m x n</code> matrix <code>maze</code> (<strong>0-indexed</strong>) with empty cells (represented as <code>&#39;.&#39;</code>) and walls (represented as <code>&#39;+&#39;</code>). You are also given the <code>entrance</code> of the maze, where <code>entrance = [entrance<sub>row</sub>, entrance<sub>col</sub>]</code> denotes the row and column of the cell you are initially standing at.</p>\n\n<p>In one step, you can move one cell <strong>up</strong>, <strong>down</strong>, <strong>left</strong>, or <strong>right</strong>. You cannot step into a cell with a wall, and you cannot step outside the maze. Your goal is to find the <strong>nearest exit</strong> from the <code>entrance</code>. An <strong>exit</strong> is defined as an <strong>empty cell</strong> that is at the <strong>border</strong> of the <code>maze</code>. The <code>entrance</code> <strong>does not count</strong> as an exit.</p>\n\n<p>Return <em>the <strong>number of steps</strong> in the shortest path from the </em><code>entrance</code><em> to the nearest exit, or </em><code>-1</code><em> if no such path exists</em>.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2021/06/04/nearest1-grid.jpg\" style=\"width: 333px; height: 253px;\" />\n<pre>\n<strong>Input:</strong> maze = [[&quot;+&quot;,&quot;+&quot;,&quot;.&quot;,&quot;+&quot;],[&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;+&quot;],[&quot;+&quot;,&quot;+&quot;,&quot;+&quot;,&quot;.&quot;]], entrance = [1,2]\n<strong>Output:</strong> 1\n<strong>Explanation:</strong> There are 3 exits in this maze at [1,0], [0,2], and [2,3].\nInitially, you are at the entrance cell [1,2].\n- You can reach [1,0] by moving 2 steps left.\n- You can reach [0,2] by moving 1 step up.\nIt is impossible to reach [2,3] from the entrance.\nThus, the nearest exit is [0,2], which is 1 step away.\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2021/06/04/nearesr2-grid.jpg\" style=\"width: 253px; height: 253px;\" />\n<pre>\n<strong>Input:</strong> maze = [[&quot;+&quot;,&quot;+&quot;,&quot;+&quot;],[&quot;.&quot;,&quot;.&quot;,&quot;.&quot;],[&quot;+&quot;,&quot;+&quot;,&quot;+&quot;]], entrance = [1,0]\n<strong>Output:</strong> 2\n<strong>Explanation:</strong> There is 1 exit in this maze at [1,2].\n[1,0] does not count as an exit since it is the entrance cell.\nInitially, you are at the entrance cell [1,0].\n- You can reach [1,2] by moving 2 steps right.\nThus, the nearest exit is [1,2], which is 2 steps away.\n</pre>\n\n<p><strong class=\"example\">Example 3:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2021/06/04/nearest3-grid.jpg\" style=\"width: 173px; height: 93px;\" />\n<pre>\n<strong>Input:</strong> maze = [[&quot;.&quot;,&quot;+&quot;]], entrance = [0,0]\n<strong>Output:</strong> -1\n<strong>Explanation:</strong> There are no exits in this maze.\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>maze.length == m</code></li>\n\t<li><code>maze[i].length == n</code></li>\n\t<li><code>1 &lt;= m, n &lt;= 100</code></li>\n\t<li><code>maze[i][j]</code> is either <code>&#39;.&#39;</code> or <code>&#39;+&#39;</code>.</li>\n\t<li><code>entrance.length == 2</code></li>\n\t<li><code>0 &lt;= entrance<sub>row</sub> &lt; m</code></li>\n\t<li><code>0 &lt;= entrance<sub>col</sub> &lt; n</code></li>\n\t<li><code>entrance</code> will always be an empty cell.</li>\n</ul>\n",
       "companies": [
         {
           "name": "Amazon",
           "slug": "amazon",
           "frequency": 2
         }
-      ],
-      "premium": false,
-      "content": "<p>You are given an <code>m x n</code> matrix <code>maze</code> (<strong>0-indexed</strong>) with empty cells (represented as <code>&#39;.&#39;</code>) and walls (represented as <code>&#39;+&#39;</code>). You are also given the <code>entrance</code> of the maze, where <code>entrance = [entrance<sub>row</sub>, entrance<sub>col</sub>]</code> denotes the row and column of the cell you are initially standing at.</p>\n\n<p>In one step, you can move one cell <strong>up</strong>, <strong>down</strong>, <strong>left</strong>, or <strong>right</strong>. You cannot step into a cell with a wall, and you cannot step outside the maze. Your goal is to find the <strong>nearest exit</strong> from the <code>entrance</code>. An <strong>exit</strong> is defined as an <strong>empty cell</strong> that is at the <strong>border</strong> of the <code>maze</code>. The <code>entrance</code> <strong>does not count</strong> as an exit.</p>\n\n<p>Return <em>the <strong>number of steps</strong> in the shortest path from the </em><code>entrance</code><em> to the nearest exit, or </em><code>-1</code><em> if no such path exists</em>.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2021/06/04/nearest1-grid.jpg\" style=\"width: 333px; height: 253px;\" />\n<pre>\n<strong>Input:</strong> maze = [[&quot;+&quot;,&quot;+&quot;,&quot;.&quot;,&quot;+&quot;],[&quot;.&quot;,&quot;.&quot;,&quot;.&quot;,&quot;+&quot;],[&quot;+&quot;,&quot;+&quot;,&quot;+&quot;,&quot;.&quot;]], entrance = [1,2]\n<strong>Output:</strong> 1\n<strong>Explanation:</strong> There are 3 exits in this maze at [1,0], [0,2], and [2,3].\nInitially, you are at the entrance cell [1,2].\n- You can reach [1,0] by moving 2 steps left.\n- You can reach [0,2] by moving 1 step up.\nIt is impossible to reach [2,3] from the entrance.\nThus, the nearest exit is [0,2], which is 1 step away.\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2021/06/04/nearesr2-grid.jpg\" style=\"width: 253px; height: 253px;\" />\n<pre>\n<strong>Input:</strong> maze = [[&quot;+&quot;,&quot;+&quot;,&quot;+&quot;],[&quot;.&quot;,&quot;.&quot;,&quot;.&quot;],[&quot;+&quot;,&quot;+&quot;,&quot;+&quot;]], entrance = [1,0]\n<strong>Output:</strong> 2\n<strong>Explanation:</strong> There is 1 exit in this maze at [1,2].\n[1,0] does not count as an exit since it is the entrance cell.\nInitially, you are at the entrance cell [1,0].\n- You can reach [1,2] by moving 2 steps right.\nThus, the nearest exit is [1,2], which is 2 steps away.\n</pre>\n\n<p><strong class=\"example\">Example 3:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2021/06/04/nearest3-grid.jpg\" style=\"width: 173px; height: 93px;\" />\n<pre>\n<strong>Input:</strong> maze = [[&quot;.&quot;,&quot;+&quot;]], entrance = [0,0]\n<strong>Output:</strong> -1\n<strong>Explanation:</strong> There are no exits in this maze.\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>maze.length == m</code></li>\n\t<li><code>maze[i].length == n</code></li>\n\t<li><code>1 &lt;= m, n &lt;= 100</code></li>\n\t<li><code>maze[i][j]</code> is either <code>&#39;.&#39;</code> or <code>&#39;+&#39;</code>.</li>\n\t<li><code>entrance.length == 2</code></li>\n\t<li><code>0 &lt;= entrance<sub>row</sub> &lt; m</code></li>\n\t<li><code>0 &lt;= entrance<sub>col</sub> &lt; n</code></li>\n\t<li><code>entrance</code> will always be an empty cell.</li>\n</ul>\n"
+      ]
     },
     {
       "id": "course-schedule",
@@ -332,16 +522,12 @@
       "title": "Course Schedule",
       "code": "class Solution {\n    public boolean canFinish(int numCourses, int[][] prerequisites) {\n        \n        Map<Integer, List<Integer>> adj = new HashMap();\n        \n        for (int i = 0; i < numCourses; i++) {\n            adj.computeIfAbsent(i, k -> new ArrayList());\n        }\n        \n        for (int i = 0; i < prerequisites.length; i++) {\n            int[] prereq = prerequisites[i];\n            adj.get(prereq[1]).add(prereq[0]);\n        }\n        \n        boolean[] checked = new boolean[numCourses];\n        boolean[] path = new boolean[numCourses];\n        for (int node: adj.keySet()) {\n            if (dfs(adj, node, path, checked)) {\n                return false;\n            }\n        }\n        return true;\n    }\n    \n    private boolean dfs(Map<Integer, List<Integer>> adj, int node, boolean[] path, boolean[] checked) {\n        // bottom cases\n        if (checked[node])\n            // this node has been checked, no cycle would be formed with this node.\n            return false;\n        \n        if (path[node]) {\n            return true;\n        }\n        \n        if (!adj.containsKey(node)) {\n            return false;\n        }\n        path[node] = true;\n        \n        boolean ret = false;\n        \n        for(int neighbor : adj.get(node)) {\n            ret = dfs(adj, neighbor, path, checked);\n            if (ret) {\n                break;\n            }\n        }\n        path[node] = false;\n        checked[node] = true;\n        return ret;\n    }\n}",
       "difficulty": "Medium",
+      "content": "<p>There are a total of <code>numCourses</code> courses you have to take, labeled from <code>0</code> to <code>numCourses - 1</code>. You are given an array <code>prerequisites</code> where <code>prerequisites[i] = [a<sub>i</sub>, b<sub>i</sub>]</code> indicates that you <strong>must</strong> take course <code>b<sub>i</sub></code> first if you want to take course <code>a<sub>i</sub></code>.</p>\n\n<ul>\n\t<li>For example, the pair <code>[0, 1]</code>, indicates that to take course <code>0</code> you have to first take course <code>1</code>.</li>\n</ul>\n\n<p>Return <code>true</code> if you can finish all courses. Otherwise, return <code>false</code>.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<pre>\n<strong>Input:</strong> numCourses = 2, prerequisites = [[1,0]]\n<strong>Output:</strong> true\n<strong>Explanation:</strong> There are a total of 2 courses to take. \nTo take course 1 you should have finished course 0. So it is possible.\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<pre>\n<strong>Input:</strong> numCourses = 2, prerequisites = [[1,0],[0,1]]\n<strong>Output:</strong> false\n<strong>Explanation:</strong> There are a total of 2 courses to take. \nTo take course 1 you should have finished course 0, and to take course 0 you should also have finished course 1. So it is impossible.\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= numCourses &lt;= 2000</code></li>\n\t<li><code>0 &lt;= prerequisites.length &lt;= 5000</code></li>\n\t<li><code>prerequisites[i].length == 2</code></li>\n\t<li><code>0 &lt;= a<sub>i</sub>, b<sub>i</sub> &lt; numCourses</code></li>\n\t<li>All the pairs prerequisites[i] are <strong>unique</strong>.</li>\n</ul>\n",
       "companies": [
         {
           "name": "Amazon",
           "slug": "amazon",
           "frequency": 46
-        },
-        {
-          "name": "Microsoft",
-          "slug": "microsoft",
-          "frequency": 11
         },
         {
           "name": "Google",
@@ -384,16 +570,6 @@
           "frequency": 3
         },
         {
-          "name": "Bloomberg",
-          "slug": "bloomberg",
-          "frequency": 3
-        },
-        {
-          "name": "Oracle",
-          "slug": "oracle",
-          "frequency": 3
-        },
-        {
           "name": "Adobe",
           "slug": "adobe",
           "frequency": 2
@@ -412,6 +588,21 @@
           "name": "Coinbase",
           "slug": "coinbase",
           "frequency": 2
+        },
+        {
+          "name": "Microsoft",
+          "slug": "microsoft",
+          "frequency": 11
+        },
+        {
+          "name": "Bloomberg",
+          "slug": "bloomberg",
+          "frequency": 3
+        },
+        {
+          "name": "Oracle",
+          "slug": "oracle",
+          "frequency": 3
         },
         {
           "name": "Snapchat",
@@ -448,266 +639,7 @@
           "slug": "wayfair",
           "frequency": 2
         }
-      ],
-      "premium": false,
-      "content": "<p>There are a total of <code>numCourses</code> courses you have to take, labeled from <code>0</code> to <code>numCourses - 1</code>. You are given an array <code>prerequisites</code> where <code>prerequisites[i] = [a<sub>i</sub>, b<sub>i</sub>]</code> indicates that you <strong>must</strong> take course <code>b<sub>i</sub></code> first if you want to take course <code>a<sub>i</sub></code>.</p>\n\n<ul>\n\t<li>For example, the pair <code>[0, 1]</code>, indicates that to take course <code>0</code> you have to first take course <code>1</code>.</li>\n</ul>\n\n<p>Return <code>true</code> if you can finish all courses. Otherwise, return <code>false</code>.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n\n<pre>\n<strong>Input:</strong> numCourses = 2, prerequisites = [[1,0]]\n<strong>Output:</strong> true\n<strong>Explanation:</strong> There are a total of 2 courses to take. \nTo take course 1 you should have finished course 0. So it is possible.\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<pre>\n<strong>Input:</strong> numCourses = 2, prerequisites = [[1,0],[0,1]]\n<strong>Output:</strong> false\n<strong>Explanation:</strong> There are a total of 2 courses to take. \nTo take course 1 you should have finished course 0, and to take course 0 you should also have finished course 1. So it is impossible.\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= numCourses &lt;= 2000</code></li>\n\t<li><code>0 &lt;= prerequisites.length &lt;= 5000</code></li>\n\t<li><code>prerequisites[i].length == 2</code></li>\n\t<li><code>0 &lt;= a<sub>i</sub>, b<sub>i</sub> &lt; numCourses</code></li>\n\t<li>All the pairs prerequisites[i] are <strong>unique</strong>.</li>\n</ul>\n"
-    },
-    {
-      "id": "pacific-atlantic-water-flow",
-      "slug": "pacific-atlantic-water-flow",
-      "title": "Pacific Atlantic Water Flow",
-      "code": "class Solution {\n    private static final int[][] DIRECTIONS = new int[][]{{0, 1}, {1, 0}, {-1, 0}, {0, -1}};\n    \n    public List<List<Integer>> pacificAtlantic(int[][] heights) {\n        // Check if input is empty\n        if (heights.length == 0 || heights[0].length == 0) {\n            return new ArrayList<>();\n        }\n        \n        // Save initial values to parameters\n        int numRows = heights.length;\n        int numCols = heights[0].length;\n        boolean[][] pacificReachable = new boolean[numRows][numCols];\n        boolean[][] atlanticReachable = new boolean[numRows][numCols];\n        \n        // Loop through each cell adjacent to the oceans and start a DFS\n        for (int i = 0; i < numRows; i++) {\n            dfs(heights, i, 0, pacificReachable);\n            dfs(heights, i, numCols - 1, atlanticReachable);\n        }\n        for (int i = 0; i < numCols; i++) {\n            dfs(heights, 0, i, pacificReachable);\n            dfs(heights, numRows - 1, i, atlanticReachable);\n        }\n        \n        // Find all cells that can reach both oceans\n        List<List<Integer>> commonCells = new ArrayList<>();\n        for (int i = 0; i < numRows; i++) {\n            for (int j = 0; j < numCols; j++) {\n                if (pacificReachable[i][j] && atlanticReachable[i][j]) {\n                    commonCells.add(List.of(i, j));\n                }\n            }\n        }\n        return commonCells;\n    }\n    \n    private void dfs(int[][] heights, int row, int col, boolean[][] reachable) {\n        // This cell is reachable, so mark it\n        reachable[row][col] = true;\n        for (int[] dir : DIRECTIONS) { // Check all 4 directions\n            int newRow = row + dir[0];\n            int newCol = col + dir[1];\n            // Check if new cell is within bounds\n            if (newRow < 0 || newRow >= heights.length || newCol < 0 || newCol >= heights[0].length) {\n                continue;\n            }\n            // Check that the new cell hasn't already been visited\n            if (reachable[newRow][newCol]) {\n                continue;\n            }\n            // Check that the new cell has a higher or equal height,\n            // So that water can flow from the new cell to the old cell\n            if (heights[newRow][newCol] < heights[row][col]) {\n                continue;\n            }\n            // If we've gotten this far, that means the new cell is reachable\n            dfs(heights, newRow, newCol, reachable);\n        }\n    }\n}",
-      "difficulty": "Medium",
-      "companies": [
-        {
-          "name": "Amazon",
-          "slug": "amazon",
-          "frequency": 9
-        },
-        {
-          "name": "Google",
-          "slug": "google",
-          "frequency": 5
-        },
-        {
-          "name": "Bloomberg",
-          "slug": "bloomberg",
-          "frequency": 3
-        },
-        {
-          "name": "Uber",
-          "slug": "uber",
-          "frequency": 3
-        },
-        {
-          "name": "Microsoft",
-          "slug": "microsoft",
-          "frequency": 2
-        },
-        {
-          "name": "Apple",
-          "slug": "apple",
-          "frequency": 2
-        },
-        {
-          "name": "TikTok",
-          "slug": "tiktok",
-          "frequency": 2
-        },
-        {
-          "name": "ByteDance",
-          "slug": "bytedance",
-          "frequency": 2
-        },
-        {
-          "name": "Salesforce",
-          "slug": "salesforce",
-          "frequency": 2
-        },
-        {
-          "name": "Adobe",
-          "slug": "adobe",
-          "frequency": 2
-        }
-      ],
-      "premium": false,
-      "content": "<p>There is an <code>m x n</code> rectangular island that borders both the <strong>Pacific Ocean</strong> and <strong>Atlantic Ocean</strong>. The <strong>Pacific Ocean</strong> touches the island&#39;s left and top edges, and the <strong>Atlantic Ocean</strong> touches the island&#39;s right and bottom edges.</p>\n\n<p>The island is partitioned into a grid of square cells. You are given an <code>m x n</code> integer matrix <code>heights</code> where <code>heights[r][c]</code> represents the <strong>height above sea level</strong> of the cell at coordinate <code>(r, c)</code>.</p>\n\n<p>The island receives a lot of rain, and the rain water can flow to neighboring cells directly north, south, east, and west if the neighboring cell&#39;s height is <strong>less than or equal to</strong> the current cell&#39;s height. Water can flow from any cell adjacent to an ocean into the ocean.</p>\n\n<p>Return <em>a <strong>2D list</strong> of grid coordinates </em><code>result</code><em> where </em><code>result[i] = [r<sub>i</sub>, c<sub>i</sub>]</code><em> denotes that rain water can flow from cell </em><code>(r<sub>i</sub>, c<sub>i</sub>)</code><em> to <strong>both</strong> the Pacific and Atlantic oceans</em>.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<img alt=\"\" src=\"https://assets.leetcode.com/uploads/2021/06/08/waterflow-grid.jpg\" style=\"width: 400px; height: 400px;\" />\n<pre>\n<strong>Input:</strong> heights = [[1,2,2,3,5],[3,2,3,4,4],[2,4,5,3,1],[6,7,1,4,5],[5,1,1,2,4]]\n<strong>Output:</strong> [[0,4],[1,3],[1,4],[2,2],[3,0],[3,1],[4,0]]\n<strong>Explanation:</strong> The following cells can flow to the Pacific and Atlantic oceans, as shown below:\n[0,4]: [0,4] -&gt; Pacific Ocean \n&nbsp;      [0,4] -&gt; Atlantic Ocean\n[1,3]: [1,3] -&gt; [0,3] -&gt; Pacific Ocean \n&nbsp;      [1,3] -&gt; [1,4] -&gt; Atlantic Ocean\n[1,4]: [1,4] -&gt; [1,3] -&gt; [0,3] -&gt; Pacific Ocean \n&nbsp;      [1,4] -&gt; Atlantic Ocean\n[2,2]: [2,2] -&gt; [1,2] -&gt; [0,2] -&gt; Pacific Ocean \n&nbsp;      [2,2] -&gt; [2,3] -&gt; [2,4] -&gt; Atlantic Ocean\n[3,0]: [3,0] -&gt; Pacific Ocean \n&nbsp;      [3,0] -&gt; [4,0] -&gt; Atlantic Ocean\n[3,1]: [3,1] -&gt; [3,0] -&gt; Pacific Ocean \n&nbsp;      [3,1] -&gt; [4,1] -&gt; Atlantic Ocean\n[4,0]: [4,0] -&gt; Pacific Ocean \n       [4,0] -&gt; Atlantic Ocean\nNote that there are other possible paths for these cells to flow to the Pacific and Atlantic oceans.\n</pre>\n\n<p><strong class=\"example\">Example 2:</strong></p>\n\n<pre>\n<strong>Input:</strong> heights = [[1]]\n<strong>Output:</strong> [[0,0]]\n<strong>Explanation:</strong> The water can flow from the only cell to the Pacific and Atlantic oceans.\n</pre>\n\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>m == heights.length</code></li>\n\t<li><code>n == heights[r].length</code></li>\n\t<li><code>1 &lt;= m, n &lt;= 200</code></li>\n\t<li><code>0 &lt;= heights[r][c] &lt;= 10<sup>5</sup></code></li>\n</ul>\n"
-    },
-    {
-      "id": "group-anagrams",
-      "slug": "group-anagrams",
-      "title": "Group Anagrams",
-      "code": "class Solution {\n    public List<List<String>> groupAnagrams(String[] strs) {\n        if (strs.length == 0) {\n            return new ArrayList();\n        }\n        \n        Map<String, List> ans = new HashMap();\n        \n        for (String s : strs) {\n            char[] ca = s.toCharArray();\n            Arrays.sort(ca);\n            String key = String.valueOf(ca);\n            if (!ans.containsKey(key)){\n                ans.put(key, new ArrayList());\n            }\n            ans.get(key).add(s);\n        }\n        return new ArrayList(ans.values());\n    }\n}",
-      "difficulty": "Medium",
-      "companies": [
-        {
-          "name": "Amazon",
-          "slug": "amazon",
-          "frequency": 51
-        },
-        {
-          "name": "Apple",
-          "slug": "apple",
-          "frequency": 9
-        },
-        {
-          "name": "Yandex",
-          "slug": "yandex",
-          "frequency": 7
-        },
-        {
-          "name": "Bloomberg",
-          "slug": "bloomberg",
-          "frequency": 7
-        },
-        {
-          "name": "Adobe",
-          "slug": "adobe",
-          "frequency": 7
-        },
-        {
-          "name": "Facebook",
-          "slug": "facebook",
-          "frequency": 6
-        },
-        {
-          "name": "Google",
-          "slug": "google",
-          "frequency": 6
-        },
-        {
-          "name": "BlackRock",
-          "slug": "blackrock",
-          "frequency": 6
-        },
-        {
-          "name": "Affirm",
-          "slug": "affirm",
-          "frequency": 5
-        },
-        {
-          "name": "Uber",
-          "slug": "uber",
-          "frequency": 4
-        },
-        {
-          "name": "Microsoft",
-          "slug": "microsoft",
-          "frequency": 4
-        },
-        {
-          "name": "eBay",
-          "slug": "ebay",
-          "frequency": 4
-        },
-        {
-          "name": "Expedia",
-          "slug": "expedia",
-          "frequency": 4
-        },
-        {
-          "name": "Walmart Global Tech",
-          "slug": "walmart-labs",
-          "frequency": 4
-        },
-        {
-          "name": "Visa",
-          "slug": "visa",
-          "frequency": 4
-        },
-        {
-          "name": "Goldman Sachs",
-          "slug": "goldman-sachs",
-          "frequency": 3
-        },
-        {
-          "name": "Oracle",
-          "slug": "oracle",
-          "frequency": 3
-        },
-        {
-          "name": "JPMorgan",
-          "slug": "jpmorgan",
-          "frequency": 3
-        },
-        {
-          "name": "Salesforce",
-          "slug": "salesforce",
-          "frequency": 3
-        },
-        {
-          "name": "VMware",
-          "slug": "vmware",
-          "frequency": 3
-        },
-        {
-          "name": "Twilio",
-          "slug": "twilio",
-          "frequency": 3
-        },
-        {
-          "name": "ServiceNow",
-          "slug": "servicenow",
-          "frequency": 3
-        },
-        {
-          "name": "Yahoo",
-          "slug": "yahoo",
-          "frequency": 2
-        },
-        {
-          "name": "Mathworks",
-          "slug": "mathworks",
-          "frequency": 2
-        },
-        {
-          "name": "Atlassian",
-          "slug": "atlassian",
-          "frequency": 2
-        },
-        {
-          "name": "Samsung",
-          "slug": "samsung",
-          "frequency": 2
-        },
-        {
-          "name": "TikTok",
-          "slug": "tiktok",
-          "frequency": 2
-        },
-        {
-          "name": "Cruise Automation",
-          "slug": "cruise-automation",
-          "frequency": 2
-        },
-        {
-          "name": "Avalara",
-          "slug": "avalara",
-          "frequency": 2
-        },
-        {
-          "name": "Netflix",
-          "slug": "netflix",
-          "frequency": 2
-        },
-        {
-          "name": "Snapchat",
-          "slug": "snapchat",
-          "frequency": 2
-        },
-        {
-          "name": "Alation",
-          "slug": "alation",
-          "frequency": 2
-        },
-        {
-          "name": "IBM",
-          "slug": "ibm",
-          "frequency": 2
-        },
-        {
-          "name": "Cisco",
-          "slug": "cisco",
-          "frequency": 2
-        },
-        {
-          "name": "C3 IoT",
-          "slug": "c3-iot",
-          "frequency": 2
-        },
-        {
-          "name": "PayTM",
-          "slug": "paytm",
-          "frequency": 2
-        },
-        {
-          "name": "Nvidia",
-          "slug": "nvidia",
-          "frequency": 2
-        }
-      ],
-      "premium": false,
-      "content": "<p>Given an array of strings <code>strs</code>, group <strong>the anagrams</strong> together. You can return the answer in <strong>any order</strong>.</p>\n\n<p>An <strong>Anagram</strong> is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.</p>\n\n<p>&nbsp;</p>\n<p><strong class=\"example\">Example 1:</strong></p>\n<pre><strong>Input:</strong> strs = [\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"]\n<strong>Output:</strong> [[\"bat\"],[\"nat\",\"tan\"],[\"ate\",\"eat\",\"tea\"]]\n</pre><p><strong class=\"example\">Example 2:</strong></p>\n<pre><strong>Input:</strong> strs = [\"\"]\n<strong>Output:</strong> [[\"\"]]\n</pre><p><strong class=\"example\">Example 3:</strong></p>\n<pre><strong>Input:</strong> strs = [\"a\"]\n<strong>Output:</strong> [[\"a\"]]\n</pre>\n<p>&nbsp;</p>\n<p><strong>Constraints:</strong></p>\n\n<ul>\n\t<li><code>1 &lt;= strs.length &lt;= 10<sup>4</sup></code></li>\n\t<li><code>0 &lt;= strs[i].length &lt;= 100</code></li>\n\t<li><code>strs[i]</code> consists of lowercase English letters.</li>\n</ul>\n"
+      ]
     }
   ]
 }

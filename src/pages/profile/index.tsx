@@ -6,29 +6,19 @@ import Layout from "../../components/layout/layout";
 import Header from "../../components/header";
 import { useSession } from "next-auth/react";
 import { trpc } from "../../utils/trpc";
-import { useEffect } from "react";
 
 export default function NewPet() {
   const router = useRouter();
   const session = useSession();
-  const { control, handleSubmit, reset } = useForm({
+  const { control, handleSubmit } = useForm({
     defaultValues: {
       session: session.data?.user?.LEETCODE_SESSION,
       csrf: session.data?.user?.LEETCODE_CSRF,
     },
   });
 
-  useEffect(() => {
-    if (session) {
-      reset({
-        session: session.data?.user?.LEETCODE_SESSION,
-        csrf: session.data?.user?.LEETCODE_CSRF,
-      });
-    }
-  }, [session, reset]);
-
   const mutation = trpc.auth.updateUser.useMutation();
-  
+
   return (
     <Layout headerContent={<Header variant={1}>User Page</Header>}>
       <form

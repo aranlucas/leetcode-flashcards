@@ -7,6 +7,9 @@ declare module "next-auth" {
   interface Session {
     user?: {
       id: string;
+      userId: string;
+      LEETCODE_SESSION: string;
+      LEETCODE_CSRF: string;
     } & DefaultSession["user"];
   }
 }

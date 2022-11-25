@@ -1,7 +1,7 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
-import { prisma } from "../../../server/db/client";
+import { prisma } from "../../../server/client/db";
 
 if (process.env.GITHUB_ID == null) {
   throw new Error(
@@ -28,17 +28,29 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
-    async jwt({ token, account }) {
+    async jwt({ token, account, profile, user }) {
       // Persist the OAuth access_token to the token right after signin
       if (account) {
-        token.accessToken = account?.access_token;
+        token.accessToken = account.access_token;
+      }
+      if (user) {
+        token.id = user.id;
+        // @ts-expect-error
+        token.LEETCODE_SESSION = user.LEETCODE_SESSION;
+        // @ts-expect-error
+        token.LEETCODE_CSRF = user.LEETCODE_CSRF;
       }
 
       return token;
     },
-    async session({ session, user }) {
+    async session({ session, token }) {
       if (session.user) {
-        session.user.id = user.id;
+        // @ts-expect-error
+        session.user.id = token.id ?? "";
+        // @ts-expect-error
+        session.user.LEETCODE_SESSION = token.LEETCODE_SESSION ?? "";
+        // @ts-expect-error
+        session.user.LEETCODE_CSRF = token.LEETCODE_CSRF ?? "";
       }
       return session;
     },

@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import axios from "axios";
 
-export async function createCSRFToken({ sessionId, csrf }) {
+export async function createLeetCodeClient({ sessionId, csrf }) {
   const instance = axios.create({
     baseURL: "https://leetcode.com",
   });
@@ -17,7 +17,7 @@ export async function createCSRFToken({ sessionId, csrf }) {
 
 const questionsPath = path.join(process.cwd(), "src/data/questions.json");
 
-const { instance } = await createCSRFToken({
+const { instance } = await createLeetCodeClient({
   sessionId: process.env.LEETCODE_SESSION_TOKEN,
   csrf: process.env.LEETCODE_CSRF,
 });

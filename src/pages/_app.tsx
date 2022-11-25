@@ -18,13 +18,8 @@ type AppPropsWithLayout = AppProps<{
   colorScheme: ColorScheme;
 };
 
-function MyApp({
-  Component,
-  pageProps,
-  colorScheme: initialColorScheme,
-}: AppPropsWithLayout) {
-  const [colorScheme, setColorScheme] =
-    useState<ColorScheme>(initialColorScheme);
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  const [colorScheme, setColorScheme] = useState<ColorScheme>("dark");
 
   const toggleColorScheme = (value?: ColorScheme) => {
     const nextColorScheme =

@@ -3,7 +3,8 @@ import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import { type Session } from "next-auth";
 
 import { getServerAuthSession } from "../common/get-server-auth-session";
-import { prisma } from "../db/client";
+import { prisma } from "../client/db";
+import { createLeetCodeClient } from "../client/leetcode";
 
 interface CreateContextOptions {
   session: Session | null;
@@ -15,7 +16,12 @@ interface CreateContextOptions {
  * @see https://create.t3.gg/en/usage/trpc#-servertrpccontextts
  **/
 export const createContextInner = async (opts: CreateContextOptions) => {
+  const leetcode = await createLeetCodeClient({
+    sessionId: opts.session?.user?.LEETCODE_SESSION ?? "",
+    csrf: opts.session?.user?.LEETCODE_CSRF ?? "",
+  });
   return {
+    leetcode: leetcode.instance,
     session: opts.session,
     prisma,
   };

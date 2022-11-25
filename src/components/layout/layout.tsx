@@ -7,15 +7,17 @@ interface LayoutProps {
   children: ReactNode;
   headerContent?: ReactNode;
   disableBreadcrumbs?: boolean;
+  footer?: ReactNode;
 }
 
 export default function Layout({
   children,
   headerContent,
   disableBreadcrumbs,
+  footer,
 }: LayoutProps) {
   return (
-    <AppShell padding="md" header={<HeaderAction />}>
+    <AppShell padding="md" header={<HeaderAction />} footer={footer}>
       <Container>
         <Stack>
           <Group>{!disableBreadcrumbs && <Breadcrumbs />}</Group>

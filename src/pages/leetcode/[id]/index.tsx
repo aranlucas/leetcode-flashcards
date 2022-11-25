@@ -4,53 +4,69 @@ import Layout from "../../../components/layout/layout";
 import { getAllQuestionId, getQuestionData } from "../../../lib/leetcode";
 // @ts-expect-error
 import PrismRenderer from "prism-react-renderer/prism";
-import { createStyles, Stack, TypographyStylesProvider } from "@mantine/core";
-import { Carousel } from "@mantine/carousel";
+import {
+  Stack,
+  TypographyStylesProvider,
+  Footer,
+  Flex,
+  Button,
+  Divider,
+} from "@mantine/core";
+import { trpc } from "../../../utils/trpc";
+import { useState } from "react";
+import { useScrollIntoView } from "@mantine/hooks";
+import { useRouter } from "next/router";
 
 // @ts-expect-error
 (typeof global !== "undefined" ? global : window).Prism = PrismRenderer;
 
 require("prismjs/components/prism-java");
 
-const useStyles = createStyles((_theme, _params, getRef) => ({
-  controls: {
-    ref: getRef("controls"),
-    transition: "opacity 150ms ease",
-    opacity: 0,
-  },
-
-  root: {
-    "&:hover": {
-      [`& .${getRef("controls")}`]: {
-        opacity: 1,
-      },
-    },
-  },
-}));
-
 export default function Post({
   question,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { classes } = useStyles();
+  const router = useRouter();
+  const { data } = trpc.leetcode.getSubmissions.useQuery({
+    titleSlug: router.query.id as string,
+  });
 
+  const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>();
+
+  const language = data?.lang || "java";
+  const code = data?.code || question.code;
+
+  const [showAnswer, setShowAnswer] = useState(false);
   return (
-    <Layout>
+    <Layout
+      footer={
+        <Footer height={60} p="md">
+          <Flex
+            gap="md"
+            justify="center"
+            align="center"
+            direction="row"
+            wrap="wrap"
+          >
+            <Button
+              onClick={() => {
+                setShowAnswer(true);
+                scrollIntoView({ alignment: "start" });
+              }}
+            >
+              Show answer
+            </Button>
+          </Flex>
+        </Footer>
+      }
+    >
       <Stack>
-        <Carousel
-          loop
-          controlsOffset="xs"
-          sx={{ flex: 1 }}
-          classNames={classes}
-        >
-          <Carousel.Slide>
-            <TypographyStylesProvider>
-              <div dangerouslySetInnerHTML={{ __html: question.content }} />
-            </TypographyStylesProvider>
-          </Carousel.Slide>
-          <Carousel.Slide>
-            <Prism language={"java" as any}>{question.code}</Prism>
-          </Carousel.Slide>
-        </Carousel>
+        <TypographyStylesProvider>
+          <div dangerouslySetInnerHTML={{ __html: question.content }} />
+        </TypographyStylesProvider>
+        <Divider my="sm" />
+        <div ref={targetRef}>
+          {showAnswer && <Prism language={language}>{code}</Prism>}
+        </div>
       </Stack>
     </Layout>
   );

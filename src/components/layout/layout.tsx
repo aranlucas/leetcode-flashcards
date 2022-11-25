@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactElement, ReactNode } from "react";
 import { AppShell, Container, Group, Stack } from "@mantine/core";
 import { HeaderAction } from "./header";
 import Breadcrumbs from "../breadcrumbs";
@@ -7,7 +7,7 @@ interface LayoutProps {
   children: ReactNode;
   headerContent?: ReactNode;
   disableBreadcrumbs?: boolean;
-  footer?: ReactNode;
+  footer?: ReactElement;
 }
 
 export default function Layout({

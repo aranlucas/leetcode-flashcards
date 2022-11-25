@@ -30,7 +30,7 @@ export default function NewPet() {
         })}
       >
         <Paper radius="md" p="md" withBorder>
-          <pre>{JSON.stringify(session)}</pre>
+          <pre>{JSON.stringify(session, null, 2)}</pre>
           <TextInput
             control={control}
             name="session"

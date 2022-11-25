@@ -13,14 +13,29 @@ import {
   Divider,
 } from "@mantine/core";
 import { trpc } from "../../../utils/trpc";
-import { useState } from "react";
 import { useScrollIntoView } from "@mantine/hooks";
 import { useRouter } from "next/router";
+import { useMachine } from "@xstate/react";
+import { createMachine } from "xstate";
+import { openModal, closeAllModals } from "@mantine/modals";
+import RichText from "../../../components/RichText";
 
 // @ts-expect-error
 (typeof global !== "undefined" ? global : window).Prism = PrismRenderer;
 
 require("prismjs/components/prism-java");
+
+const reviewMachine = createMachine({
+  predictableActionArguments: true,
+  id: "review",
+  initial: "problem",
+  states: {
+    problem: {
+      on: { REVIEW: "review" },
+    },
+    review: {},
+  },
+});
 
 export default function Post({
   question,
@@ -29,13 +44,16 @@ export default function Post({
   const { data } = trpc.leetcode.getSubmissions.useQuery({
     titleSlug: router.query.id as string,
   });
+  const { data: note } = trpc.leetcode.getNote.useQuery({
+    titleSlug: router.query.id as string,
+  });
+  const [state, send] = useMachine(reviewMachine);
 
   const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>();
 
   const language = data?.lang || "java";
   const code = data?.code || question.code;
 
-  const [showAnswer, setShowAnswer] = useState(false);
   return (
     <Layout
       footer={
@@ -47,14 +65,48 @@ export default function Post({
             direction="row"
             wrap="wrap"
           >
-            <Button
-              onClick={() => {
-                setShowAnswer(true);
-                scrollIntoView({ alignment: "start" });
-              }}
-            >
-              Show answer
-            </Button>
+            {state.value === "problem" && (
+              <>
+                <Button
+                  onClick={() => {
+                    scrollIntoView({ alignment: "start" });
+                    send("REVIEW");
+                  }}
+                >
+                  Show answer
+                </Button>
+                <Button
+                  onClick={() => {
+                    openModal({
+                      children: (
+                        <>
+                          <RichText readOnly id="rte" value={note.note || ""} />
+                          <Button
+                            fullWidth
+                            onClick={() => {
+                              closeAllModals();
+                            }}
+                            mt="md"
+                          >
+                            Submit
+                          </Button>
+                        </>
+                      ),
+                    });
+                  }}
+                >
+                  Show Notes
+                </Button>
+              </>
+            )}
+            {state.value === "review" && (
+              <>
+                <Button onClick={() => {}}>Again</Button>
+                <Button onClick={() => {}}>Hard</Button>
+                <Button onClick={() => {}}>Good</Button>
+                <Button onClick={() => {}}>Easy</Button>
+              </>
+            )}
           </Flex>
         </Footer>
       }
@@ -65,7 +117,9 @@ export default function Post({
         </TypographyStylesProvider>
         <Divider my="sm" />
         <div ref={targetRef}>
-          {showAnswer && <Prism language={language}>{code}</Prism>}
+          {state.value === "review" && (
+            <Prism language={language}>{code}</Prism>
+          )}
         </div>
       </Stack>
     </Layout>

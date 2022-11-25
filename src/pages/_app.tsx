@@ -11,6 +11,7 @@ import { NotificationsProvider } from "@mantine/notifications";
 import { setCookie } from "cookies-next";
 import { Session } from "next-auth";
 import { trpc } from "../utils/trpc";
+import { ModalsProvider } from "@mantine/modals";
 
 type AppPropsWithLayout = AppProps<{
   session: Session;
@@ -50,9 +51,11 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           withNormalizeCSS
         >
           <SessionProvider session={pageProps.session}>
-            <NotificationsProvider>
-              <Component {...pageProps} />
-            </NotificationsProvider>
+            <ModalsProvider>
+              <NotificationsProvider>
+                <Component {...pageProps} />
+              </NotificationsProvider>
+            </ModalsProvider>
           </SessionProvider>
         </MantineProvider>
       </ColorSchemeProvider>

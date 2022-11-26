@@ -75,12 +75,13 @@ export const leetCodeRouter = router({
 
       review = reviewProblem(review, grade as SuperMemoGrade);
 
-      return ctx.prisma.review.upsert({
+      const newReview = await ctx.prisma.review.upsert({
         where: {
           id: reviewId,
         },
         create: review,
         update: review,
       });
+      return newReview;
     }),
 });

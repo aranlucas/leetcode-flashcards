@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Layout from "../../components/layout/layout";
 import { createColumnHelper } from "@tanstack/react-table";
 import Table from "../../components/table";
@@ -15,9 +14,9 @@ export default function AllPets() {
   const columns = [
     columnHelper.accessor("name", {
       cell: (info) => (
-        <Link href={`/pets/${(info.row.original.id ?? "").toString()}`}>
+        <NextLink href={`/pets/${(info.row.original.id ?? "").toString()}`}>
           {info.getValue()}
-        </Link>
+        </NextLink>
       ),
     }),
     columnHelper.accessor("species", {

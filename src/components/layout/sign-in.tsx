@@ -1,4 +1,6 @@
-import { Button, Avatar, Popover, Text } from "@mantine/core";
+import { Button, Avatar, Text, Menu, Group } from "@mantine/core";
+import { NextLink } from "@mantine/next";
+import { IconLogout, IconSettings } from "@tabler/icons";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function SignIn() {
@@ -13,14 +15,48 @@ export default function SignIn() {
   }
 
   return (
-    <Popover width={200} position="bottom" withArrow shadow="md">
-      <Popover.Target>
-        <Avatar src={session.user?.image} alt="it's me" />
-      </Popover.Target>
-      <Popover.Dropdown>
-        <Text>Hello {session.user?.name}</Text>
-        <Button onClick={async () => await signOut()}>Sign out</Button>
-      </Popover.Dropdown>
-    </Popover>
+    <Group position="center">
+      <Menu withArrow width={300} position="bottom" transition="pop">
+        <Menu.Target>
+          <Avatar src={session.user?.image} alt="it's me" />
+        </Menu.Target>
+        <Menu.Dropdown>
+          <Menu.Item>
+            <Group>
+              <Avatar radius="xl" src={session.user?.image} />
+
+              <div>
+                <Text weight={500}>{session.user?.name}</Text>
+                <Text size="xs" color="dimmed">
+                  {session.user?.email}
+                </Text>
+              </div>
+            </Group>
+          </Menu.Item>
+
+          <Menu.Divider />
+
+          <Menu.Label>Settings</Menu.Label>
+          <Menu.Item icon={<IconSettings size={14} stroke={1.5} />}>
+            <NextLink legacyBehavior href="/profile">
+              Account settings
+            </NextLink>
+          </Menu.Item>
+          <Menu.Item
+            icon={
+              <IconLogout
+                size={14}
+                stroke={1.5}
+                onClick={async () => {
+                  await signOut();
+                }}
+              />
+            }
+          >
+            Logout
+          </Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+    </Group>
   );
 }

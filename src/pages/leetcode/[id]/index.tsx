@@ -18,7 +18,6 @@ import { useRouter } from "next/router";
 import { useMachine } from "@xstate/react";
 import { createMachine } from "xstate";
 import { openModal, closeAllModals } from "@mantine/modals";
-import RichText from "../../../components/RichText";
 
 // @ts-expect-error
 (typeof global !== "undefined" ? global : window).Prism = PrismRenderer;
@@ -44,9 +43,7 @@ export default function Post({
   const { data } = trpc.leetcode.getSubmissions.useQuery({
     titleSlug: router.query.id as string,
   });
-  const { data: note } = trpc.leetcode.getNote.useQuery({
-    titleSlug: router.query.id as string,
-  });
+
   const [state, send] = useMachine(reviewMachine);
 
   const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>();
@@ -80,7 +77,6 @@ export default function Post({
                     openModal({
                       children: (
                         <>
-                          <RichText readOnly id="rte" value={note.note || ""} />
                           <Button
                             fullWidth
                             onClick={() => {

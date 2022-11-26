@@ -49,7 +49,8 @@ export const leetCodeRouter = router({
           repetition: 0,
           efactor: 2.5
         },
-        create: { 
+        create: {
+          id: reviewId, 
           problemId: input.problemId,
           authorId: id!!,
           problemTitle: 'ProblemTitle',

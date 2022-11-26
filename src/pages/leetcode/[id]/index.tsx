@@ -59,42 +59,46 @@ export default function Post({
   const gradesModel = [
     {
       label: "complete blackout.",
-      message: "You suck! 🤥"
+      message: "You suck! 🤥",
     },
     {
       label: "incorrect response; the correct one remembered.",
-      message: "You suck less. 🤥"
+      message: "You suck less. 🤥",
     },
     {
       label: "incorrect response; where the correct one seemed easy to recall.",
-      message: "You suck lesser. 🤥"
+      message: "You suck lesser. 🤥",
     },
     {
       label: "correct response recalled with serious difficulty.",
-      message: "Meh. 😕"
+      message: "Meh. 😕",
     },
     {
       label: "correct response after a hesitation.",
-      message: "You dont suck. 😐"
+      message: "You dont suck. 😐",
     },
     {
       label: "perfect response.",
-      message: "Well done! 🥳"
-    }
-]
+      message: "Well done! 🥳",
+    },
+  ];
 
   const grades = gradesModel.map(({ label, message }, idx) => {
     return (
       <Tooltip label={label} key={idx}>
-          <Button onClick={() => {
-            mutation.mutate({grade: idx, problemId: id});
+        <Button
+          onClick={() => {
+            mutation.mutate({ grade: idx, problemId: id });
             showNotification({
-              title: 'Review Submitted',
-              message
+              title: "Review Submitted",
+              message,
             });
-          }}>{idx}</Button>
-        </Tooltip>
-    )
+          }}
+        >
+          {idx}
+        </Button>
+      </Tooltip>
+    );
   });
 
   return (
@@ -141,11 +145,7 @@ export default function Post({
                 </Button>
               </>
             )}
-            {state.value === "review" && (
-              <>
-                {grades}
-              </>
-            )}
+            {state.value === "review" && <>{grades}</>}
           </Flex>
         </Footer>
       }

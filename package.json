@@ -7,8 +7,9 @@
     "analyze": "cross-env ANALYZE=true next build",
     "build": "next build",
     "dev": "next dev",
-    "postinstall": "prisma generate",
     "lint": "next lint --fix",
+    "postinstall": "prisma generate",
+    "prettier:fix": "npx prettier src  --write",
     "start": "next start",
     "studio": "prisma studio",
     "typecheck": "tsc --noEmit"
@@ -70,8 +71,10 @@
     "eslint-config-standard-with-typescript": "^23.0.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-n": "^15.5.1",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.31.11",
+    "prettier": "^2.8.0",
     "prisma": "^4.6.1",
     "typescript": "^4.9.3"
   }

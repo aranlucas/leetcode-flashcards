@@ -43,15 +43,10 @@ export default function SignIn() {
             </NextLink>
           </Menu.Item>
           <Menu.Item
-            icon={
-              <IconLogout
-                size={14}
-                stroke={1.5}
-                onClick={async () => {
-                  await signOut();
-                }}
-              />
-            }
+            onClick={async () => {
+              await signOut();
+            }}
+            icon={<IconLogout size={14} stroke={1.5} />}
           >
             Logout
           </Menu.Item>

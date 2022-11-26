@@ -65,9 +65,21 @@ model User {
   image            String?
   accounts         Account[]
   sessions         Session[]
+  reviews          Review[]
   role             Role      @default(USER)
   LEETCODE_SESSION String?
   LEETCODE_CSRF    String?
+}
+
+model Review {
+  id       String @id
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String
+  interval Int
+  repetition Int
+  efactor Float
+  problemId String
+  problemTitle String
 }
 
 model VerificationToken {

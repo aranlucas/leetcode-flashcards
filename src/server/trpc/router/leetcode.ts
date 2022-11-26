@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { router, publicProcedure } from "../trpc";
+import { router, publicProcedure, protectedProcedure } from "../trpc";
 import gql from "graphql-tag";
 import { print } from "graphql";
 
@@ -35,4 +35,28 @@ export const leetCodeRouter = router({
 
       return { note: response.data.data.question.note };
     }),
+    updateReview: protectedProcedure
+    .input(z.object({ grade: z.number(), problemId: z.string()}))
+    .mutation( async ({ ctx, input }) => {
+      const id = ctx.session?.user?.id;
+      const { problemId } = input;
+      
+      const reviewId = `${id}_${problemId}`;
+      return ctx.prisma.review.upsert({
+        where: { id: reviewId },
+        update: {
+          interval: 0,
+          repetition: 0,
+          efactor: 2.5
+        },
+        create: { 
+          problemId: input.problemId,
+          authorId: id!!,
+          problemTitle: 'ProblemTitle',
+          interval: 0,
+          repetition: 0,
+          efactor: 2.5
+         },
+      })
+    })
 });

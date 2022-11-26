@@ -40,9 +40,12 @@ export default function Post({
   question,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter();
+  const id = router.query.id as string;
   const { data } = trpc.leetcode.getSubmissions.useQuery({
-    titleSlug: router.query.id as string,
+    titleSlug: id,
   });
+
+  const mutation = trpc.leetcode.updateReview.useMutation();
 
   const [state, send] = useMachine(reviewMachine);
 
@@ -97,7 +100,9 @@ export default function Post({
             )}
             {state.value === "review" && (
               <>
-                <Button onClick={() => {}}>Again</Button>
+                <Button onClick={() => {
+                  mutation.mutateAsync({grade: 0, problemId: id})
+                }}>Again</Button>
                 <Button onClick={() => {}}>Hard</Button>
                 <Button onClick={() => {}}>Good</Button>
                 <Button onClick={() => {}}>Easy</Button>

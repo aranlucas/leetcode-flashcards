@@ -85,7 +85,7 @@ export default function Post({
 
   const grades = gradesModel.map(({ label, message }, idx) => {
     return (
-      <Tooltip label={label}>
+      <Tooltip label={label} key={idx}>
           <Button onClick={() => {
             mutation.mutate({grade: idx, problemId: id});
             showNotification({

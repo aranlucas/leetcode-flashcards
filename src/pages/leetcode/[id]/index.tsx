@@ -104,7 +104,7 @@ export default function Post({
               <>
                 <Tooltip label="complete blackout.">
                   <Button onClick={() => {
-                    mutation.mutateAsync({grade: 0, problemId: id});
+                    mutation.mutate({grade: 0, problemId: id});
                     showNotification({
                       title: 'Review Submitted',
                       message: 'You suck. 🤥'
@@ -113,7 +113,7 @@ export default function Post({
                 </Tooltip>
                 <Tooltip label="incorrect response; the correct one remembered.">
                   <Button onClick={() => {
-                    mutation.mutateAsync({grade: 1, problemId: id});
+                    mutation.mutate({grade: 1, problemId: id});
                     showNotification({
                       title: 'Review Submitted',
                       message: 'You suck less. 🤥'
@@ -122,7 +122,7 @@ export default function Post({
                 </Tooltip>
                 <Tooltip label="incorrect response; where the correct one seemed easy to recall.">
                   <Button onClick={() => {
-                    mutation.mutateAsync({grade: 2, problemId: id});
+                    mutation.mutate({grade: 2, problemId: id});
                     showNotification({
                       title: 'Review Submitted',
                       message: 'You suck lesser. 🤥'
@@ -131,7 +131,7 @@ export default function Post({
                 </Tooltip>
                 <Tooltip label="correct response recalled with serious difficulty.">
                   <Button onClick={() => {
-                    mutation.mutateAsync({grade: 3, problemId: id});
+                    mutation.mutate({grade: 3, problemId: id});
                     showNotification({
                       title: 'Review Submitted',
                       message: 'Meh. 😕'
@@ -140,7 +140,7 @@ export default function Post({
                 </Tooltip>
                 <Tooltip label="correct response after a hesitation.">
                   <Button onClick={() => {
-                      mutation.mutateAsync({grade: 4, problemId: id})
+                      mutation.mutate({grade: 4, problemId: id})
                       showNotification({
                         title: 'Review Submitted',
                         message: 'You dont suck. 😐'
@@ -149,7 +149,7 @@ export default function Post({
                 </Tooltip>
                 <Tooltip label="perfect response.">
                   <Button onClick={() => {
-                      mutation.mutateAsync({grade: 5, problemId: id})
+                      mutation.mutate({grade: 5, problemId: id})
                       showNotification({
                         title: 'Review Submitted',
                         message: 'Well done! 🥳'

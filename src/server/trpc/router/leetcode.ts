@@ -3,7 +3,7 @@ import { router, publicProcedure, protectedProcedure } from "../trpc";
 import gql from "graphql-tag";
 import { print } from "graphql";
 import dayjs from 'dayjs';
-import { supermemo, SuperMemoItem, SuperMemoGrade } from 'supermemo';
+import { supermemo, SuperMemoGrade } from 'supermemo';
 
 
 function reviewProblem(problem: any, grade: SuperMemoGrade){
@@ -68,7 +68,7 @@ export const leetCodeRouter = router({
         review = {
           id: reviewId, 
           problemId,
-          authorId: id!!,
+          authorId: id,
           problemTitle: problemId,
           interval: 0,
           repetition: 0,
@@ -78,7 +78,7 @@ export const leetCodeRouter = router({
 
       review = reviewProblem(review, grade as SuperMemoGrade);
         
-      return ctx.prisma.review.upsert({
+      return await ctx.prisma.review.upsert({
         where: {
           id: reviewId
         },

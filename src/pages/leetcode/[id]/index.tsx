@@ -11,6 +11,7 @@ import {
   Flex,
   Button,
   Divider,
+  Tooltip,
 } from "@mantine/core";
 import { trpc } from "../../../utils/trpc";
 import { useScrollIntoView } from "@mantine/hooks";
@@ -18,6 +19,7 @@ import { useRouter } from "next/router";
 import { useMachine } from "@xstate/react";
 import { createMachine } from "xstate";
 import { openModal, closeAllModals } from "@mantine/modals";
+import { showNotification } from "@mantine/notifications";
 
 // @ts-expect-error
 (typeof global !== "undefined" ? global : window).Prism = PrismRenderer;
@@ -100,12 +102,60 @@ export default function Post({
             )}
             {state.value === "review" && (
               <>
-                <Button onClick={() => {
-                  mutation.mutateAsync({grade: 0, problemId: id})
-                }}>Again</Button>
-                <Button onClick={() => {}}>Hard</Button>
-                <Button onClick={() => {}}>Good</Button>
-                <Button onClick={() => {}}>Easy</Button>
+                <Tooltip label="complete blackout.">
+                  <Button onClick={() => {
+                    mutation.mutateAsync({grade: 0, problemId: id});
+                    showNotification({
+                      title: 'Review Submitted',
+                      message: 'You suck. 🤥'
+                    });
+                  }}>0</Button>
+                </Tooltip>
+                <Tooltip label="incorrect response; the correct one remembered.">
+                  <Button onClick={() => {
+                    mutation.mutateAsync({grade: 1, problemId: id});
+                    showNotification({
+                      title: 'Review Submitted',
+                      message: 'You suck less. 🤥'
+                    });
+                  }}>1</Button>
+                </Tooltip>
+                <Tooltip label="incorrect response; where the correct one seemed easy to recall.">
+                  <Button onClick={() => {
+                    mutation.mutateAsync({grade: 2, problemId: id});
+                    showNotification({
+                      title: 'Review Submitted',
+                      message: 'You suck lesser. 🤥'
+                    });
+                  }}>2</Button>
+                </Tooltip>
+                <Tooltip label="correct response recalled with serious difficulty.">
+                  <Button onClick={() => {
+                    mutation.mutateAsync({grade: 3, problemId: id});
+                    showNotification({
+                      title: 'Review Submitted',
+                      message: 'Meh. 😕'
+                    });
+                  }}>3</Button>
+                </Tooltip>
+                <Tooltip label="correct response after a hesitation.">
+                  <Button onClick={() => {
+                      mutation.mutateAsync({grade: 4, problemId: id})
+                      showNotification({
+                        title: 'Review Submitted',
+                        message: 'You dont suck. 😐'
+                      });
+                  }}>4</Button>
+                </Tooltip>
+                <Tooltip label="perfect response.">
+                  <Button onClick={() => {
+                      mutation.mutateAsync({grade: 5, problemId: id})
+                      showNotification({
+                        title: 'Review Submitted',
+                        message: 'Well done! 🥳'
+                      })
+                  }}>5</Button>
+                </Tooltip>
               </>
             )}
           </Flex>

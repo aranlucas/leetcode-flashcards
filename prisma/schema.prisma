@@ -80,6 +80,7 @@ model Review {
   efactor Float
   problemId String
   problemTitle String
+  dueDate DateTime
 }
 
 model VerificationToken {

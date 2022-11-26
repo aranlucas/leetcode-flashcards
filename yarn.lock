@@ -1375,6 +1375,11 @@ damerau-levenshtein@^1.0.8:
   resolved "https://registry.npmjs.org/damerau-levenshtein/-/damerau-levenshtein-1.0.8.tgz"
   integrity sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==
 
+dayjs@^1.11.6:
+  version "1.11.6"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.6.tgz#2e79a226314ec3ec904e3ee1dd5a4f5e5b1c7afb"
+  integrity sha512-zZbY5giJAinCG+7AGaw0wIhNZ6J8AhWuSXKvuc1KAyMiRsvGQWqh4L+MomvhdAYjN+lqvVCMq1I41e3YHvXkyQ==
+
 debug@^2.6.9:
   version "2.6.9"
   resolved "https://registry.npmjs.org/debug/-/debug-2.6.9.tgz"
@@ -3314,6 +3319,11 @@ superjson@^1.11.0:
   integrity sha512-6PfAg1FKhqkwWvPb2uXhH4MkMttdc17eJ91+Aoz4s1XUEDZFmLfFx/xVA3wgkPxAGy5dpozgGdK6V/n20Wj9yg==
   dependencies:
     copy-anything "^3.0.2"
+
+supermemo@^2.0.17:
+  version "2.0.17"
+  resolved "https://registry.yarnpkg.com/supermemo/-/supermemo-2.0.17.tgz#03341ccd1bb824a3726111e7818092e98acff99f"
+  integrity sha512-c/BMAkG+IDYtAP1AR97DVU4x4gs8vfvLA4ejND7lHKdzjaAWwxixtcZjnQNfcyAKfZn2ovIYKJAGpTG45dr8ug==
 
 supports-color@^5.3.0:
   version "5.5.0"

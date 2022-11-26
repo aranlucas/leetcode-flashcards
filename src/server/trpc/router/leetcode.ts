@@ -2,6 +2,18 @@ import { z } from "zod";
 import { router, publicProcedure, protectedProcedure } from "../trpc";
 import gql from "graphql-tag";
 import { print } from "graphql";
+import dayjs from 'dayjs';
+import { supermemo, SuperMemoItem, SuperMemoGrade } from 'supermemo';
+
+
+function reviewProblem(problem: any, grade: SuperMemoGrade){
+
+  const { interval, repetition, efactor } = supermemo(problem, grade);
+  const dueDate = dayjs(Date.now()).add(interval, 'day').toISOString();
+
+  return { ...problem, interval, repetition, efactor, dueDate };
+}
+
 
 export const leetCodeRouter = router({
   getSubmissions: publicProcedure
@@ -39,25 +51,39 @@ export const leetCodeRouter = router({
     .input(z.object({ grade: z.number(), problemId: z.string()}))
     .mutation( async ({ ctx, input }) => {
       const id = ctx.session?.user?.id;
-      const { problemId } = input;
+      const { problemId, grade } = input;
       
       const reviewId = `${id}_${problemId}`;
-      return ctx.prisma.review.upsert({
-        where: { id: reviewId },
-        update: {
-          interval: 0,
-          repetition: 0,
-          efactor: 2.5
-        },
-        create: {
+
+      const existingReview = await ctx.prisma.review.findUnique({
+        where: {
+          id: reviewId
+        }
+      });
+
+      let review; 
+      if(existingReview !== null) {
+        review = existingReview;
+      } else {
+        review = {
           id: reviewId, 
-          problemId: input.problemId,
+          problemId,
           authorId: id!!,
-          problemTitle: 'ProblemTitle',
+          problemTitle: problemId,
           interval: 0,
           repetition: 0,
-          efactor: 2.5
-         },
-      })
+          efactor: 2.5,
+        }
+      };
+
+      review = reviewProblem(review, grade as SuperMemoGrade);
+        
+      return ctx.prisma.review.upsert({
+        where: {
+          id: reviewId
+        },
+        create: review,
+        update: review
+      });
     })
 });

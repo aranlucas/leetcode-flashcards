@@ -56,6 +56,47 @@ export default function Post({
   const language = data?.lang || "java";
   const code = data?.code || question.code;
 
+  const gradesModel = [
+    {
+      label: "complete blackout.",
+      message: "You suck! 🤥"
+    },
+    {
+      label: "incorrect response; the correct one remembered.",
+      message: "You suck less. 🤥"
+    },
+    {
+      label: "incorrect response; where the correct one seemed easy to recall.",
+      message: "You suck lesser. 🤥"
+    },
+    {
+      label: "correct response recalled with serious difficulty.",
+      message: "Meh. 😕"
+    },
+    {
+      label: "correct response after a hesitation.",
+      message: "You dont suck. 😐"
+    },
+    {
+      label: "perfect response.",
+      message: "Well done! 🥳"
+    }
+]
+
+  const grades = gradesModel.map(({ label, message }, idx) => {
+    return (
+      <Tooltip label={label}>
+          <Button onClick={() => {
+            mutation.mutate({grade: idx, problemId: id});
+            showNotification({
+              title: 'Review Submitted',
+              message
+            });
+          }}>{idx}</Button>
+        </Tooltip>
+    )
+  });
+
   return (
     <Layout
       footer={
@@ -102,60 +143,7 @@ export default function Post({
             )}
             {state.value === "review" && (
               <>
-                <Tooltip label="complete blackout.">
-                  <Button onClick={() => {
-                    mutation.mutate({grade: 0, problemId: id});
-                    showNotification({
-                      title: 'Review Submitted',
-                      message: 'You suck. 🤥'
-                    });
-                  }}>0</Button>
-                </Tooltip>
-                <Tooltip label="incorrect response; the correct one remembered.">
-                  <Button onClick={() => {
-                    mutation.mutate({grade: 1, problemId: id});
-                    showNotification({
-                      title: 'Review Submitted',
-                      message: 'You suck less. 🤥'
-                    });
-                  }}>1</Button>
-                </Tooltip>
-                <Tooltip label="incorrect response; where the correct one seemed easy to recall.">
-                  <Button onClick={() => {
-                    mutation.mutate({grade: 2, problemId: id});
-                    showNotification({
-                      title: 'Review Submitted',
-                      message: 'You suck lesser. 🤥'
-                    });
-                  }}>2</Button>
-                </Tooltip>
-                <Tooltip label="correct response recalled with serious difficulty.">
-                  <Button onClick={() => {
-                    mutation.mutate({grade: 3, problemId: id});
-                    showNotification({
-                      title: 'Review Submitted',
-                      message: 'Meh. 😕'
-                    });
-                  }}>3</Button>
-                </Tooltip>
-                <Tooltip label="correct response after a hesitation.">
-                  <Button onClick={() => {
-                      mutation.mutate({grade: 4, problemId: id})
-                      showNotification({
-                        title: 'Review Submitted',
-                        message: 'You dont suck. 😐'
-                      });
-                  }}>4</Button>
-                </Tooltip>
-                <Tooltip label="perfect response.">
-                  <Button onClick={() => {
-                      mutation.mutate({grade: 5, problemId: id})
-                      showNotification({
-                        title: 'Review Submitted',
-                        message: 'Well done! 🥳'
-                      })
-                  }}>5</Button>
-                </Tooltip>
+                {grades}
               </>
             )}
           </Flex>

@@ -1,0 +1,22 @@
+---
+backend:
+  name: github
+  repo: aranlucas/mantine-next
+  branch: main
+local_backend: true
+media_folder: public/img
+public_folder: img
+collections:
+  - name: pages
+    label: Pages
+    files:
+      - label: Home
+        name: home
+        file: content/pages/home.md
+        fields:
+          - label: Hero Title
+            name: title
+            widget: string
+          - label: Hero Description
+            name: description
+            widget: markdown

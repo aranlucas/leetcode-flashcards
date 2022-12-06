@@ -2,7 +2,7 @@ import Layout from "../../components/layout/layout";
 import { createColumnHelper } from "@tanstack/react-table";
 import Table from "../../components/table";
 import { Button } from "@mantine/core";
-import { NextLink } from "@mantine/next";
+import NextLink from "next/link";
 import Header from "../../components/header";
 import { trpc } from "../../utils/trpc";
 import { CreatePetInput } from "../../schema/pet.schema";

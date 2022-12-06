@@ -1,6 +1,5 @@
 import { createStyles, Container, Text, Button, Group } from "@mantine/core";
-import { NextLink } from "@mantine/next";
-import { IconBrandGithub } from "@tabler/icons";
+import NextLink from "next/link";
 
 const BREAKPOINT = "@media (max-width: 755px)";
 
@@ -66,37 +65,25 @@ export function HeroText() {
           >
             fully featured
           </Text>{" "}
-          React components and hooks library
+          Flashcard website for leetcode.
         </h1>
 
         <Text className={classes.description} color="dimmed">
-          Build fully functional accessible web applications with ease – Mantine
-          includes more than 100 customizable components and hooks to cover you
-          in any situation
+          Master the fundamentals of computer science with our comprehensive
+          course on data structures and algorithms. Sign up now and start
+          learning with interactive lessons and hands-on exercises.
         </Text>
 
         <Group className={classes.controls}>
           <Button
             size="xl"
-            legacyBehavior
             component={NextLink}
-            href="/pets"
+            href="/leetcode"
             className={classes.control}
             variant="gradient"
             gradient={{ from: "blue", to: "cyan" }}
           >
-            Go to pets
-          </Button>
-
-          <Button
-            component="a"
-            href="https://github.com/mantinedev/mantine"
-            size="xl"
-            variant="default"
-            className={classes.control}
-            leftIcon={<IconBrandGithub />}
-          >
-            GitHub
+            Go to question bank
           </Button>
         </Group>
       </Container>

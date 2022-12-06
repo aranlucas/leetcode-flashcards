@@ -1,5 +1,5 @@
 import { Button, Avatar, Text, Menu, Group } from "@mantine/core";
-import { NextLink } from "@mantine/next";
+import NextLink from "next/link";
 import { IconLogout, IconSettings } from "@tabler/icons";
 import { signIn, signOut, useSession } from "next-auth/react";
 
@@ -38,9 +38,7 @@ export default function SignIn() {
 
           <Menu.Label>Settings</Menu.Label>
           <Menu.Item icon={<IconSettings size={14} stroke={1.5} />}>
-            <NextLink legacyBehavior href="/profile">
-              Account settings
-            </NextLink>
+            <NextLink href="/profile">Account settings</NextLink>
           </Menu.Item>
           <Menu.Item
             onClick={async () => {

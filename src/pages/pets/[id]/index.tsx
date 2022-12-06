@@ -1,5 +1,5 @@
 import { Button, Group, Paper, Stack, Title } from "@mantine/core";
-import { NextLink } from "@mantine/next";
+import NextLink from "next/link";
 import { useRouter } from "next/router";
 import Header from "../../../components/header";
 import Layout from "../../../components/layout/layout";
@@ -16,7 +16,7 @@ export default function Pet() {
       headerContent={
         <Group position="apart">
           <Title order={1}>{data?.name}</Title>
-          <Button legacyBehavior component={NextLink} href={`/pets/${id}/edit`}>
+          <Button component={NextLink} href={`/pets/${id}/edit`}>
             Edit
           </Button>
         </Group>

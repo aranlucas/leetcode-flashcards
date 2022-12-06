@@ -3,6 +3,7 @@ backend:
   name: github
   repo: aranlucas/mantine-next
   branch: main
+  base_url: https://netlify-cms-mauve.vercel.app/
 local_backend: true
 media_folder: public/img
 public_folder: img

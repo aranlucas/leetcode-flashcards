@@ -1,4 +1,4 @@
 ---
-hero_title: This is a title
+hero_title: blah
 hero_description: T﻿his is a description
 ---

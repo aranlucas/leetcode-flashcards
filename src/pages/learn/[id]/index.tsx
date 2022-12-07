@@ -43,6 +43,7 @@ export default function IndexPage({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Layout>
+      <Title order={2}>{mdxSource.frontmatter.title} </Title>
       <MDXRemote {...mdxSource} components={components} />
     </Layout>
   );

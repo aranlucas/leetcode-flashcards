@@ -2,6 +2,22 @@
 title: Shortest Path
 ---
 
-// TODO
+The shortest path problem is a common problem in computer science and can be solved using a variety of algorithms, such as Dijkstra's algorithm or the A\* algorithm. The basic idea is to find the shortest path between two points on a graph.
 
-Shortest Path First (SPF) is an algorithm that finds the shortest path within a network. It is an interior gateway protocol used in most routing protocols (such as OSPF and IS-IS). The algorithm uses a link-state routing protocol to calculate the shortest path between nodes within a network. The algorithm identifies the path with the lowest cumulative cost and selects it as the path with the best performance. SPF is often used in core backbone or enterprise networks, or in networks with a large number of interconnected nodes.
+To solve a shortest path problem, you first need to represent the problem as a graph, with each node representing a location on the map and each edge representing a possible path between two locations. You can then use one of the algorithms mentioned above to find the shortest path between the starting and ending points.
+
+The specific steps to solve a shortest path problem will vary depending on the algorithm you use, but in general, you can follow these steps:
+
+Create a graph representation of the problem, with nodes for locations and edges for possible paths between locations.
+
+Set the starting location as the current location and initialize the distances to all other locations to infinity.
+
+Visit each of the neighboring locations and update their distances based on the distance from the current location.
+
+Choose the next location to visit based on the algorithm you are using (e.g., Dijkstra's algorithm may choose the location with the smallest distance, while the A\* algorithm may use a combination of distance and heuristics to choose the next location).
+
+Repeat steps 3 and 4 until you reach the ending location.
+
+The final distance will be the shortest path between the starting and ending locations.
+
+I hope this helps. Let me know if you have any other questions.

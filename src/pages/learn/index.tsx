@@ -10,15 +10,15 @@ export default function IndexPage({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Layout>
-      {files.map((post: any) => {
-        return (
-          <Link href={`learn/${post.slug}`} key={post.id}>
-            <>
-              <h2>{post.data.title}</h2>
-            </>
-          </Link>
-        );
-      })}
+      <ul>
+        {files.map((post: any) => {
+          return (
+            <li key={post.id}>
+              <Link href={`learn/${post.slug}`}>{post.data.title}</Link>
+            </li>
+          );
+        })}
+      </ul>
     </Layout>
   );
 }

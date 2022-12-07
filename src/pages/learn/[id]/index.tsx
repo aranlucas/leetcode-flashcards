@@ -1,3 +1,4 @@
+import { TypographyStylesProvider } from "@mantine/core";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import Layout from "../../../components/layout/layout";
 
@@ -6,14 +7,16 @@ export default function IndexPage({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Layout>
-      <pre>{JSON.stringify(blogpost, null, 2)}</pre>
+      <TypographyStylesProvider>
+        <div dangerouslySetInnerHTML={{ __html: blogpost }} />
+      </TypographyStylesProvider>
     </Layout>
   );
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const markdownFiles = require
-    .context("/content/pages", false, /\.\/.*\.md$/)
+    .context("/content/learn", false, /\.\/.*\.md$/)
     .keys()
     .map((relativePath) => relativePath.substring(2));
 
@@ -34,13 +37,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const id = params?.id as string;
 
-  const blogpost = await import(`../../../../content/pages/${id}.md`).catch(
+  const blogpost = await import(`../../../../content/learn/${id}.md`).catch(
     () => null
   );
 
   return {
     props: {
-      blogpost: blogpost.attributes,
+      blogpost: blogpost.html,
     },
   };
 };

@@ -6,10 +6,11 @@
   "scripts": {
     "analyze": "cross-env ANALYZE=true next build",
     "build": "next build",
-    "dev": "next dev & npx netlify-cms-proxy-server",
+    "dev": "concurrently --kill-others \"next dev\" \"npm run netlify\"",
     "lint": "next lint --fix",
+    "netlify": "npx netlify-cms-proxy-server",
     "postinstall": "prisma generate",
-    "prettier:fix": "npx prettier src  --write",
+    "prettier:fix": "npx prettier src content --write",
     "start": "next start",
     "studio": "prisma studio",
     "typecheck": "tsc --noEmit"
@@ -65,6 +66,7 @@
     "@types/webpack-env": "^1.18.0",
     "@typescript-eslint/eslint-plugin": "^5.45.1",
     "@typescript-eslint/parser": "^5.45.1",
+    "concurrently": "^7.6.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.29.0",
     "eslint-config-next": "^13.0.6",

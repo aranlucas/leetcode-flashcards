@@ -3,10 +3,13 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   webpack: (cfg) => {
-    cfg.module.rules.push({
-      test: /\.md$/,
-      loader: "frontmatter-markdown-loader",
-    });
+    // cfg.module.rules.push({
+    //   test: /\.md$/,
+    //   loader: "frontmatter-markdown-loader",
+    //   options: {
+    //     mode: ["body"],
+    //   },
+    // });
     return cfg;
   },
   i18n: {

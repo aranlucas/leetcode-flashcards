@@ -1,0 +1,3 @@
+---
+title: Minimum Spanning Tree
+---

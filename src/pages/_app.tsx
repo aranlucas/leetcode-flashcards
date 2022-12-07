@@ -12,6 +12,13 @@ import { setCookie } from "cookies-next";
 import { Session } from "next-auth";
 import { trpc } from "../utils/trpc";
 import { ModalsProvider } from "@mantine/modals";
+// @ts-expect-error
+import PrismRenderer from "prism-react-renderer/prism";
+
+// @ts-expect-error
+(typeof global !== "undefined" ? global : window).Prism = PrismRenderer;
+
+require("prismjs/components/prism-java");
 
 type AppPropsWithLayout = AppProps<{
   session: Session;

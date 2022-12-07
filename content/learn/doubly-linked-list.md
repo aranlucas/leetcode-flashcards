@@ -1,0 +1,3 @@
+---
+title: Doubly-Linked List
+---

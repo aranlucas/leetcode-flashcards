@@ -1,25 +1,9 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Link from "next/link";
+import path, { join } from "path";
 import Layout from "../../components/layout/layout";
-
-const importBlogPosts = async () => {
-  // https://medium.com/@shawnstern/importing-multiple-markdown-files-into-a-react-component-with-webpack-7548559fce6f
-  // second flag in require.context function is if subdirectories should be searched
-  const markdownFiles = require
-    .context("/content/learn", false, /\.\/.*\.md$/)
-    .keys()
-    .map((relativePath) => relativePath.substring(2));
-
-  return await Promise.all(
-    markdownFiles.map(async (path) => {
-      const markdown = await import(`../../../content/learn/${path}`);
-      return {
-        attributes: markdown.attributes,
-        slug: path.substring(0, path.length - 3),
-      };
-    })
-  );
-};
+import fs from "fs";
+import matter from "gray-matter";
 
 export default function IndexPage({
   files,
@@ -30,7 +14,7 @@ export default function IndexPage({
         return (
           <Link href={`learn/${post.slug}`} key={post.id}>
             <>
-              <h2>{post.attributes.title}</h2>
+              <h2>{post.data.title}</h2>
             </>
           </Link>
         );
@@ -40,10 +24,24 @@ export default function IndexPage({
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const files = await importBlogPosts();
-  return {
-    props: {
-      files,
-    },
-  };
+  const contentDirectory = join(process.cwd(), "content/learn");
+
+  const postFilePaths = fs
+    .readdirSync(contentDirectory)
+    // Only include md(x) files
+    .filter((path) => /\.mdx?$/.test(path));
+
+  const files = postFilePaths.map((filePath) => {
+    const source = fs.readFileSync(path.join(contentDirectory, filePath));
+    const { content, data } = matter(source);
+
+    return {
+      content,
+      data,
+      filePath,
+      slug: filePath.substring(0, filePath.length - 3),
+    };
+  });
+
+  return { props: { files } };
 };

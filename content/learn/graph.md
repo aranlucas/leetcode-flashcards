@@ -1,6 +1,5 @@
 ---
-title: Graphs
-date: December 6, 2022 2:42 PM
+title: Graph
 ---
 
 1. Understand the problem statement: read the problem carefully and make sure you understand what you are being asked to do. Pay attention to the specific constraints and requirements of the problem.

@@ -47,3 +47,5 @@ public void backtrack(/* some parameters */) {
   }
 }
 ```
+
+Backtracking is a type of algorithm used to solve problems by exploring a set of potential solutions incrementally and eventually arriving at a final solution, or by determining that a final solution is not possible. It is a form of recursive trial and error that is typically used for combinatorial optimization problems. The algorithm works by first selecting a partial solution and then testing to see if that partial solution can be extended to a complete solution. If it can be extended, the solution is extended and tested; if it cannot be extended, the algorithm backtracks and tries another partial solution.

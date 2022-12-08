@@ -1,5 +1,6 @@
 ---
 title: Sliding Window
+questionCount: 79
 ---
 
 Sliding window problems involve keeping track of a subset of data within a larger set of data, where the subset is defined by a specific "window" of data. To solve these types of problems on LeetCode, you typically need to use a two-pointer approach, where one pointer represents the start of the window and the other pointer represents the end. As you move the pointers to "slide" the window across the larger dataset, you can keep track of any relevant information within the window, and use that information to update your answer as needed.

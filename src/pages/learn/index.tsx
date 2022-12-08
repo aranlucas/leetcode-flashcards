@@ -13,7 +13,7 @@ export default function IndexPage({
       <ul>
         {files.map((post: any) => {
           return (
-            <li key={post.id}>
+            <li key={post.slug}>
               <Link href={`learn/${post.slug}`}>{post.data.title}</Link>
             </li>
           );
@@ -31,17 +31,19 @@ export const getStaticProps: GetStaticProps = async () => {
     // Only include md(x) files
     .filter((path) => /\.mdx?$/.test(path));
 
-  const files = postFilePaths.map((filePath) => {
-    const source = fs.readFileSync(path.join(contentDirectory, filePath));
-    const { content, data } = matter(source);
+  const files = postFilePaths
+    .map((filePath) => {
+      const source = fs.readFileSync(path.join(contentDirectory, filePath));
+      const { content, data } = matter(source);
 
-    return {
-      content,
-      data,
-      filePath,
-      slug: filePath.substring(0, filePath.length - 3),
-    };
-  });
+      return {
+        content,
+        data,
+        filePath,
+        slug: filePath.substring(0, filePath.length - 3),
+      };
+    })
+    .sort((a, b) => b.data.questionCount - a.data.questionCount);
 
   return { props: { files } };
 };

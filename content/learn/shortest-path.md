@@ -1,5 +1,6 @@
 ---
 title: Shortest Path
+questionCount: 17
 ---
 
 The shortest path problem is a common problem in computer science and can be solved using a variety of algorithms, such as Dijkstra's algorithm or the A\* algorithm. The basic idea is to find the shortest path between two points on a graph.

@@ -1,5 +1,6 @@
 ---
 title: Graph
+questionCount: 116
 ---
 
 1. Understand the problem statement: read the problem carefully and make sure you understand what you are being asked to do. Pay attention to the specific constraints and requirements of the problem.

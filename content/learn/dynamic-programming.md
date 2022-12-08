@@ -1,5 +1,6 @@
 ---
 title: Dynamic Programming
+questionCount: 406
 ---
 
 ## What is it?

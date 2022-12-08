@@ -1,5 +1,6 @@
 ---
 title: Tree
+questionCount: 205
 ---
 
 To solve a tree question on Leetcode, follow these steps:

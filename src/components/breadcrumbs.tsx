@@ -8,9 +8,9 @@ function titleize(str: string) {
   for (let i = 0, l = str.length; i < l; i++) {
     // Note that you can also check for all kinds of spaces  with
     // str[i].match(/\s/)
-    if (str[i] === " ") {
+    if (str[i] === " " || str[i] === "-") {
       upper = true;
-      newStr += str[i];
+      newStr += " ";
       continue;
     }
     newStr += upper ? str[i].toUpperCase() : str[i].toLowerCase();

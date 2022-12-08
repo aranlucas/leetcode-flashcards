@@ -1,42 +1,10 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import Layout from "../../../components/layout/layout";
 import { serialize } from "next-mdx-remote/serialize";
-import { MDXRemote } from "next-mdx-remote";
 import { join } from "path";
 import fs from "fs";
-import { Code, Title } from "@mantine/core";
-import { ComponentProps } from "react";
-import { MDXProvider } from "@mdx-js/react";
-import { Prism } from "@mantine/prism";
-
-const components: ComponentProps<typeof MDXProvider>["components"] = {
-  h1: (props: any) => <Title order={1} {...props} />,
-  h2: (props: any) => <Title order={2} {...props} />,
-  h3: (props: any) => <Title order={3} {...props} />,
-  h4: (props: any) => <Title order={4} {...props} />,
-  h5: (props: any) => <Title order={5} {...props} />,
-  h6: (props: any) => <Title order={6} {...props} />,
-  ul: (props: any) => (
-    <ul
-      {...props}
-      style={{ lineHeight: 1.65, marginBottom: 20, marginTop: 10 }}
-    />
-  ),
-  li: (props: any) => <li {...props} style={{ marginTop: 4 }} />,
-  code: (props: any) => <Code {...props} />,
-  pre: (props: any) => {
-    const matches =
-      props.children.props.className.match(/language-(?<lang>.*)/);
-
-    const language = matches?.groups?.lang ? matches.groups.lang : "";
-
-    return (
-      <Prism language={language} mb={20}>
-        {props.children.props?.children}
-      </Prism>
-    );
-  },
-};
+import { Title } from "@mantine/core";
+import { MantineMDX } from "../../../components/mdxprovider/mdxprovider";
 
 export default function IndexPage({
   mdxSource,
@@ -44,7 +12,7 @@ export default function IndexPage({
   return (
     <Layout>
       <Title order={2}>{mdxSource.frontmatter.title} </Title>
-      <MDXRemote {...mdxSource} components={components} />
+      <MantineMDX {...mdxSource} />
     </Layout>
   );
 }

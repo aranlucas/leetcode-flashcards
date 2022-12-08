@@ -7,7 +7,6 @@ export const tags = [
   ["Sorting", "sorting"],
   ["Greedy", "greedy"],
   ["Depth-First Search", "depth-first-search"],
-  ["Database", "database"],
   ["Breadth-First Search", "breadth-first-search"],
   ["Tree", "tree"],
   ["Binary Search", "binary-search"],

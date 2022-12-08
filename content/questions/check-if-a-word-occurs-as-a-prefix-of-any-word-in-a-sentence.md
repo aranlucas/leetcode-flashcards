@@ -1,0 +1,5 @@
+---
+id: 1566
+title: Check If a Word Occurs As a Prefix of Any Word in a Sentence
+slug: check-if-a-word-occurs-as-a-prefix-of-any-word-in-a-sentence
+---

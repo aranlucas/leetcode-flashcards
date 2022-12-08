@@ -1,0 +1,5 @@
+---
+id: 1576
+title: Reorder Routes to Make All Paths Lead to the City Zero
+slug: reorder-routes-to-make-all-paths-lead-to-the-city-zero
+---

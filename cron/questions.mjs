@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from "fs-extra";
 import matter from "gray-matter";
 import { createLeetCodeClient } from "./util/leetcode.mjs";
 
@@ -19,10 +19,8 @@ const questions = problems.data.stat_status_pairs.map((q) => {
   };
 });
 
-console.log(questions);
-
 for (const question of questions) {
-  const fileName = `content/questions/${question.slug}.md`;
+  const fileName = `content/questions/${question.slug}/question.md`;
 
   fs.writeFileSync(fileName, matter.stringify("", question));
 }

@@ -50,3 +50,20 @@ public void backtrack(/* some parameters */) {
 ```
 
 Backtracking is a type of algorithm used to solve problems by exploring a set of potential solutions incrementally and eventually arriving at a final solution, or by determining that a final solution is not possible. It is a form of recursive trial and error that is typically used for combinatorial optimization problems. The algorithm works by first selecting a partial solution and then testing to see if that partial solution can be extended to a complete solution. If it can be extended, the solution is extended and tested; if it cannot be extended, the algorithm backtracks and tries another partial solution.
+
+To perform backtracking, follow these steps:
+
+1. Identify the problem and define the search space, or the set of potential solutions to the problem.
+2. Define the decision points, or the choices that must be made at each step of the algorithm.
+3. Start with the initial state and make a choice at the first decision point.
+4. Advance to the next decision point and make a choice.
+
+If the choice leads to a solution, return it. Otherwise, reverse the choice and try a different one.
+
+Repeat step 5 until a solution is found or all choices have been exhausted.
+
+If no solution was found, return "no solution" or backtrack to the previous decision point and try a different choice.
+
+Repeat steps 6-7 until a solution is found or the initial state is reached.
+
+For example, to solve a maze using backtracking, the search space would be the maze itself, and the decision points would be the possible paths at each junction. The algorithm would start at the entrance and make a choice at the first junction, then advance to the next junction and make another choice. If the choice leads to a dead end, the algorithm would backtrack and try a different path. It would repeat this process until it reaches the exit or all paths have been exhausted.

@@ -2,12 +2,7 @@ import fs from "fs";
 import { tags } from "./util/tags.mjs";
 import matter from "gray-matter";
 import { createLeetCodeClient } from "./util/leetcode.mjs";
-
-const sleep = (delay) => {
-  return new Promise(function (resolve) {
-    setTimeout(resolve, delay);
-  });
-};
+import { sleep } from "./util/sleep.mjs";
 
 const { instance } = await createLeetCodeClient({
   sessionId: process.env.LEETCODE_SESSION_TOKEN,

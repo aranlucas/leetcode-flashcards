@@ -3,26 +3,45 @@ import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Link from "next/link";
 import Layout from "../../components/layout/layout";
 import Table from "../../components/table";
-import { getQuestions, Question } from "../../lib/leetcode";
+import { Question } from "../../lib/leetcode";
+import fs from "fs";
+import path, { join } from "path";
+import matter from "gray-matter";
 
 export const getStaticProps: GetStaticProps = async () => {
-  const questions = getQuestions();
-  return {
-    props: {
-      questions,
-    },
-  };
+  const contentDirectory = join(process.cwd(), "content/questions");
+
+  const postFilePaths = fs.readdirSync(contentDirectory);
+
+  const files = postFilePaths.map((filePath) => {
+    const source = fs.readFileSync(
+      path.join(contentDirectory, filePath, "question.md")
+    );
+    const { data } = matter(source);
+
+    return {
+      data: {
+        title: data.title,
+        slug: data.slug,
+      },
+    };
+  });
+
+  return { props: { files } };
 };
 
 export default function IndexPage({
-  questions,
+  files,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const columnHelper = createColumnHelper<Question & { id: string }>();
+  const columnHelper = createColumnHelper<Question & { data: any }>();
 
   const columns = [
-    columnHelper.accessor("title", {
+    columnHelper.accessor("data.title", {
+      header: () => "Title",
       cell: (info) => (
-        <Link href={`/leetcode/${(info.row.original.slug ?? "").toString()}`}>
+        <Link
+          href={`/leetcode/${(info.row.original.data.slug ?? "").toString()}`}
+        >
           {info.getValue()}
         </Link>
       ),
@@ -31,7 +50,7 @@ export default function IndexPage({
 
   return (
     <Layout>
-      <Table items={questions ?? []} columnDefinitions={columns} />
+      <Table items={files ?? []} columnDefinitions={columns} />
     </Layout>
   );
 }

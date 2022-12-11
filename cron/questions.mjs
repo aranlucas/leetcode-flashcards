@@ -68,7 +68,7 @@ for (const question of questions) {
 
   // Write tmp file to avoid re-running
   fs.writeFileSync(tmp, JSON.stringify(Array.from(done)));
-  await sleep(10000);
+  await sleep(3000);
 }
 
 // Empty cache

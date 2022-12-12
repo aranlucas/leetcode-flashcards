@@ -23,7 +23,7 @@
     "@mantine/core": "^5.9.3",
     "@mantine/hooks": "^5.9.3",
     "@mantine/modals": "^5.9.3",
-    "@mantine/next": "^5.9.3",
+    "@mantine/next": "^5.9.4",
     "@mantine/notifications": "^5.9.3",
     "@mantine/prism": "^5.9.3",
     "@mdx-js/react": "^2.1.5",

@@ -1,13 +1,19 @@
-import { Control, FieldValues, useController, Path } from "react-hook-form";
 import {
   TextInput as MantineTextInput,
   TextInputProps as MantineTextInputProps,
 } from "@mantine/core";
+import {
+  FieldValues,
+  Control,
+  Path,
+  UnPackAsyncDefaultValues,
+  useController,
+} from "react-hook-form";
 
 interface TextInputProps<TFieldValues extends FieldValues>
   extends MantineTextInputProps {
   control: Control<TFieldValues>;
-  name: Path<TFieldValues>;
+  name: Path<UnPackAsyncDefaultValues<TFieldValues>>;
 }
 
 function TextInput<TFieldValues extends FieldValues>({

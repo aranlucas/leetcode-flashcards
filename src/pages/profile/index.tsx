@@ -6,6 +6,7 @@ import Layout from "../../components/layout/layout";
 import Header from "../../components/header";
 import { useSession } from "next-auth/react";
 import { trpc } from "../../utils/trpc";
+import { showNotification } from "@mantine/notifications";
 
 export default function NewPet() {
   const router = useRouter();
@@ -27,10 +28,13 @@ export default function NewPet() {
             session: data.session ?? "",
             csrf: data.csrf ?? "",
           });
+          showNotification({
+            title: "Success",
+            message: "Updated session and csrf for leetcode",
+          });
         })}
       >
         <Paper radius="md" p="md" withBorder>
-          <pre>{JSON.stringify(session, null, 2)}</pre>
           <TextInput
             control={control}
             name="session"

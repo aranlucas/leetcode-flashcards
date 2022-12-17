@@ -5,13 +5,15 @@ import { join } from "path";
 import fs from "fs";
 import { Title } from "@mantine/core";
 import { MantineMDX } from "../../../components/mdxprovider/mdxprovider";
+import { MDXRemoteSerializeResult } from "next-mdx-remote";
 
 export default function IndexPage({
   mdxSource,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Layout>
-      <Title order={2}>{mdxSource.frontmatter.title} </Title>
+      <Title order={2}>{mdxSource?.frontmatter?.title} </Title>
+
       <MantineMDX {...mdxSource} />
     </Layout>
   );
@@ -37,7 +39,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps<{
+  mdxSource: MDXRemoteSerializeResult;
+}> = async ({ params }) => {
   const id = params?.id as string;
   const contentDirectory = join(process.cwd(), "content/learn");
 
@@ -45,6 +49,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const mdxSource = await serialize(fileContents, {
     parseFrontmatter: true,
+    mdxOptions: { development: false },
   });
 
   return {

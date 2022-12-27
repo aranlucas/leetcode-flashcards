@@ -1,25 +1,20 @@
 import { Prism } from "@mantine/prism";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import Layout from "../../../components/layout/layout";
-import { getAllQuestionId, getQuestionData } from "../../../lib/leetcode";
 // @ts-expect-error
 import PrismRenderer from "prism-react-renderer/prism";
-import {
-  Stack,
-  TypographyStylesProvider,
-  Footer,
-  Flex,
-  Button,
-  Divider,
-  Tooltip,
-} from "@mantine/core";
+import { Stack, Footer, Flex, Button, Divider, Tooltip } from "@mantine/core";
 import { trpc } from "../../../utils/trpc";
 import { useScrollIntoView } from "@mantine/hooks";
 import { useRouter } from "next/router";
 import { useMachine } from "@xstate/react";
 import { createMachine } from "xstate";
-import { openModal, closeAllModals } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
+import fs from "fs";
+import { join } from "path";
+import { serialize } from "next-mdx-remote/serialize";
+import { MDXRemoteSerializeResult } from "next-mdx-remote";
+import { MantineMDX } from "../../../components/mdxprovider/mdxprovider";
 
 // @ts-expect-error
 (typeof global !== "undefined" ? global : window).Prism = PrismRenderer;
@@ -39,7 +34,7 @@ const reviewMachine = createMachine({
 });
 
 export default function Post({
-  question,
+  mdxSource,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter();
   const id = router.query.id as string;
@@ -54,7 +49,6 @@ export default function Post({
   const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>();
 
   const language = data?.lang || "java";
-  const code = data?.code || question.code;
 
   const gradesModel = [
     {
@@ -113,37 +107,14 @@ export default function Post({
             wrap="wrap"
           >
             {state.value === "problem" && (
-              <>
-                <Button
-                  onClick={() => {
-                    scrollIntoView({ alignment: "start" });
-                    send("REVIEW");
-                  }}
-                >
-                  Show answer
-                </Button>
-                <Button
-                  onClick={() => {
-                    openModal({
-                      children: (
-                        <>
-                          <Button
-                            fullWidth
-                            onClick={() => {
-                              closeAllModals();
-                            }}
-                            mt="md"
-                          >
-                            Submit
-                          </Button>
-                        </>
-                      ),
-                    });
-                  }}
-                >
-                  Show Notes
-                </Button>
-              </>
+              <Button
+                onClick={() => {
+                  scrollIntoView({ alignment: "start" });
+                  send("REVIEW");
+                }}
+              >
+                Show answer
+              </Button>
             )}
             {state.value === "review" && <>{grades}</>}
           </Flex>
@@ -151,13 +122,12 @@ export default function Post({
       }
     >
       <Stack>
-        <TypographyStylesProvider>
-          <div dangerouslySetInnerHTML={{ __html: question.content }} />
-        </TypographyStylesProvider>
+        <MantineMDX {...mdxSource} />
+
         <Divider my="sm" />
         <div ref={targetRef}>
           {state.value === "review" && (
-            <Prism language={language}>{code}</Prism>
+            <Prism language={language}>{data?.code || ""}</Prism>
           )}
         </div>
       </Stack>
@@ -166,21 +136,39 @@ export default function Post({
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = getAllQuestionId();
+  const contentDirectory = join(process.cwd(), "content/questions");
+
+  const postFilePaths = fs.readdirSync(contentDirectory);
+
+  const paths = postFilePaths
+    // Remove file extensions for page paths
+    .map((path) => path.replace(/\.mdx?$/, ""))
+    // Map the path into the static paths object required by Next.js
+    .map((id) => ({ params: { id } }));
+
   return {
     paths,
     fallback: false,
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps<{
+  mdxSource: MDXRemoteSerializeResult;
+}> = async ({ params }) => {
   const id = params?.id as string;
+  const contentDirectory = join(process.cwd(), "content/questions");
 
-  const question = getQuestionData(id);
+  const fullPath = join(contentDirectory, `${id}/question.md`);
+
+  const fileContents = fs.readFileSync(fullPath, "utf8");
+  const mdxSource = await serialize(fileContents, {
+    parseFrontmatter: true,
+    mdxOptions: { development: false },
+  });
 
   return {
     props: {
-      question,
+      mdxSource,
     },
   };
 };

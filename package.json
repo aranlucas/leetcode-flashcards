@@ -36,7 +36,7 @@
     "@trpc/react-query": "^10.7.0",
     "@trpc/server": "^10.7.0",
     "@xstate/react": "^3.0.1",
-    "axios": "^1.2.1",
+    "axios": "^1.2.2",
     "cookies-next": "^2.1.1",
     "dayjs": "^1.11.7",
     "dotenv": "^16.0.3",

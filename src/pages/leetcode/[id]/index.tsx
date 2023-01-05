@@ -163,7 +163,7 @@ export const getStaticProps: GetStaticProps<{
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const mdxSource = await serialize(fileContents, {
     parseFrontmatter: true,
-    mdxOptions: { development: false, format: "md" },
+    mdxOptions: { format: "md" },
   });
 
   return {

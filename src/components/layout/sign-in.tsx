@@ -8,7 +8,12 @@ export default function SignIn() {
 
   if (status !== "authenticated") {
     return (
-      <Button onClick={async () => await signIn()} sx={{ height: 30 }}>
+      <Button
+        onClick={async () => {
+          await signIn();
+        }}
+        sx={{ height: 30 }}
+      >
         Sign in
       </Button>
     );

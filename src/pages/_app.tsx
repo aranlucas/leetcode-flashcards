@@ -34,7 +34,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <>
       <Head>
-        <title>Page title</title>
+        <title>Lucas</title>
         <link rel="shortcut icon" href="/favicon.svg" />
         <meta
           name="viewport"
@@ -46,7 +46,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         toggleColorScheme={toggleColorScheme}
       >
         <MantineProvider
-          theme={{ colorScheme }}
+          theme={{ colorScheme, primaryColor: "red" }}
           withGlobalStyles
           withNormalizeCSS
         >

@@ -67,7 +67,12 @@ export default function NewPet() {
           />
         </Paper>
         <Group position="right" mt="md">
-          <Button variant="subtle" onClick={() => router.back()}>
+          <Button
+            variant="subtle"
+            onClick={() => {
+              router.back();
+            }}
+          >
             Cancel
           </Button>
           <Button type="submit">Submit</Button>

@@ -1,6 +1,5 @@
 import { Button, Group, Paper } from "@mantine/core";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import TextInput from "../../../components/form/text-input";
 import Layout from "../../../components/layout/layout";
@@ -19,19 +18,10 @@ export default function EditPet() {
 
   const mutate = trpc.pets.editPet.useMutation();
 
-  const { control, handleSubmit, reset } = useForm<CreatePetInput>({
-    defaultValues: {
-      name: "",
-      species: "",
-    },
+  const { control, handleSubmit } = useForm<CreatePetInput>({
+    defaultValues: data,
     resolver: zodResolver(createPetSchema),
   });
-
-  useEffect(() => {
-    if (data) {
-      reset(data);
-    }
-  }, [data, reset]);
 
   return (
     <Layout headerContent={<Header variant={1}>Edit Pet</Header>}>

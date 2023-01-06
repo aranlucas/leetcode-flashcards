@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createPetSchema, getPetSchema } from "../../../schema/pet.schema";
 
@@ -7,14 +8,23 @@ export const petsRouter = router({
   getAll: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.pets.findMany();
   }),
-  getPet: publicProcedure.input(getPetSchema).query(({ input, ctx }) => {
+  getPet: publicProcedure.input(getPetSchema).query(async ({ input, ctx }) => {
     const { id } = input;
 
-    return ctx.prisma.pets.findUnique({
+    const pet = await ctx.prisma.pets.findUnique({
       where: {
         id,
       },
     });
+
+    if (!pet) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Note with that ID not found",
+      });
+    }
+
+    return pet;
   }),
   createPet: publicProcedure
     .input(createPetSchema)

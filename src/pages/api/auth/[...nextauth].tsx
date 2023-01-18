@@ -35,9 +35,9 @@ export const authOptions: NextAuthOptions = {
       }
       if (user) {
         token.id = user.id;
-        // @ts-expect-error
+        // @ts-expect-error nextauth typing
         token.LEETCODE_SESSION = user.LEETCODE_SESSION;
-        // @ts-expect-error
+        // @ts-expect-error nextauth typing
         token.LEETCODE_CSRF = user.LEETCODE_CSRF;
       }
 
@@ -45,11 +45,11 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, token }) {
       if (session.user) {
-        // @ts-expect-error
+        // @ts-expect-error nextauth typing
         session.user.id = token.id ?? "";
-        // @ts-expect-error
+        // @ts-expect-error nextauth typing
         session.user.LEETCODE_SESSION = token.LEETCODE_SESSION ?? "";
-        // @ts-expect-error
+        // @ts-expect-error nextauth typing
         session.user.LEETCODE_CSRF = token.LEETCODE_CSRF ?? "";
       }
       return session;

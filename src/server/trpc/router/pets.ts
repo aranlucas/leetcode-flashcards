@@ -5,8 +5,8 @@ import { createPetSchema, getPetSchema } from "../../../schema/pet.schema";
 import { router, publicProcedure } from "../trpc";
 
 export const petsRouter = router({
-  getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.pets.findMany();
+  getAll: publicProcedure.query(async ({ ctx }) => {
+    return await ctx.prisma.pets.findMany();
   }),
   getPet: publicProcedure.input(getPetSchema).query(async ({ input, ctx }) => {
     const { id } = input;

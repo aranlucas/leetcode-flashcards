@@ -1,5 +1,5 @@
 import { createStyles, Header, Container, Group } from "@mantine/core";
-import { IconRocket } from "@tabler/icons";
+import { IconRocket } from "@tabler/icons-react";
 import SignIn from "./sign-in";
 
 const HEADER_HEIGHT = 40;

@@ -1,5 +1,5 @@
-import { Group, Title, TitleOrder, Text, Stack } from "@mantine/core";
-import { ReactNode } from "react";
+import { Group, Title, type TitleOrder, Text, Stack } from "@mantine/core";
+import { type ReactNode } from "react";
 
 interface HeaderProps {
   actions?: ReactNode;

@@ -3,7 +3,7 @@ import { router, publicProcedure, protectedProcedure } from "../trpc";
 import gql from "graphql-tag";
 import { print } from "graphql";
 import dayjs from "dayjs";
-import { supermemo, SuperMemoGrade } from "supermemo";
+import { supermemo, type SuperMemoGrade } from "supermemo";
 
 function reviewProblem(problem: any, grade: SuperMemoGrade) {
   const { interval, repetition, efactor } = supermemo(problem, grade);

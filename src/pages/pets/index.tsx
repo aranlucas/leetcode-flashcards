@@ -5,7 +5,7 @@ import { Button } from "@mantine/core";
 import NextLink from "next/link";
 import Header from "../../components/header";
 import { trpc } from "../../utils/trpc";
-import { CreatePetInput } from "../../schema/pet.schema";
+import { type CreatePetInput } from "../../schema/pet.schema";
 
 export default function AllPets() {
   const { data, isLoading } = trpc.pets.getAll.useQuery();

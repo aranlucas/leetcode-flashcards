@@ -1,6 +1,6 @@
 import { Button, Avatar, Text, Menu, Group } from "@mantine/core";
 import NextLink from "next/link";
-import { IconLogout, IconSettings } from "@tabler/icons";
+import { IconLogout, IconSettings } from "@tabler/icons-react";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function SignIn() {
@@ -21,7 +21,7 @@ export default function SignIn() {
 
   return (
     <Group position="center">
-      <Menu withArrow width={300} position="bottom" transition="pop">
+      <Menu withArrow width={300} position="bottom">
         <Menu.Target>
           <Avatar src={session.user?.image} alt="it's me" />
         </Menu.Target>

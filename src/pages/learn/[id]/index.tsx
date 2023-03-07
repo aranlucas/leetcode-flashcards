@@ -1,18 +1,23 @@
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
+import {
+  type GetStaticPaths,
+  type GetStaticProps,
+  type InferGetStaticPropsType,
+} from "next";
 import Layout from "../../../components/layout/layout";
 import { serialize } from "next-mdx-remote/serialize";
 import { join } from "path";
 import fs from "fs";
 import { Title } from "@mantine/core";
 import { MantineMDX } from "../../../components/mdxprovider/mdxprovider";
-import { MDXRemoteSerializeResult } from "next-mdx-remote";
+import { type MDXRemoteSerializeResult } from "next-mdx-remote";
 
 export default function IndexPage({
   mdxSource,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const title = mdxSource.frontmatter.title as string;
   return (
     <Layout>
-      <Title order={2}>{mdxSource?.frontmatter?.title} </Title>
+      <Title order={2}>{title}</Title>
 
       <MantineMDX {...mdxSource} />
     </Layout>

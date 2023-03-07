@@ -9,7 +9,7 @@ import {
   useReactTable,
   getCoreRowModel,
   flexRender,
-  ColumnDef,
+  type ColumnDef,
   getFilteredRowModel,
   getPaginationRowModel,
 } from "@tanstack/react-table";
@@ -51,7 +51,6 @@ export default function Table<T>({
           <Group position="right">
             <Pagination
               total={table.getPageCount()}
-              page={table.getState().pagination.pageIndex + 1}
               onChange={(e) => {
                 table.setPageIndex(e - 1);
               }}

@@ -1,9 +1,9 @@
 import { createColumnHelper } from "@tanstack/react-table";
-import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { type GetStaticProps, type InferGetStaticPropsType } from "next";
 import Link from "next/link";
 import Layout from "../../components/layout/layout";
 import Table from "../../components/table";
-import { Question } from "../../lib/leetcode";
+import { type Question } from "../../lib/leetcode";
 import fs from "fs";
 import path, { join } from "path";
 import matter from "gray-matter";

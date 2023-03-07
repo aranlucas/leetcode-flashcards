@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { showNotification } from "@mantine/notifications";
 import Header from "../../components/header";
 import { trpc } from "../../utils/trpc";
-import { CreatePetInput, createPetSchema } from "../../schema/pet.schema";
+import { type CreatePetInput, createPetSchema } from "../../schema/pet.schema";
 
 export default function NewPet() {
   const router = useRouter();

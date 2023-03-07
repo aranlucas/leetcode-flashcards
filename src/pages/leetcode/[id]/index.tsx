@@ -1,7 +1,11 @@
 import { Prism } from "@mantine/prism";
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
+import {
+  type GetStaticPaths,
+  type GetStaticProps,
+  type InferGetStaticPropsType,
+} from "next";
 import Layout from "../../../components/layout/layout";
-// @ts-expect-error prism errors
+// @ts-expect-error needed
 import PrismRenderer from "prism-react-renderer/prism";
 import { Stack, Footer, Flex, Button, Divider, Tooltip } from "@mantine/core";
 import { trpc } from "../../../utils/trpc";
@@ -13,10 +17,10 @@ import { showNotification } from "@mantine/notifications";
 import fs from "fs";
 import { join } from "path";
 import { serialize } from "next-mdx-remote/serialize";
-import { MDXRemoteSerializeResult } from "next-mdx-remote";
+import { type MDXRemoteSerializeResult } from "next-mdx-remote";
 import { MantineMDX } from "../../../components/mdxprovider/mdxprovider";
 
-// @ts-expect-error prism errors
+// @ts-expect-error needed
 (typeof global !== "undefined" ? global : window).Prism = PrismRenderer;
 
 require("prismjs/components/prism-java");

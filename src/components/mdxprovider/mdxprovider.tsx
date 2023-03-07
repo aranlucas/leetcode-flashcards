@@ -1,9 +1,9 @@
 import { Code, Title } from "@mantine/core";
 import { Prism } from "@mantine/prism";
-import { MDXRemote, MDXRemoteProps } from "next-mdx-remote";
-// @ts-expect-error can't find module
+import { MDXRemote, type MDXRemoteProps } from "next-mdx-remote";
+// @ts-expect-error needed
 import PrismRenderer from "prism-react-renderer/prism";
-// @ts-expect-error hacky fix
+// @ts-expect-error needed
 (typeof global !== "undefined" ? global : window).Prism = PrismRenderer;
 
 require("prismjs/components/prism-java");

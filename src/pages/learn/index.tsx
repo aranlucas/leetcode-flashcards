@@ -1,4 +1,4 @@
-import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { type GetStaticProps, type InferGetStaticPropsType } from "next";
 import Link from "next/link";
 import path, { join } from "path";
 import Layout from "../../components/layout/layout";

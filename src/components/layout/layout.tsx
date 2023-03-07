@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode } from "react";
+import { type ReactElement, type ReactNode } from "react";
 import { AppShell, Container, Group, Stack } from "@mantine/core";
 import { HeaderAction } from "./header";
 import Breadcrumbs from "../breadcrumbs";

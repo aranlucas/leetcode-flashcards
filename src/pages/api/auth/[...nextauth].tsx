@@ -1,5 +1,5 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth, { type NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import { prisma } from "../../../server/client/db";
 
@@ -35,9 +35,9 @@ export const authOptions: NextAuthOptions = {
       }
       if (user) {
         token.id = user.id;
-        // @ts-expect-error nextauth typing
+        // @ts-expect-error needed
         token.LEETCODE_SESSION = user.LEETCODE_SESSION;
-        // @ts-expect-error nextauth typing
+        // @ts-expect-error needed
         token.LEETCODE_CSRF = user.LEETCODE_CSRF;
       }
 
@@ -45,11 +45,11 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, token }) {
       if (session.user) {
-        // @ts-expect-error nextauth typing
+        // @ts-expect-error needed
         session.user.id = token.id ?? "";
-        // @ts-expect-error nextauth typing
+        // @ts-expect-error needed
         session.user.LEETCODE_SESSION = token.LEETCODE_SESSION ?? "";
-        // @ts-expect-error nextauth typing
+        // @ts-expect-error needed
         session.user.LEETCODE_CSRF = token.LEETCODE_CSRF ?? "";
       }
       return session;

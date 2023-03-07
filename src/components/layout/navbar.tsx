@@ -5,7 +5,7 @@ import {
   createStyles,
   Stack,
 } from "@mantine/core";
-import { TablerIcon, IconHome2, IconMovie, IconInbox } from "@tabler/icons";
+import { IconHome2, IconMovie, IconInbox } from "@tabler/icons-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -42,38 +42,6 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-interface NavbarLinkProps {
-  icon: TablerIcon;
-  label: string;
-  active?: boolean;
-  onClick?: () => void;
-  href: string;
-}
-
-function NavbarLink({
-  icon: Icon,
-  label,
-  active,
-  onClick,
-  href,
-}: NavbarLinkProps) {
-  const { classes, cx } = useStyles();
-
-  return (
-    <Tooltip label={label} position="right" transitionDuration={0}>
-      <Link href={href} passHref>
-        <UnstyledButton
-          component="a"
-          onClick={onClick}
-          className={cx(classes.link, { [classes.active]: active })}
-        >
-          <Icon stroke={1.5} />
-        </UnstyledButton>
-      </Link>
-    </Tooltip>
-  );
-}
-
 const mockdata = [
   { icon: IconHome2, label: "Home", href: "/" },
   { icon: IconMovie, label: "Movies", href: "/movies" },
@@ -83,13 +51,20 @@ const mockdata = [
 export function NavbarMinimal() {
   const router = useRouter();
   const links = mockdata.map((link, index) => (
-    <NavbarLink
-      {...link}
-      key={link.label}
-      active={router.pathname === link.href}
-      href={link.href}
-    />
+    <Tooltip label={link.label} position="right" key={link.label}>
+      <Link href={link.href} passHref>
+        <UnstyledButton
+          component="a"
+          className={cx(classes.link, {
+            [classes.active]: router.pathname === link.href,
+          })}
+        >
+          <link.icon stroke={1.5} />
+        </UnstyledButton>
+      </Link>
+    </Tooltip>
   ));
+  const { classes, cx } = useStyles();
 
   return (
     <Navbar>

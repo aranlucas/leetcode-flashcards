@@ -1,15 +1,14 @@
-import { AppProps } from "next/app";
+import { type AppProps } from "next/app";
 import Head from "next/head";
 import {
-  ColorScheme,
+  type ColorScheme,
   ColorSchemeProvider,
   MantineProvider,
 } from "@mantine/core";
 import { useState } from "react";
 import { SessionProvider } from "next-auth/react";
-import { NotificationsProvider } from "@mantine/notifications";
 import { setCookie } from "cookies-next";
-import { Session } from "next-auth";
+import { type Session } from "next-auth";
 import { trpc } from "../utils/trpc";
 import { ModalsProvider } from "@mantine/modals";
 
@@ -52,9 +51,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         >
           <SessionProvider session={pageProps.session}>
             <ModalsProvider>
-              <NotificationsProvider>
-                <Component {...pageProps} />
-              </NotificationsProvider>
+              <Component {...pageProps} />
             </ModalsProvider>
           </SessionProvider>
         </MantineProvider>

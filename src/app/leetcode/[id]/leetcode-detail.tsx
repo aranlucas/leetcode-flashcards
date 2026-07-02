@@ -12,7 +12,6 @@ import { type MDXRemoteSerializeResult } from "next-mdx-remote";
 import Layout from "../../../components/layout/layout";
 
 const reviewMachine = createMachine({
-  predictableActionArguments: true,
   id: "review",
   initial: "problem",
   states: {
@@ -93,7 +92,7 @@ export default function LeetcodeDetail({
             <Button
               onClick={() => {
                 scrollIntoView({ alignment: "start" });
-                send("REVIEW");
+                send({ type: "REVIEW" });
               }}
             >
               Show answer

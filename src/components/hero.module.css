@@ -1,0 +1,45 @@
+.title {
+  font-size: 62px;
+  font-weight: 900;
+  line-height: 1.1;
+  margin: 0;
+  padding: 0;
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+}
+
+.description {
+  margin-top: var(--mantine-spacing-xl);
+  font-size: 24px;
+}
+
+.controls {
+  margin-top: calc(var(--mantine-spacing-xl) * 2);
+}
+
+.control {
+  height: 54px;
+  padding-left: 38px;
+  padding-right: 38px;
+}
+
+@media (max-width: 755px) {
+  .title {
+    font-size: 42px;
+    line-height: 1.2;
+  }
+
+  .description {
+    font-size: 18px;
+  }
+
+  .controls {
+    margin-top: var(--mantine-spacing-xl);
+  }
+
+  .control {
+    height: 54px;
+    padding-left: 18px;
+    padding-right: 18px;
+    flex: 1;
+  }
+}

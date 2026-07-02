@@ -1,3 +1,5 @@
+"use client";
+
 import { Button, Avatar, Text, Menu, Group } from "@mantine/core";
 import NextLink from "next/link";
 import { IconLogout, IconSettings } from "@tabler/icons-react";
@@ -12,7 +14,7 @@ export default function SignIn() {
         onClick={async () => {
           await signIn();
         }}
-        sx={{ height: 30 }}
+        style={{ height: 30 }}
       >
         Sign in
       </Button>
@@ -20,7 +22,7 @@ export default function SignIn() {
   }
 
   return (
-    <Group position="center">
+    <Group justify="center">
       <Menu withArrow width={300} position="bottom">
         <Menu.Target>
           <Avatar src={session.user?.image} alt="it's me" />
@@ -29,10 +31,9 @@ export default function SignIn() {
           <Menu.Item>
             <Group>
               <Avatar radius="xl" src={session.user?.image} />
-
               <div>
-                <Text weight={500}>{session.user?.name}</Text>
-                <Text size="xs" color="dimmed">
+                <Text fw={500}>{session.user?.name}</Text>
+                <Text size="xs" c="dimmed">
                   {session.user?.email}
                 </Text>
               </div>
@@ -42,14 +43,14 @@ export default function SignIn() {
           <Menu.Divider />
 
           <Menu.Label>Settings</Menu.Label>
-          <Menu.Item icon={<IconSettings size={14} stroke={1.5} />}>
+          <Menu.Item leftSection={<IconSettings size={14} stroke={1.5} />}>
             <NextLink href="/profile">Account settings</NextLink>
           </Menu.Item>
           <Menu.Item
             onClick={async () => {
               await signOut();
             }}
-            icon={<IconLogout size={14} stroke={1.5} />}
+            leftSection={<IconLogout size={14} stroke={1.5} />}
           >
             Logout
           </Menu.Item>

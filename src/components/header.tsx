@@ -17,12 +17,12 @@ export default function Header({
   counter,
 }: HeaderProps) {
   return (
-    <Stack spacing="xs">
-      <Group position="apart">
-        <Group spacing="xs">
+    <Stack gap="xs">
+      <Group justify="apart">
+        <Group gap="xs">
           <Title order={variant}>{children}</Title>
           {counter && (
-            <Title order={variant} color="dimmed" weight={500}>
+            <Title order={variant} c="dimmed" fw={500}>
               {counter}
             </Title>
           )}
@@ -30,7 +30,7 @@ export default function Header({
         {actions}
       </Group>
       {description && (
-        <Text size="sm" color="dimmed">
+        <Text size="sm" c="dimmed">
           {description}
         </Text>
       )}

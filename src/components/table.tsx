@@ -1,5 +1,4 @@
 import {
-  Grid,
   Group,
   Pagination,
   Skeleton,
@@ -26,13 +25,8 @@ export default function Table<T>({
   columnDefinitions,
   isLoading,
 }: TableProps<T>) {
-  const data = useMemo(() => {
-    return items;
-  }, [items]);
-
-  const columns = useMemo(() => {
-    return columnDefinitions;
-  }, [columnDefinitions]);
+  const data = useMemo(() => items, [items]);
+  const columns = useMemo(() => columnDefinitions, [columnDefinitions]);
 
   const table = useReactTable({
     data,
@@ -44,20 +38,14 @@ export default function Table<T>({
 
   return (
     <div>
-      <Grid>
-        <Grid.Col span={8}></Grid.Col>
-
-        <Grid.Col span={4}>
-          <Group position="right">
-            <Pagination
-              total={table.getPageCount()}
-              onChange={(e) => {
-                table.setPageIndex(e - 1);
-              }}
-            />
-          </Group>
-        </Grid.Col>
-      </Grid>
+      <Group justify="flex-end">
+        <Pagination
+          total={table.getPageCount()}
+          onChange={(e) => {
+            table.setPageIndex(e - 1);
+          }}
+        />
+      </Group>
       <MantineTable>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (

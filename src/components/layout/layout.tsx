@@ -1,3 +1,5 @@
+"use client";
+
 import { type ReactElement, type ReactNode } from "react";
 import { AppShell, Container, Group, Stack } from "@mantine/core";
 import { HeaderAction } from "./header";

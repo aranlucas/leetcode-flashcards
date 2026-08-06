@@ -3,6 +3,7 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import Link from "next/link";
 import Table from "../../components/table";
+import { type TableFeatureSet } from "../../components/table-features";
 
 interface FileItem {
   data: { title: string; slug: string };
@@ -13,7 +14,7 @@ interface LeetcodeListProps {
 }
 
 export default function LeetcodeList({ files }: LeetcodeListProps) {
-  const columnHelper = createColumnHelper<FileItem>();
+  const columnHelper = createColumnHelper<TableFeatureSet, FileItem>();
 
   const columns = [
     columnHelper.accessor("data.title", {

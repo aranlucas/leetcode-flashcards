@@ -3,6 +3,7 @@
 import Layout from "../../components/layout/layout";
 import { createColumnHelper } from "@tanstack/react-table";
 import Table from "../../components/table";
+import { type TableFeatureSet } from "../../components/table-features";
 import { Button } from "@mantine/core";
 import NextLink from "next/link";
 import Header from "../../components/header";
@@ -11,7 +12,10 @@ import { type CreatePetInput } from "../../schema/pet.schema";
 
 export default function AllPets() {
   const { data, isLoading } = trpc.pets.getAll.useQuery();
-  const columnHelper = createColumnHelper<CreatePetInput & { id: string }>();
+  const columnHelper = createColumnHelper<
+    TableFeatureSet,
+    CreatePetInput & { id: string }
+  >();
 
   const columns = [
     columnHelper.accessor("name", {

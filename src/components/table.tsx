@@ -5,22 +5,21 @@ import {
   Table as MantineTable,
 } from "@mantine/core";
 import {
-  useReactTable,
-  getCoreRowModel,
+  useTable,
   flexRender,
   type ColumnDef,
-  getFilteredRowModel,
-  getPaginationRowModel,
+  type RowData,
 } from "@tanstack/react-table";
 import { useMemo } from "react";
+import { features, type TableFeatureSet } from "./table-features";
 
-interface TableProps<T> {
+interface TableProps<T extends RowData> {
   items: T[];
-  columnDefinitions: Array<ColumnDef<T, any>>;
+  columnDefinitions: Array<ColumnDef<TableFeatureSet, T, any>>;
   isLoading?: boolean;
 }
 
-export default function Table<T>({
+export default function Table<T extends RowData>({
   items,
   columnDefinitions,
   isLoading,
@@ -28,12 +27,10 @@ export default function Table<T>({
   const data = useMemo(() => items, [items]);
   const columns = useMemo(() => columnDefinitions, [columnDefinitions]);
 
-  const table = useReactTable({
+  const table = useTable({
+    features,
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
   });
 
   return (
@@ -74,7 +71,7 @@ export default function Table<T>({
         <tbody>
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
+              {row.getAllCells().map((cell) => (
                 <td key={cell.id}>
                   {isLoading ? (
                     <Skeleton height={28} />

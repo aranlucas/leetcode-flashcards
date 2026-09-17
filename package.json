@@ -55,7 +55,7 @@
     "superjson": "^2.2.6",
     "supermemo": "^2.0.23",
     "xstate": "^5.32.6",
-    "zod": "^4.5.4"
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^16.3.4",

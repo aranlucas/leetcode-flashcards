@@ -1,7 +1,7 @@
 ---
 backend:
   name: github
-  repo: aranlucas/mantine-next
+  repo: aranlucas/leetcode-flashcards
   branch: main
   base_url: https://netlify-cms-mauve.vercel.app/
 local_backend: true

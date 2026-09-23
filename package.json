@@ -31,7 +31,7 @@
     "@mantine/notifications": "^9.6.1",
     "@prisma/adapter-pg": "^7.10.0",
     "@prisma/client": "^7.10.0",
-    "@tabler/icons-react": "^3.46.0",
+    "@tabler/icons-react": "^3.47.0",
     "@tanstack/react-query": "^5.103.1",
     "@tanstack/react-table": "^9.2.4",
     "@trpc/client": "^11.19.0",
